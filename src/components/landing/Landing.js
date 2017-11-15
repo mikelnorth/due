@@ -7,7 +7,7 @@ class Landing extends Component {
         return (
           <div className="Landing">
             <h1>Landing</h1>
-            <Link to='/dashboard' ><button>Login</button></Link>
+            <a href={ process.env.REACT_APP_LOGIN }><button>Login</button></a>
           </div>
         );
       }

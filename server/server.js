@@ -79,10 +79,11 @@ passport.serializeUser(function (user_id, done) {
 
 passport.deserializeUser( function (user_id, done) {
     //deserialize here
-    app.get('db').users_find_user([user_id])
+    app.get('db').users_find_current_user([user_id])
     .then( user => {
         done(null, user[0])
     })
+    // done(null, user_id)
 })
 
 

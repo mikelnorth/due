@@ -6,6 +6,8 @@ const massive = require("massive");
 const passport = require("passport");
 const Auth0Strategy = require('passport-auth0');
 
+const users_controller = require('./controllers/users_controller')
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -62,7 +64,7 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 
 app.get("/auth/me", (req,res) => {
     if(!req.user){
-        return res.status(200).send(false)
+        return res.status(404).send(false)
     }
 
     return res.status(200).send(req.user)
@@ -86,6 +88,10 @@ passport.deserializeUser( function (user_id, done) {
     // done(null, user_id)
 })
 
+
+//ENDPOINTS
+
+app.get('/api/users/setuser/:user_id', users_controller.setUserOnRedux)
 
 
 const PORT = 3005;

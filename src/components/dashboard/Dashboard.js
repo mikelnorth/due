@@ -6,6 +6,10 @@ import { getUser } from '../../ducks/reducer'
 import Select from "react-select";
 import "../../../node_modules/react-select/dist/react-select.css";
 import axios from 'axios';
+import MediaQuery from 'react-responsive';
+import SideNav from '../navbar/SideNav.js';
+import MobileNav from '../navbar/MobileNav.js';
+
 
 class Dashboard extends Component {
     constructor() {
@@ -81,7 +85,12 @@ class Dashboard extends Component {
         ];
         return (
             <div className='dashboard'>
-                <p>welcome to the dashboard</p>
+                <MediaQuery query="(min-width: 750px)">
+                    <SideNav />
+                </MediaQuery>
+                <MediaQuery query="(max-width: 750px)">
+                    <MobileNav />
+                </MediaQuery>
                 <a href={process.env.REACT_APP_LOGOUT}><button>Logout</button></a>
                 <div>
                     {/* <button onClick={ this.handleOpenModal }>Open</button> */}
@@ -91,11 +100,11 @@ class Dashboard extends Component {
                         onRequestClose={this.handleCloseModal}
                         className='Modal'
                         overlayClassName='Overlay'>
-                       
+
                         {/* <input onChange={(e) => this.handlChange( e.target.value)}></input> */}
 
                         <div className='select'>
-                        <h4>What School do you attend?</h4>
+                            <h4>What School do you attend?</h4>
 
                             <Select
                                 className='school-select'
@@ -110,7 +119,7 @@ class Dashboard extends Component {
                                 value="one"
                                 loadOptions={getOptions}
                             />
-                             <button onClick={() => this.submit()}>Submit</button>
+                            <button onClick={() => this.submit()}>Submit</button>
                         </div>
                     </ReactModal>
                 </div>

@@ -6,6 +6,8 @@ import Class from "./components/class/Class.js";
 import Create from "./components/create-class/Create.js";
 import Join from "./components/join-class/Join.js";
 import Profile from "./components/profile/Profile.js";
+import MobileNav from "./components/navbar/MobileNav";
+import SideNav from "./components/navbar/SideNav";
 
 export default (
     <div>
@@ -16,9 +18,8 @@ export default (
             <Route component={Create} path='/class/create' />
             <Route component={Join} path='/class/join' />
             <Route component={Profile} path='/profile' />
-
-            {/* these are testing routes */}
-            <Route component={Profile} path='/profile' />
+            <Route component={SideNav} path='/side' />
+            <Route component={MobileNav} path='/mobilenav' />
 
         </Switch>
     </div>

@@ -5,13 +5,14 @@ import ReactModal from "react-modal";
 import { getUser } from '../../ducks/reducer'
 import Select from "react-select";
 import "../../../node_modules/react-select/dist/react-select.css";
+import axios from 'axios';
 
 class Dashboard extends Component {
     constructor() {
         super()
         this.state = {
-            showModal: true,
-            hideModal: false,
+            showModal: false,
+            // hideModal: false,
             select: ''
         }
 
@@ -32,14 +33,14 @@ class Dashboard extends Component {
     handleOpenModal() {
         this.setState({
             showModal: true,
-            hideModal: !this.state.hideModal
+            // hideModal: !this.state.hideModal
         })
     }
 
     handleCloseModal() {
         this.setState({
             showModal: false,
-            hideModal: !this.state.hideModal
+            // hideModal: !this.state.hideModal
 
         })
     }
@@ -53,6 +54,7 @@ class Dashboard extends Component {
     }
 
     submit() {
+        axios.post(`/api/schools/insert/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`)
         this.state.select ? this.handleCloseModal() : this.handleOpenModal()
     }
 
@@ -62,12 +64,12 @@ class Dashboard extends Component {
 
         const getOptions = (input) => {
             return fetch(`/users/${input}.json`)
-              .then((response) => {
-                return response.json();
-              }).then((json) => {
-                return { options: json };
-              });
-          }
+                .then((response) => {
+                    return response.json();
+                }).then((json) => {
+                    return { options: json };
+                });
+        }
 
         var options = [
             { value: 1111, label: 'University of Utah' },
@@ -89,22 +91,27 @@ class Dashboard extends Component {
                         onRequestClose={this.handleCloseModal}
                         className='Modal'
                         overlayClassName='Overlay'>
-                        <h4>What School do you attend?</h4>
+                       
                         {/* <input onChange={(e) => this.handlChange( e.target.value)}></input> */}
-                        <Select
-                            className='school-select'
-                            name="form-field-name"
-                            placeholder="Select A School"
-                            value={this.state.select}
-                            options={options}
-                            onChange={this.handleSelect}
-                        />
-                        <Select.Async
-                            name="form-field-name"
-                            value="one"
-                            loadOptions={getOptions}
-                        />
-                        <button onClick={() => this.submit()}>Submit</button>
+
+                        <div className='select'>
+                        <h4>What School do you attend?</h4>
+
+                            <Select
+                                className='school-select'
+                                name="form-field-name"
+                                placeholder="Select A School"
+                                value={this.state.select}
+                                options={options}
+                                onChange={this.handleSelect}
+                            />
+                            <Select.Async
+                                name="form-field-name"
+                                value="one"
+                                loadOptions={getOptions}
+                            />
+                             <button onClick={() => this.submit()}>Submit</button>
+                        </div>
                     </ReactModal>
                 </div>
             </div >

@@ -20,3 +20,7 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.562);
   animation: fadeIn .5s; }
+
+.school-select {
+  width: 300px;
+  margin: 20px; }

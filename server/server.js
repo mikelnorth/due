@@ -7,6 +7,7 @@ const passport = require("passport");
 const Auth0Strategy = require('passport-auth0');
 
 const users_controller = require('./controllers/users_controller')
+const schools_controller = require("./controllers/schools_controller")
 
 const app = express();
 
@@ -92,7 +93,7 @@ passport.deserializeUser( function (user_id, done) {
 //ENDPOINTS
 
 app.get('/api/users/setuser/:user_id', users_controller.setUserOnRedux)
-
+app.post('/api/schools/insert/:school_id/:user_id/:school_name', schools_controller.addSchool)
 
 const PORT = 3005;
 

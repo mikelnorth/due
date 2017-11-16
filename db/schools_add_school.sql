@@ -1,0 +1,1 @@
+INSERT INTO Schools (school_id, school_name) VALUES ($1, $2) RETURNING*;

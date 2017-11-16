@@ -5,13 +5,6 @@ import { getUser } from '../../ducks/reducer'
 import logo from '../../assets/due_logo.svg'
 
 class SideNav extends Component {
-    constructor(props) {
-        super(props)
-    }
-
-    componentWillMount() {
-        this.props.getUser()
-    }
 
     render() {
         console.log('this.props is: ', this.props)

@@ -1,0 +1,1 @@
+SELECT * FROM Schools WHERE school_id = $1;

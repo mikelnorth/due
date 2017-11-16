@@ -1,0 +1,41 @@
+.side {
+  position: fixed;
+  padding-top: 40px;
+  height: 100vh;
+  width: 20vw;
+  background: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-right: 1px solid black; }
+
+.profile_pic {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  background: grey;
+  border-radius: 50%;
+  border: 1px solid #1485CB; }
+
+.profile_name {
+  font-size: 30px;
+  margin: 40px; }
+
+.class {
+  width: 100%;
+  height: 100px;
+  background: #ebebeb;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #1485CB; }
+  .class p {
+    font-size: 30px;
+    margin-right: 40px; }
+  .class .add {
+    font-size: 30px; }
+
+.nav_logo {
+  position: absolute;
+  bottom: 50px;
+  left: 10%;
+  width: 60px; }

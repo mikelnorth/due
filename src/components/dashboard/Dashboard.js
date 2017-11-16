@@ -85,10 +85,10 @@ class Dashboard extends Component {
         ];
         return (
             <div className='dashboard'>
-                <MediaQuery query="(min-width: 750px)">
+                <MediaQuery query="(min-width: 1100px)">
                     <SideNav />
                 </MediaQuery>
-                <MediaQuery query="(max-width: 750px)">
+                <MediaQuery query="(max-width: 1100px)">
                     <MobileNav />
                 </MediaQuery>
                 <a href={process.env.REACT_APP_LOGOUT}><button>Logout</button></a>

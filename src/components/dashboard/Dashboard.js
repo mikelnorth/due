@@ -89,7 +89,7 @@ class Dashboard extends Component {
                     <SideNav />
                 </MediaQuery>
                 <MediaQuery query="(max-width: 1024px)">
-                    <MobileNav />
+                   {this.props.user.school_id ? <MobileNav /> : null}
                 </MediaQuery>
                 <div>
                     {/* <button onClick={ this.handleOpenModal }>Open</button> */}
@@ -114,6 +114,7 @@ class Dashboard extends Component {
                                 onChange={this.handleSelect}
                             />
                             <Select.Async
+                                className='fetch'
                                 name="form-field-name"
                                 value="one"
                                 loadOptions={getOptions}

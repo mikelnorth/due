@@ -16,6 +16,10 @@ export default (
             <Route component={Create} path='/class/create' />
             <Route component={Join} path='/class/join' />
             <Route component={Profile} path='/profile' />
+
+            {/* these are testing routes */}
+            <Route component={Profile} path='/profile' />
+
         </Switch>
     </div>
 )

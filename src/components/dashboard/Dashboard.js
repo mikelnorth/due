@@ -5,6 +5,7 @@ import ReactModal from "react-modal";
 import { getUser } from '../../ducks/reducer'
 import Select from "react-select";
 import "../../../node_modules/react-select/dist/react-select.css";
+import axios from 'axios';
 
 class Dashboard extends Component {
     constructor() {
@@ -53,6 +54,7 @@ class Dashboard extends Component {
     }
 
     submit() {
+        axios.post(`/api/schools/insert/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`)
         this.state.select ? this.handleCloseModal() : this.handleOpenModal()
     }
 

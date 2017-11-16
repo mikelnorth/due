@@ -44,7 +44,7 @@ class Dashboard extends Component {
         })
     }
 
-    handleSelect(val){
+    handleSelect(val) {
         this.setState({
             select: val,
         })
@@ -53,12 +53,21 @@ class Dashboard extends Component {
     }
 
     submit() {
-        this.state.school ? this.handleCloseModal() : this.handleOpenModal()
+        this.state.select ? this.handleCloseModal() : this.handleOpenModal()
     }
 
 
     render() {
         console.log('this.props', this.props)
+
+        const getOptions = (input) => {
+            return fetch(`/users/${input}.json`)
+              .then((response) => {
+                return response.json();
+              }).then((json) => {
+                return { options: json };
+              });
+          }
 
         var options = [
             { value: 1111, label: 'University of Utah' },
@@ -89,6 +98,11 @@ class Dashboard extends Component {
                             value={this.state.select}
                             options={options}
                             onChange={this.handleSelect}
+                        />
+                        <Select.Async
+                            name="form-field-name"
+                            value="one"
+                            loadOptions={getOptions}
                         />
                         <button onClick={() => this.submit()}>Submit</button>
                     </ReactModal>

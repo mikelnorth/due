@@ -13,7 +13,10 @@
   display: flex;
   width: 200px;
   height: 200px;
-  background: grey;
+  background-image: url("../../assets/profile.svg");
+  background-size: 110px;
+  background-repeat: no-repeat;
+  background-position: center;
   border-radius: 50%;
   border: 1px solid #1485CB; }
 

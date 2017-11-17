@@ -1,0 +1,8 @@
+SELECT a.assignment_name as title, a.due_date as start, a.due_date as end, a.due_time as time, c.class_name as desc, a.points_possible FROM users as u
+JOIN user_schools as us ON u.user_id = us.user_id
+JOIN schools as s ON s.school_id = us.school_id
+JOIN classes as c ON c.school_id = us.school_id
+JOIN calendar as cal ON cal.class_id = c.class_id
+JOIN user_calendars as uc ON uc.calendar_id = cal.calendar_id
+JOIN assignments as a ON a.calendar_id = cal.calendar_id
+WHERE uc.user_id = $1;

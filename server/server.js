@@ -97,14 +97,34 @@ passport.deserializeUser( function (user_id, done) {
 
 //ENDPOINTS
 
+//USER
 app.get('/api/users/setuser/:user_id', users_controller.setUserOnRedux)
-app.post('/api/schools/insert/:school_id/:user_id/:school_name', schools_controller.addSchool)
+
+//SCHOOLS
+app.post('/api/schools/insert/:school_id/:user_id/:school_name', schools_controller.addSchool);
+
+//CLASSES
 app.get('/api/classes/get/:class_name/:school_id', classes_controller.findClass);
 app.post('/api/classes/add/:class_name/:school_id', classes_controller.createClass);
+
+//CALENDARS
 app.get('/api/calendars/get/:class_id', calendar_controller.findCalendars);
 app.post('/api/calendars/add/:user_id/:class_id', calendar_controller.createCalendar);
+app.get('/api/calendars/user/:user_id', calendar_controller.findCalendarByUser);
+app.get('/api/calendars/user/class/:user_id/:calendar_id', calendar_controller.findCalendarByUserClass);
+
+//USER CALENDARS
+app.post('/api/usercalendar/add/:user_id/:calendar_id', calendar_controller.subscribeToCalendar);
+
+//ASSIGNMENTS
 app.post('/api/assignments/add', assignment_controller.createAssignment);
-app.get('/api/calendars/user/:user_id', assignment_controller.findAssignmetsByUser);
+app.get('/api/assignments/getall/:user_id', assignment_controller.getCalendarAssignments);
+
+
+
+// app.get('/api/calendars/user/:user_id', assignment_controller.findAssignmetsByUser);
+
+
 
 
 const PORT = 3005;

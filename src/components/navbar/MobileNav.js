@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getUser} from '../../ducks/reducer';
 import profilePic from '../../assets/profile.svg';
+import dueLogo from '../../assets/due_logo.svg';
 import './MobileNav.css';
 
 
@@ -30,7 +31,7 @@ class MobileNav extends React.Component {
           <div>
             <MuiThemeProvider>
                 <AppBar
-                title="due."
+                title="Title"
                 iconClassNameRight="muidocs-icon-navigation-expand-more"
                 style={{backgroundColor: "#1485CB"}}
                 onClick={this.handleToggle}
@@ -40,7 +41,6 @@ class MobileNav extends React.Component {
                 width={300}
                 open={this.state.open}
                 onRequestChange={(open) => this.setState({open})}
-                style={{padding: "0"}}
                 >
                 <MenuItem onClick={this.handleClose}>
                   <div className="mobile-user-container">
@@ -48,7 +48,7 @@ class MobileNav extends React.Component {
                     <h3 className="mobile-user-name">{this.props.user.user_name}</h3>
                   </div>
                 </MenuItem>
-                <MenuItem onClick={this.handleClose} style={{padding: "0"}}>
+                <MenuItem onClick={this.handleClose}>
                     <div className="add-a-class">
                       <p id="add-class-message">Add Class</p><p id="plus">+</p>
                     </div>

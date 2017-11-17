@@ -3,6 +3,8 @@ import './SideNav.css'
 import {connect} from 'react-redux';
 import { getUser } from '../../ducks/reducer'
 import logo from '../../assets/due_logo.svg'
+import { Button } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 class SideNav extends Component {
 
@@ -16,6 +18,11 @@ class SideNav extends Component {
                 <div className='class'>
                 <p>Add Class</p> <p className='add'>+</p>
                 </div>
+                <Button.Group>
+    <Button>One</Button>
+    <Button>Two</Button>
+    <Button>Three</Button>
+  </Button.Group>
 
                 <img className='nav_logo' src={logo} alt='#'/>
                 <a className="login" href={process.env.REACT_APP_LOGOUT}><button>Logout</button></a>

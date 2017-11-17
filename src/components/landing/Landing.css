@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:200,400");
+.Landing {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 200; }
+
+header {
+  height: 100%;
+  width: 100%;
+  background-color: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
+  header .sideBySide {
+    display: flex;
+    align-items: center; }
+    header .sideBySide .logo {
+      height: 45px;
+      margin-left: 2.5vw; }
+    header .sideBySide .dueTitle {
+      margin-left: 1vw;
+      font-size: 1.5em; }
+
+.links {
+  font-size: 1.5em;
+  margin-right: 1vw;
+  border-bottom: 2px solid #eee;
+  cursor: pointer;
+  transition: .64s; }
+
+.links:hover {
+  border-bottom: 2px solid #1485CB; }
+
+button {
+  border: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 200;
+  font-size: 1.5em;
+  cursor: pointer; }
+
+.login {
+  margin-right: 2.5vw;
+  background-color: transparent;
+  border-bottom: 2px solid #eee;
+  transition: .64s;
+  border-radius: 0;
+  outline: none; }
+
+.login:hover {
+  border-bottom: 2px solid #1485CB; }
+
+.placeholder {
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(5, 20vw);
+  grid-template-rows: repeat(5, 20vh); }
+
+.placeholder:nth-child(2n) {
+  background-color: #f9f9f9; }
+
+.lappy {
+  height: 70vh;
+  grid-column: 2/3;
+  grid-row: 2/3; }
+
+.iphone {
+  height: 25vh;
+  z-index: 1;
+  grid-column: 4/5;
+  grid-row: 3/4; }

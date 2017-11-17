@@ -16,6 +16,7 @@ class SideNav extends Component {
                 <div className='class'>
                 <p>Add Class</p> <p className='add'>+</p>
                 </div>
+                
 
                 <img className='nav_logo' src={logo} alt='#'/>
                 <a className="login" href={process.env.REACT_APP_LOGOUT}><button>Logout</button></a>

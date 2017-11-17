@@ -27,16 +27,27 @@ module.exports = {
         res.status(200).send('Complete')
     },
 
-    findAssignmetsByUser: (req, res, next) => {
+    getCalendarAssignments: (req, res, next) => {
         const db = req.app.get('db');
-        const { user_id } = req.params
+        const{ user_id } = req.params
 
-        db.calendar_get_users_calendars([user_id]).then(
-            calendars => {
-                res.status(200).send(calendars)
+        db.assignments_get_all([ user_id ]).then(
+            assignments => {
+                res.status(200).send(assignments)
             }
         )
+    }
+
+    // findAssignmetsByUser: (req, res, next) => {
+    //     const db = req.app.get('db');
+    //     const { user_id } = req.params
+
+    //     db.calendar_get_users_calendars([user_id]).then(
+    //         calendars => {
+    //             res.status(200).send(calendars)
+    //         }
+    //     )
 
         
-    }
+    // }
 }

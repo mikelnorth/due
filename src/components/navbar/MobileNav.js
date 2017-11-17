@@ -49,9 +49,9 @@ class MobileNav extends React.Component {
                   </div>
                 </MenuItem>
                 <MenuItem onClick={this.handleClose}>
-                    <div className="add-a-class">
+                    <Link to="class/wizard"><div className="add-a-class">
                       <p id="add-class-message">Add Class</p><p id="plus">+</p>
-                    </div>
+                    </div></Link>
                 </MenuItem>
                 <div>
                   <a href={process.env.REACT_APP_LOGOUT}><button>Logout</button></a>

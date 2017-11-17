@@ -1,12 +1,13 @@
 .Modal {
-    position: relative;
+    position: fixed;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width:100vw;
-    height: 100vw;
-    background-color: rgb(60, 112, 160);
+    height: 100%;
+    background: rgba(14, 136, 201, 0.952);
     outline: none;
 
     -webkit-animation-name: fadeIn;
@@ -35,21 +36,29 @@
     justify-content: center;
     align-items: center;
     background-color: transparent;
-  }
+    // filter: blur(10px);
+}
 
-  .select{
+.select{
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
       flex-direction: column;
-      width: 50vw;
+      width: 80vw;
       height: 50vh;
       background: white;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       border-radius: 8px;
+      z-index: 10;
   }
 
   .school-select{
-    width: 300px;
+    width: 90%;
     margin: 20px;
   }
+
+  .fetch{
+      width: 90%;
+  }
+

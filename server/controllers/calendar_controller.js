@@ -1,3 +1,5 @@
+// const db = req.app.get('db');
+
 module.exports = {
     findCalendars: (req, res, next) => {
         const db = req.app.get('db');
@@ -17,6 +19,39 @@ module.exports = {
         const { calendar_name, days } = req.body
 
         db.calendar_create_calendar([calendar_name, days, class_id, user_id]).then(
+            calendar => {
+                res.status(200).send(calendar)
+            }
+        )
+    },
+
+    findCalendarByUser: (req, res, next) => {
+        const db = req.app.get('db');
+        const { user_id } = req.params
+
+        db.calendar_get_user_calendars([user_id]).then(
+            calendars => {
+                res.status(200).send(calendars)
+            }
+        )
+    },
+
+    findCalendarByUserClass: (req, res, next) => {
+        const db = req.app.get('db');        
+        const { user_id, calendar_id } = req.params
+        
+        db.calendar_get_users_calendar([user_id, calendar_id]).then(
+            calendar => {
+                res.status(200).send(calendar)
+            }
+        )
+    },
+
+    subscribeToCalendar: (req, res, next) => {
+        const db = req.app.get('db');        
+        const { user_id, calendar_id } = req.params
+
+        db.calendar_sub_to_calendar([user_id, calendar_id]).then(
             calendar => {
                 res.status(200).send(calendar)
             }

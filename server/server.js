@@ -8,6 +8,11 @@ const Auth0Strategy = require('passport-auth0');
 
 const users_controller = require('./controllers/users_controller')
 const schools_controller = require("./controllers/schools_controller")
+const classes_controller = require('./controllers/classes_controller');
+const calendar_controller = require('./controllers/calendar_controller');
+const assignment_controller = require('./controllers/assignment_controller');
+
+
 
 const app = express();
 
@@ -94,6 +99,13 @@ passport.deserializeUser( function (user_id, done) {
 
 app.get('/api/users/setuser/:user_id', users_controller.setUserOnRedux)
 app.post('/api/schools/insert/:school_id/:user_id/:school_name', schools_controller.addSchool)
+app.get('/api/classes/get/:class_name/:school_id', classes_controller.findClass);
+app.post('/api/classes/add/:class_name/:school_id', classes_controller.createClass);
+app.get('/api/calendars/get/:class_id', calendar_controller.findCalendars);
+app.post('/api/calendars/add/:user_id/:class_id', calendar_controller.createCalendar);
+app.post('/api/assignments/add', assignment_controller.createAssignment);
+app.get('/api/calendars/user/:user_id', assignment_controller.findAssignmetsByUser);
+
 
 const PORT = 3005;
 

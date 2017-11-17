@@ -1,0 +1,42 @@
+.mobile-user-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px 0 40px 0;
+}
+
+.mobile-user-profile-pic {
+    display: flex;
+    width: 90px;
+    height: 90px;
+    background-image: url("../../assets/profile.svg");
+    background-repeat: no-repeat;
+    background-size: 50px;
+    background-position: center;
+    border-radius: 50%;
+    border: 1px solid #1485CB;
+}
+
+.mobile-user-name {
+    font-size: 16px;
+    margin: 0 0 0 20px;
+}
+
+.add-a-class {
+    width: 100%;
+    height: 100px;
+    background: rgb(235, 235, 235);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #1485CB;
+
+    #add-class-message {
+        font-size: 30px;
+        margin-right: 40px;
+    }
+
+    #plus {
+        font-size: 30px;
+    }
+}

@@ -24,12 +24,13 @@
 
 .add-a-class {
     width: 100%;
-    height: 100px;
-    background: rgb(235, 235, 235);
+    height: 80px;
+    // background: rgb(235, 235, 235);
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #1485CB;
+    border-top: 1px solid #1485CB;
+    border-bottom: 1px solid #1485CB;
 
     #add-class-message {
         font-size: 30px;

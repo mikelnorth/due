@@ -49,7 +49,7 @@ class MobileNav extends React.Component {
                   </div>
                 </MenuItem>
                 <MenuItem onClick={this.handleClose}>
-                    <Link to="class/wizard"><div className="add-a-class">
+                    <Link to="classwizard"><div className="add-a-class">
                       <p id="add-class-message">Add Class</p><p id="plus">+</p>
                     </div></Link>
                 </MenuItem>

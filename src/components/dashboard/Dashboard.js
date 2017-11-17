@@ -17,7 +17,8 @@ class Dashboard extends Component {
         this.state = {
             showModal: false,
             // hideModal: false,
-            select: ''
+            select: '',
+            showNav: false
         }
 
         this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -60,6 +61,10 @@ class Dashboard extends Component {
     submit() {
         axios.post(`/api/schools/insert/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`)
         this.state.select ? this.handleCloseModal() : this.handleOpenModal()
+
+        this.setState({
+            showNav: true
+        })
     }
 
 
@@ -85,13 +90,12 @@ class Dashboard extends Component {
         ];
         return (
             <div className='dashboard'>
-                <MediaQuery query="(min-width: 1100px)">
+                <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
                 </MediaQuery>
-                <MediaQuery query="(max-width: 1100px)">
-                    <MobileNav />
+                <MediaQuery query="(max-width: 1024px)">
+                   {this.state.showNav || this.props.user.school_id ? <MobileNav /> : null}
                 </MediaQuery>
-                <a href={process.env.REACT_APP_LOGOUT}><button>Logout</button></a>
                 <div>
                     {/* <button onClick={ this.handleOpenModal }>Open</button> */}
                     <ReactModal
@@ -115,6 +119,7 @@ class Dashboard extends Component {
                                 onChange={this.handleSelect}
                             />
                             <Select.Async
+                                className='fetch'
                                 name="form-field-name"
                                 value="one"
                                 loadOptions={getOptions}

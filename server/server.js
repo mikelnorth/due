@@ -106,6 +106,7 @@ app.post('/api/schools/insert/:school_id/:user_id/:school_name', schools_control
 //CLASSES
 app.get('/api/classes/get/:school_id', classes_controller.findClass);
 app.post('/api/classes/add/:class_name/:school_id', classes_controller.createClass);
+app.get('/api/classes/getbyclassname/:user_id', classes_controller.getClassNamesByUser);
 
 //CALENDARS
 app.get('/api/calendars/get/:class_id', calendar_controller.findCalendars);

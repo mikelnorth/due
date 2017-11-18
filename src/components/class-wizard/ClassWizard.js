@@ -84,9 +84,6 @@ class ClassWizard extends Component {
     }
   };
 
-  handleCheckbox(){
-      
-  }
 
   renderStepActions(step) {
     const { stepIndex } = this.state;
@@ -167,7 +164,7 @@ class ClassWizard extends Component {
                     label="M"
                     value='M'
                     style={styles.checkbox}
-                    onChange={handleCheckbox}
+                    // onChange={handleCheckbox}
                   />
                   <Checkbox
                     label="T"

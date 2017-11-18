@@ -35,9 +35,9 @@ export default function (state = initialState, action) {
 }
 
 export function getUser() {
-    console.log("got hit")
+    console.log("getUser in reducer")
     const user = axios.get('/auth/me').then(res => {
-        console.log(res)
+        console.log('getUser response',res)
         return axios.get('/api/users/setuser/' + res.data.email)
             .then(res => {
                 console.log("User Info: ", res.data[0])

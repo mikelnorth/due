@@ -1,14 +1,31 @@
 .side{
     position: fixed;
-    padding-top: 40px;
     height: 100vh;
     width: 20vw;
-    // background: #1485CB;
     background: white;
     display: flex;
     align-items: center;
     flex-direction: column;
-    border-right: 1px solid black
+    border-right: 1px solid black;
+}
+
+.side-top{
+    padding-top: 20px;
+    max-height: 310px;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+.side-container{
+    height: 60vh;
+    width: 100%;
+    overflow-y: scroll;
 }
 
 .profile_pic{
@@ -26,20 +43,23 @@
 
 .profile_name{
     font-size: 30px;
-    margin: 40px;
+    margin-top: 40px;
 }
 
-.class{
+.class-btn{
     width:100%;
-    height: 100px;
+    height: 80px;
+    margin: 0;
     background: rgb(235, 235, 235);
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #1485CB;
+    word-wrap: break-word;
+    // border-bottom: 0px;
     p{
-        font-size: 30px;
-        margin-right: 40px;
+        font-size: 20px;
+        margin: 0 40px 0 0;
         // color: rgb(75, 146, 240);
         
     }
@@ -47,22 +67,39 @@
         font-size: 30px;
         // color: rgb(75, 146, 240);
     }
+
+}
+.ui.button{
+    border: 1px solid #1485CB !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    
 }
 
-.nav_logo{
-    position: absolute;
-    bottom: 50px;
-    left: 10%;
-    width: 60px;
-}
 
-.login{
-    button{
+
+.side-bottom{
+    position: relative;
+    height: 65px;
+    background: rgb(235, 235, 235);
+    width: 100%;
+    border-right: 1px solid #1485CB;
+    border-left: 1px solid #1485CB;
+    .nav_logo{
         position: absolute;
-        bottom: 65px;
-        right: 20%;
-        font-size: 15px;
-        border: 1px solid #1485CB;
-        padding: 2px 10px 2px 10px;
-    } 
+        bottom: 0;
+        left: 10%;
+        width: 60px;
+    }
+    
+    .login{
+        button{
+            position: absolute;
+            bottom: 10px;
+            right: 20%;
+            font-size: 15px;
+            border: 1px solid #1485CB;
+            padding: 2px 10px 2px 10px;
+        } 
+}
 }

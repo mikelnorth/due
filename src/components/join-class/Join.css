@@ -1,0 +1,13 @@
+.classes {
+  height: 50px;
+  width: 100vw;
+  background: #e9e5e5;
+  border: 1px solid black;
+  margin-top: 20px;
+  cursor: pointer; }
+
+.classes:active {
+  background: darkslategray; }
+
+.classes:focus {
+  background: darkslategray; }

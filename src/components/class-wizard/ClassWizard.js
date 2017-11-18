@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import './ClassWizard.css';
+import Select from "react-select";
+import "../../../node_modules/react-select/dist/react-select.css";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {
-  Step,
-  Stepper,
-  StepLabel,
-  StepContent,
-} from 'material-ui/Stepper';
+import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Checkbox from 'material-ui/Checkbox';
-import Select from "react-select";
-import "../../../node_modules/react-select/dist/react-select.css";
-import { Input } from 'semantic-ui-react';
 import DateTimePicker from 'material-ui-datetimepicker';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
+import { Input, Button, Header, Image, Modal } from 'semantic-ui-react';
+import MediaQuery from 'react-responsive';
+import axios from "axios";
+import {Link} from 'react-router-dom';
+
+
 
 
 
@@ -27,13 +29,44 @@ import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
  * <small>(The vertical stepper can also be used without `<StepContent>` to display a basic stepper.)</small>
  */
 class ClassWizard extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-      this.state = {
-        finished: false,
-        stepIndex: 0,
-        dateTime: null
-      }
+    this.state = {
+      finished: false,
+      stepIndex: 0,
+      dateTime: null,
+      subject: '',
+      options: [],
+      selectedClass: ''
+
+    }
+    this.handleClassChange = this.handleClassChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(this.props.user.school)
+    axios.get(`/api/classes/get/${this.props.user.school_id}`).then(response => {
+      this.setState({
+        options: response.data
+      })
+      console.log('classWizard',response.data)
+    })
+  }
+
+  handleSelect(val) {
+    this.setState({
+      selectedClass: val,
+    })
+    console.log("select state", this.state.selectedClass)
+    // console.log("select state", this.state.select.label)
+  }
+
+  handleClassChange(val) {
+    this.setState({
+      subject: val
+    })
+    console.log(this.state.subject)
   }
 
   handleNext = () => {
@@ -50,6 +83,7 @@ class ClassWizard extends Component {
       this.setState({ stepIndex: stepIndex - 1 });
     }
   };
+
 
   renderStepActions(step) {
     const { stepIndex } = this.state;
@@ -77,31 +111,13 @@ class ClassWizard extends Component {
     );
   }
 
-  setDate = (dateTime) => this.setState({ dateTime })
+  setDate = (dateTime) => {
+    this.setState({ dateTime })
+    console.log(dateTime)
+  }
 
   render() {
     const { finished, stepIndex } = this.state;
-
-    function disablePrevDates(startDate) {
-      const startSeconds = Date.parse(startDate);
-      return (date) => {
-        return Date.parse(date) < startSeconds;
-      }
-    }
-
-    const getOptions = (input) => {
-      return fetch(`/users/${input}.json`)
-        .then((response) => {
-          return response.json();
-        }).then((json) => {
-          return { options: json };
-        });
-    }
-
-    let options = "";
-    const InputExampleFocus = () => (
-      <Input focus placeholder='Search...' />
-    )
 
     const styles = {
       block: {
@@ -113,57 +129,65 @@ class ClassWizard extends Component {
     };
 
     return (
-      <div style={{ maxWidth: 380, maxHeight: 400, margin: 'auto' }}>
+      <div className='stepper' style={{ maxWidth: 380, maxHeight: 400, margin: 'auto' }}>
         <MuiThemeProvider>
           <Stepper activeStep={stepIndex} orientation="vertical">
             <Step>
               <StepLabel>Find your class</StepLabel>
               <StepContent>
                 <span>Search for your class subject</span>
-                <Select.Async
-                  className='fetch'
+                <div style={{height: '150px'}}><Select
+                  className='school-select'
                   name="form-field-name"
-                  value="one"
-                  loadOptions={getOptions}
-                />
-                <span>Didn't find your class? Press next to create one</span>
-                {this.renderStepActions(0)}
+                  placeholder="Select a class"
+                  value={this.state.selectedClass}
+                  options={this.state.options}
+                  onChange={this.handleSelect}
+                /></div>
+                {this.state.selectedClass ? <Link to='/join'><span>Find Teachers</span></Link> :
+                  <div>
+                    <span>Didn't find your class? Press next to create one</span>
+                    {this.renderStepActions(0)}
+                </div>
+                }
               </StepContent>
             </Step>
             <Step>
               <StepLabel>Create class</StepLabel>
               <StepContent>
                 <p>Enter class subject</p>
-                <Input focus placeholder="Subject" />
+                <Input focus placeholder="Subject"  />
                 <p>Enter Teacher's name</p>
                 <Input focus placeholder="Teacher" />
                 <div>
                   <Checkbox
-                    label="Simple"
+                    label="M"
+                    value='M'
+                    style={styles.checkbox}
+                    // onChange={handleCheckbox}
+                  />
+                  <Checkbox
+                    label="T"
                     style={styles.checkbox}
                   />
                   <Checkbox
-                    label="Simple"
+                    label="W"
                     style={styles.checkbox}
                   />
                   <Checkbox
-                    label="Simple"
+                    label="TH"
                     style={styles.checkbox}
                   />
                   <Checkbox
-                    label="Simple"
+                    label="F"
                     style={styles.checkbox}
                   />
                   <Checkbox
-                    label="Simple"
+                    label="ST"
                     style={styles.checkbox}
                   />
                   <Checkbox
-                    label="Simple"
-                    style={styles.checkbox}
-                  />
-                  <Checkbox
-                    label="Simple"
+                    label="SU"
                     style={styles.checkbox}
                   />
                 </div>
@@ -176,8 +200,10 @@ class ClassWizard extends Component {
               <StepContent>
                 <p>Add asignments for this class.</p>
                 <Input focus placeholder="Assignment name" />
-                <span>When is the due date.</span>
+                <Input focus placeholder="How many points?" type='number' /><br />
+                <span>When is the due date</span>
                 <DateTimePicker
+                  placeholder='date/time'
                   onChange={this.setDate}
                   DatePicker={DatePickerDialog}
                   TimePicker={TimePickerDialog}
@@ -185,36 +211,18 @@ class ClassWizard extends Component {
                 {this.renderStepActions(2)}
               </StepContent>
             </Step>
-            <Step>
-              <StepLabel>Create an ad</StepLabel>
-              <StepContent>
-                <p>
-                  Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.
-              </p>
-                {this.renderStepActions(3)}
-              </StepContent>
-            </Step>
           </Stepper>
-          {finished && (
-            <p style={{ margin: '20px 0', textAlign: 'center' }}>
-              <a
-                href="#"
-                onClick={(event) => {
-                  event.preventDefault();
-                  this.setState({ stepIndex: 0, finished: false });
-                }}
-              >
-                Click here
-            </a> to reset the example.
-          </p>
-          )}
         </MuiThemeProvider>
+
       </div>
     );
   }
 }
+function mapStatetoProps(state) {
+  return {
+    user: state.user,
+    email: state.email
+  }
+}
 
-export default ClassWizard;
+export default (connect(mapStatetoProps)(ClassWizard))

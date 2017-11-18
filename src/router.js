@@ -16,7 +16,7 @@ export default (
             <Route component={Dashboard} path='/dashboard' />
             <Route component={Class} path='/class' />
             <Route component={ClassWizard} path='/classwizard' />
-            <Route component={Join} path='/classjoin' />
+            <Route component={Join} path='/join' />
             <Route component={Profile} path='/profile' />
             <Route component={SideNav} path='/side' />
             <Route component={MobileNav} path='/mobilenav' />

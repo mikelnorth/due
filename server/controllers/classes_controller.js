@@ -4,7 +4,7 @@ module.exports = {
         let { class_name, school_id }= req.params
         class_name = '%'+ class_name +'%'
 
-        db.classes_find_class([class_name, school_id]).then(
+        db.classes_find_class([school_id]).then(
             classes => {
                 res.status(200).send(classes)
             }

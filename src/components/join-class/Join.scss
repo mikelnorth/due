@@ -1,0 +1,17 @@
+.classes{
+    height: 50px;
+    width: 100vw;
+    background: rgb(233, 229, 229);
+    border: 1px solid black;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.classes:active {
+    background: darkslategray;
+}
+
+.classes:focus {
+    background: darkslategray;
+}
+

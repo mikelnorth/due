@@ -8,7 +8,13 @@ let initialState = {
         email: '',
         user_pic: '',
         school_id: null
+    },
+    class: {
+        class_name: '',
+        calendar_name: '',
+        days: []
     }
+    
 
 }
 

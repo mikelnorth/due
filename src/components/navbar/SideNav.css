@@ -64,9 +64,8 @@
   position: relative;
   height: 65px;
   background: #ebebeb;
-  width: 100%;
-  border-right: 1px solid #1485CB;
-  border-left: 1px solid #1485CB; }
+  background: white;
+  width: 100%; }
   .side-bottom .nav_logo {
     position: absolute;
     bottom: 0;

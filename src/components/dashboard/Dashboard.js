@@ -20,11 +20,9 @@ class Dashboard extends Component {
             select: '',
             showNav: false
         }
-
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
-
     }
 
     componentWillMount() {
@@ -33,7 +31,6 @@ class Dashboard extends Component {
     componentWillReceiveProps(newProps) {
         console.log(newProps)
         newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
-
     }
     handleOpenModal() {
         this.setState({

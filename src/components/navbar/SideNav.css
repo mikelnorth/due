@@ -1,6 +1,5 @@
 .side {
   position: fixed;
-  padding-top: 40px;
   height: 100vh;
   width: 20vw;
   background: white;
@@ -8,6 +7,22 @@
   align-items: center;
   flex-direction: column;
   border-right: 1px solid black; }
+
+.side-top {
+  padding-top: 20px;
+  max-height: 310px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  flex-direction: column; }
+
+::-webkit-scrollbar {
+  display: none; }
+
+.side-container {
+  height: 60vh;
+  width: 100%;
+  overflow-y: scroll; }
 
 .profile_pic {
   display: flex;
@@ -22,32 +37,44 @@
 
 .profile_name {
   font-size: 30px;
-  margin: 40px; }
+  margin-top: 40px; }
 
-.class {
+.class-btn {
   width: 100%;
-  height: 100px;
+  height: 80px;
+  margin: 0;
   background: #ebebeb;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #1485CB; }
-  .class p {
-    font-size: 30px;
-    margin-right: 40px; }
-  .class .add {
+  border: 1px solid #1485CB;
+  word-wrap: break-word; }
+  .class-btn p {
+    font-size: 20px;
+    margin: 0 40px 0 0; }
+  .class-btn .add {
     font-size: 30px; }
 
-.nav_logo {
-  position: absolute;
-  bottom: 50px;
-  left: 10%;
-  width: 60px; }
+.ui.button {
+  border: 1px solid #1485CB !important;
+  margin: 0 !important;
+  border-radius: 0 !important; }
 
-.login button {
-  position: absolute;
-  bottom: 65px;
-  right: 20%;
-  font-size: 15px;
-  border: 1px solid #1485CB;
-  padding: 2px 10px 2px 10px; }
+.side-bottom {
+  position: relative;
+  height: 65px;
+  background: #ebebeb;
+  background: white;
+  width: 100%; }
+  .side-bottom .nav_logo {
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 60px; }
+  .side-bottom .login button {
+    position: absolute;
+    bottom: 10px;
+    right: 20%;
+    font-size: 15px;
+    border: 1px solid #1485CB;
+    padding: 2px 10px 2px 10px; }

@@ -178,10 +178,16 @@ class ClassModal extends Component {
     }
 
     submitAssignments() {
-        console.log(this.state.assignments)
+        console.log('assignments', this.state.assignments)
         axios.post(`/api/assignments/add/${this.state.currentClassId}/${this.state.currentCalendarId}`, this.state.assignments).then(response => {
             console.log(response.data)
         })
+
+        axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.currentCalendarId}`).then(response => {
+            console.log(response.data)
+        })
+
+        window.location.reload(true)
     }
 
     handleSelectChange = (event, index, value) => {
@@ -222,10 +228,10 @@ class ClassModal extends Component {
             days: 'M T W TH F SA SU'
         }
 
-        console.log(this.state.subject)
+        console.log('subject', this.state.subject)
         axios.post(`/api/classes/add/${this.state.subject}/${this.props.user.school_id}`).then(
             response => {
-                console.log(response.data)
+                console.log('response data',response.data)
                 this.setState({currentClassId: response.data[0].class_id})
                 axios.post(`/api/calendars/add/${this.props.user.user_id}/${response.data[0].class_id}`, calendarInfo).then( response => {
                     console.log(response.data)
@@ -270,7 +276,6 @@ class ClassModal extends Component {
         ];
 
         return (
-            <div className="REMOVEME">
                 <div className='stepper' >
                     <div className="yScroll">
 
@@ -398,7 +403,6 @@ class ClassModal extends Component {
                     </div>
                 </div>
 
-            </div>
         );
     }
 }

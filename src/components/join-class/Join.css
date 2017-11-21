@@ -1,13 +1,91 @@
+@import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:200,400");
+button {
+  outline: none !important; }
+
+.classes-container {
+  padding-top: 50px;
+  font-family: "Barlow Condensed", sans-serif;
+  color: #4B4F59;
+  height: 100%; }
+
+.join-class-column {
+  display: flex;
+  justify-content: space-around;
+  font-size: 30px; }
+
 .classes {
   height: 50px;
-  width: 100vw;
-  background: #e9e5e5;
-  border: 1px solid black;
+  width: 90%;
+  border: 1px solid #7B7B7B;
+  box-shadow: 0 0 1em #7B7B7B;
+  background: transparent;
   margin-top: 20px;
   cursor: pointer; }
 
 .classes:active {
-  background: darkslategray; }
+  background: #ccc; }
 
 .classes:focus {
-  background: darkslategray; }
+  background: #ccc; }
+
+.teacher-and-days {
+  display: flex;
+  justify-content: space-around;
+  text-transform: uppercase;
+  margin: auto; }
+
+.submit-btn {
+  height: 50px;
+  width: 30%;
+  margin: 30px 0px;
+  font-size: 22px;
+  font-family: "Barlow Condensed", sans-serif;
+  background-color: #1485CB;
+  color: #fff; }
+  .submit-btn button {
+    height: 50px;
+    font-size: 22px;
+    font-family: "Barlow Condensed", sans-serif;
+    background-color: #1485CB;
+    color: #fff; }
+
+@media (min-width: 1024px) {
+  .classes-container {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    padding-top: 50px;
+    width: 80vw; }
+  .description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  .join-class-column {
+    display: flex;
+    justify-content: space-around; }
+    .join-class-column span {
+      margin: 0 100px 0 100px; }
+  .classes {
+    width: 90%; }
+  .teacher-and-days {
+    display: flex;
+    justify-content: space-around;
+    text-transform: uppercase; }
+  .submit-btn {
+    width: 10%;
+    font-size: 18px;
+    width: 10%;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px; }
+    .submit-btn button {
+      height: 50px;
+      font-size: 22px;
+      font-family: "Barlow Condensed", sans-serif;
+      background-color: #1485CB;
+      color: #fff; }
+  .submit-btn:hover {
+    opacity: 0.8; } }

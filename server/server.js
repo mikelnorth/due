@@ -118,7 +118,7 @@ app.get('/api/calendars/user/class/:user_id/:calendar_id', calendar_controller.f
 app.post('/api/usercalendar/add/:user_id/:calendar_id', calendar_controller.subscribeToCalendar);
 
 //ASSIGNMENTS
-app.post('/api/assignments/add', assignment_controller.createAssignment);
+app.post('/api/assignments/add/:class_id/:calendar_id', assignment_controller.createAssignment);
 app.get('/api/assignments/getall/:user_id', assignment_controller.getCalendarAssignments);
 
 

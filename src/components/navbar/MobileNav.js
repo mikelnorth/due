@@ -32,6 +32,11 @@ class MobileNav extends Component {
     })
   }
 
+  componentWillReceiveProps(newProps){
+    console.log('new props',newProps)
+    console.log('user id', this.props.user_id)
+  }
+
   handleToggle = () => this.setState({ open: !this.state.open });
 
   handleClose = () => this.setState({ open: false });
@@ -60,8 +65,6 @@ class MobileNav extends Component {
               </div>
             </MenuItem>
             {this.state.classNames.length !== 0 ?
-
-
               this.state.classNames.map((clss, index) => {
                 return (
 

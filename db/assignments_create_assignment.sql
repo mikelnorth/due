@@ -1,3 +1,3 @@
-INSERT INTO assignments (class_id, calendar_id, assignment_name, due_date, points_possible, due_time, category)
+INSERT INTO assignments (class_id, calendar_id, assignment_name, points_possible, category, datetime)
 VALUES
-($1, $2, $3, $4, $5, $6, $7);
+($1, $2, $3, $4, $5, $6);

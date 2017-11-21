@@ -5,22 +5,23 @@ module.exports = {
         // const { assignments } = req.body;
         let assignments = req.body
 
-        // console.log(assignments)
+        const {class_id, calendar_id} = req.params
+
+        console.log(assignments)
         assignments.map((assignment, index) => {
-            // console.log(assignment)
+            console.log("Assignment: ", assignment)
             let assignmentForAdd = [
-                assignment.class_id,
-                assignment.calendar_id,
+                class_id,
+                calendar_id,
                 assignment.assignment_name,
-                assignment.due_date,
                 assignment.points_possible,
-                assignment.due_time,
-                assignment.category
+                assignment.category,
+                assignment.due_date,
             ]
 
             db.assignments_create_assignment(assignmentForAdd).then(
                 assignment => {
-        
+                    console.log(assignment)
                 }
             )
         })

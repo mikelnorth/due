@@ -8,6 +8,7 @@ import Join from "./components/join-class/Join.js";
 import Profile from "./components/profile/Profile.js";
 import MobileNav from "./components/navbar/MobileNav";
 import SideNav from "./components/navbar/SideNav";
+import ClassModal from "./components/class-modal/ClassModal"
 
 export default (
     <div>
@@ -20,7 +21,7 @@ export default (
             <Route component={Profile} path='/profile' />
             <Route component={SideNav} path='/side' />
             <Route component={MobileNav} path='/mobilenav' />
-
+            <Route component={ClassModal} path="/classmodal"/>
         </Switch>
     </div>
 )

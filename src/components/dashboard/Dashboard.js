@@ -16,7 +16,6 @@ class Dashboard extends Component {
         super()
         this.state = {
             showModal: false,
-            // hideModal: false,
             select: '',
             showNav: false
         }
@@ -25,28 +24,29 @@ class Dashboard extends Component {
         this.handleSelect = this.handleSelect.bind(this);
     }
 
+    //before the application mounts, get the user.
     componentWillMount() {
         this.props.getUser()
     }
+    //waits until props comes in, then checks if the user has registered to a school by school_id,
+    //If true continue to dashboard and keep the modal closed. If false, show the modal to select a school..
     componentWillReceiveProps(newProps) {
-        console.log(newProps)
+        console.log('componentwillrecieveprops dash',newProps)
         newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
     }
     handleOpenModal() {
         this.setState({
-            showModal: true,
-            // hideModal: !this.state.hideModal
+            showModal: true
         })
     }
 
     handleCloseModal() {
         this.setState({
-            showModal: false,
-            // hideModal: !this.state.hideModal
-
+            showModal: false
         })
     }
 
+    //Handles the React-select field to set state to the value and label of the selected school.
     handleSelect(val) {
         this.setState({
             select: val,
@@ -55,9 +55,13 @@ class Dashboard extends Component {
         console.log("select state", this.state.select.label)
     }
 
+   //axios call sends the selected school id and name-(label) to the database.
+    //checks to see if the select field has any value, if true closses the modal to show dashboard.
+
     submit() {
-        axios.post(`/api/schools/insert/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`)
-        this.state.select ? this.handleCloseModal() : this.handleOpenModal()
+       this.state.select.value ?( axios.post(`/api/schools/insert/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`)
+        this.state.select ? this.handleCloseModal() : this.handleOpenModal())
+        : null
 
         this.setState({
             showNav: true

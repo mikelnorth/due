@@ -9,6 +9,13 @@ import axios from 'axios';
 import MediaQuery from 'react-responsive';
 import SideNav from '../navbar/SideNav.js';
 import MobileNav from '../navbar/MobileNav.js';
+import BigCalendar from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+
+BigCalendar.setLocalizer(
+    BigCalendar.momentLocalizer(moment)
+);
 
 
 class Dashboard extends Component {
@@ -18,7 +25,8 @@ class Dashboard extends Component {
             showModal: false,
             // hideModal: false,
             select: '',
-            showNav: false
+            showNav: false,
+            events: []
         }
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -26,7 +34,23 @@ class Dashboard extends Component {
     }
 
     componentWillMount() {
-        this.props.getUser()
+        this.props.getUser().then(res => {
+            axios.get(`/api/assignments/getall/${res.value.user_id}`).then(
+                response => {
+                    console.log('HERE IT IS', response)
+                    response.data.map((event, index) => {
+                        event.start = new Date(event.start)
+                        event.end = new Date(event.end)
+
+                    })
+                    this.setState({
+                        events: response.data
+                    })
+                    console.log(this.state.events)
+                }
+            )
+        })
+
     }
     componentWillReceiveProps(newProps) {
         console.log(newProps)
@@ -69,13 +93,24 @@ class Dashboard extends Component {
         console.log('this.props', this.props)
 
         const getOptions = (input) => {
-            return fetch(`/users/${input}.json`)
+            return fetch(`https://api.data.gov/ed/collegescorecard/v1/schools.json?school.name=${input}&_fields=school.name,id&api_key=YBXKnMOHVby0cMoDcpxpLSyv7dtBFZVawfqIVJ3s`)
                 .then((response) => {
                     return response.json();
                 }).then((json) => {
-                    return { options: json };
+                    let schools = [];
+                    json.results.map((schoolmap, index) => {
+                        let temp = { value: '', label: '' }
+
+                        // temp.value = schoolmap.school.name;
+                        temp.label = schoolmap['school.name']
+                        temp.value = schoolmap.id
+                        schools.push(temp)
+                    })
+                    return { options: schools }
                 });
         }
+
+        let isLoadingExternally = true;
 
         var options = [
             { value: 1111, label: 'University of Utah' },
@@ -85,13 +120,34 @@ class Dashboard extends Component {
             { value: 5555, label: 'Snow College' },
             { value: 6666, label: 'Dixie State' },
         ];
+
+        let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
         return (
             <div className='dashboard'>
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
+                    <div className='dashboardContainer'>
+                        <div className="calendarWrapper">
+                            {this.props.user.school_id ? <BigCalendar
+                                events={this.state.events}
+                                //   views={{month: true, week: true}}
+                                views={allViews}
+                                step={60}
+                                defaultDate={new Date()}
+                            /> :
+
+                                <div className="clickToAddMessage">
+                                    <span className="addMessage">
+                                        ⇦ Click over there to add your first a class!
+                                    </span>
+                                </div>}
+                        </div>
+                    </div>
+
                 </MediaQuery>
                 <MediaQuery query="(max-width: 1024px)">
-                   {this.state.showNav || this.props.user.school_id ? <MobileNav /> : null}
+                    {this.state.showNav || this.props.user.school_id ? <MobileNav /> : null}
+
                 </MediaQuery>
                 <div>
                     {/* <button onClick={ this.handleOpenModal }>Open</button> */}
@@ -118,8 +174,11 @@ class Dashboard extends Component {
                             <Select.Async
                                 className='fetch'
                                 name="form-field-name"
-                                value="one"
+                                value={this.state.select}
                                 loadOptions={getOptions}
+                                isLoading={isLoadingExternally}
+                                onChange={this.handleSelect}
+
                             />
                             <button onClick={() => this.submit()}>Submit</button>
                         </div>
@@ -131,9 +190,11 @@ class Dashboard extends Component {
 }
 
 function mapStatetoProps(state) {
+    console.log(state)
     return {
         user: state.user,
-        email: state.email
+        email: state.email,
+        school_id: state.user.school_id
     }
 }
 

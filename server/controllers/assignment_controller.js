@@ -16,7 +16,7 @@ module.exports = {
                 assignment.assignment_name,
                 assignment.points_possible,
                 assignment.category,
-                assignment.due_date,
+                new Date(assignment.due_date),
             ]
 
             db.assignments_create_assignment(assignmentForAdd).then(

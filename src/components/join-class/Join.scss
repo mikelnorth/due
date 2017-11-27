@@ -5,117 +5,125 @@ button {
 }
 
 .classes-container {
-    padding-top: 50px;
-    font-family: $primary-font;
-    color: $text-color;
-    height: 100%;
+    // padding-top: 50px;
+    // font-family: $primary-font;
+    // font-weight: 700;
+    // color: $text-color;
+    // height: 100%;
 }
 
 .join-class-column {
-    display: flex;
-    justify-content: space-around;
-    font-size: 30px;
+    // display: flex;
+    // justify-content: space-around;
+    font-size: 2rem;
+
+    span {
+        margin: 100px 30px;
+    }
 }
 
 .classes, {
-    height: 50px;
+    height: 40px;
     width: 90%;
-    border: 1px solid $tertiary-color;
-    box-shadow: 0 0 1em $tertiary-color;
+    border-top: 1px solid #bdbdbd;
+    border-bottom: 1px solid #bdbdbd;
+    border-radius: 0;
+    // box-shadow: 0 0 1em $tertiary-color;
     background: transparent;
-    margin-top: 20px;
+    margin: 20px;
     cursor: pointer;
 }
 
 .classes:active {
-    background: #ccc;
+    background:  #E3EBF6;
 }
 
 .classes:focus {
-    background: #ccc;
+    background:  #E3EBF6;
 }
 
 .teacher-and-days {
     display: flex;
-    justify-content: space-around;
-    text-transform: uppercase;
-    margin: auto;
+    justify-content: space-between;
+    text-transform: capitalize;
+
+    span {
+        margin: 0 5rem;
+    }
 }
 
 .submit-btn {
-    height: 50px;
-    width: 30%;
-    margin: 30px 0px;
-    font-size: 22px;
-    font-family: $primary-font;    
-    background-color: $primary-color;
-    color: #fff;
+    margin: 30px 0;
+
     button{
-        height: 50px;
+        height: 36px;
+        width: 90px;
         font-size: 22px;
         font-family: $primary-font;    
         background-color: $primary-color;
         color: #fff;
-        
+    }
+    &:hover {
+        opacity: .8;
     }
 }
 
-@media(min-width: 1024px) {
-    .classes-container {
-        display: flex;
-        margin: auto;
-        flex-direction: column;
-        padding-top: 50px;
-        width: 80vw;
-    }
-    .description {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+// @media(min-width: 1024px) {
+//     .classes-container {
+//         display: flex;
+//         margin: auto;
+//         flex-direction: column;
+//         padding-top: 50px;
+//         width: 80vw;
+//     }
+//     .description {
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         align-items: center;
+//     }
 
 
-    .join-class-column{
-        display: flex;
-        justify-content: space-around;
-        span{
-            margin: 0 100px 0 100px;
-        }
-    }
+//     .join-class-column{
+//         display: flex;
+//         justify-content: space-around;
+//         span{
+//             margin: 0 100px 0 100px;
+//         }
+//     }
 
-    .classes {
-        width: 90%;
-    }
+//     .classes {
+//         width: 90%;
+//     }
 
-    .teacher-and-days {
-        display: flex;
-        justify-content: space-around;
-        text-transform: uppercase;
-    }
+//     .teacher-and-days {
+//         display: flex;
+//         justify-content: space-around;
+//         text-transform: uppercase;
+//     }
 
-    .submit-btn {
-        width: 10%;
-        font-size: 18px;
-        width: 10%;
-        font-size: 18px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-        button{
-            height: 50px;
-            font-size: 22px;
-            font-family: $primary-font;    
-            background-color: $primary-color;
-            color: #fff;
+//     .submit-btn {
+//         width: 10%;
+//         font-size: 18px;
+//         width: 10%;
+//         font-size: 18px;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         border-radius: 5px;
+//         button{
+//             height: 50px;
+//             font-size: 22px;
+//             font-family: $primary-font;    
+//             background-color: $primary-color;
+//             color: #fff;
             
-        }
-    }
+//         }
+//     }
 
 
 
-    .submit-btn:hover {
-        opacity: 0.8;
-    }
-}
+//     .submit-btn:hover {
+//         opacity: 0.8;
+//     }
+// }

@@ -9,6 +9,13 @@ import axios from 'axios';
 import MediaQuery from 'react-responsive';
 import SideNav from '../navbar/SideNav.js';
 import MobileNav from '../navbar/MobileNav.js';
+import BigCalendar from 'react-big-calendar';
+import moment from 'moment';
+ import 'react-big-calendar/lib/css/react-big-calendar.css'
+ 
+BigCalendar.setLocalizer(
+  BigCalendar.momentLocalizer(moment)
+);
 
 
 class Dashboard extends Component {
@@ -18,7 +25,8 @@ class Dashboard extends Component {
             showModal: false,
             // hideModal: false,
             select: '',
-            showNav: false
+            showNav: false,
+            events: []
         }
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -26,7 +34,23 @@ class Dashboard extends Component {
     }
 
     componentWillMount() {
-        this.props.getUser()
+        this.props.getUser().then(res =>{
+            axios.get(`/api/assignments/getall/${res.value.user_id}`).then(
+                response =>{
+                    console.log('HERE IT IS', response)
+                    response.data.map((event, index) => {
+                        event.start = new Date(event.start)
+                        event.end = new Date(event.end)
+                        
+                    })
+                    this.setState({
+                        events: response.data
+                    })
+                    console.log(this.state.events)
+                }
+            )
+        })
+        
     }
     componentWillReceiveProps(newProps) {
         console.log(newProps)
@@ -77,6 +101,10 @@ class Dashboard extends Component {
                 });
         }
 
+        // const eventStuff = this.state.events
+
+
+
         var options = [
             { value: 1111, label: 'University of Utah' },
             { value: 2222, label: 'Utah Valley University' },
@@ -85,13 +113,28 @@ class Dashboard extends Component {
             { value: 5555, label: 'Snow College' },
             { value: 6666, label: 'Dixie State' },
         ];
+
+        let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]) 
         return (
             <div className='dashboard'>
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
+                    <div className='dashboardContainer'>
+                         <div className="calendarWrapper">
+                            <BigCalendar
+                                 events={this.state.events}
+                                //   views={{month: true, week: true}}
+                                views={allViews}
+                                 step={60}
+                                 defaultDate={new Date()}
+                             />
+                         </div>
+                    </div>
+
                 </MediaQuery>
                 <MediaQuery query="(max-width: 1024px)">
                    {this.state.showNav || this.props.user.school_id ? <MobileNav /> : null}
+
                 </MediaQuery>
                 <div>
                     {/* <button onClick={ this.handleOpenModal }>Open</button> */}

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:200,400");
 .side {
   position: fixed;
   height: 100vh;
@@ -41,19 +42,24 @@
 
 .class-btn {
   width: 100%;
-  height: 80px;
+  height: 75px;
   margin: 0;
-  background: #ebebeb;
+  background: white !important;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid #1485CB;
-  word-wrap: break-word; }
-  .class-btn p {
-    font-size: 20px;
-    margin: 0 40px 0 0; }
+  word-wrap: break-word;
+  color: gray !important;
+  font-size: 25px !important;
+  font-family: "Barlow Condensed", sans-serif !important;
+  transition: .64s !important; }
   .class-btn .add {
     font-size: 30px; }
+
+.class-btn:hover {
+  background: #148bcb !important;
+  color: white !important; }
 
 .ui.button {
   border: 1px solid #1485CB !important;
@@ -62,8 +68,10 @@
 
 .side-bottom {
   position: relative;
+  bottom: 0;
   height: 65px;
   background: #ebebeb;
+  background: linear-gradient(#b95959, rgba(235, 235, 235, 0));
   background: white;
   width: 100%; }
   .side-bottom .nav_logo {

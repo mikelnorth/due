@@ -5,7 +5,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUser } from '../../ducks/reducer';
+import { getUser, setClassId } from '../../ducks/reducer';
 import profilePic from '../../assets/profile.svg';
 import dueLogo from '../../assets/due_logo.svg';
 import axios from "axios"
@@ -18,12 +18,13 @@ class MobileNav extends Component {
     super(props);
     this.state = {
       open: false,
-      classNames: []
+      classNames: [],
     };
+
+    this.setClassId = this.setClassId.bind(this)
   }
 
   componentDidMount() {
-    // this.props.getUser()
     console.log('mobileNav didmount', this.props.user.user_id)
     axios.get(`/api/classes/getbyclassname/${this.props.user.user_id}`).then(response => {
       console.log(response)
@@ -33,22 +34,22 @@ class MobileNav extends Component {
     })
   }
 
-  componentWillReceiveProps(newProps){
-    console.log('new props',newProps)
-    console.log('user id', this.props.user_id)
-  }
-
   handleToggle = () => this.setState({ open: !this.state.open });
 
   handleClose = () => this.setState({ open: false });
 
+  setClassId(classId){
+    this.props.setClassId(classId)
+    // window.location.reload(true)
+}
+
   render() {
-    console.log(this.state.classNames)
+
     return (
       <div>
         <MuiThemeProvider>
           <AppBar
-            title="Title"
+            title={window.location.href.search('dashboard') !== -1 ? 'Dashboard' : 'Class'}
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             style={{ backgroundColor: "#1485CB" }}
             onClick={this.handleToggle}
@@ -64,6 +65,13 @@ class MobileNav extends Component {
                 <img className="mobile-user-profile-pic" src={this.props.user.user_pic} alt='' />
                 <h3 className="mobile-user-name">{this.props.user.user_name}</h3>
               </div>
+              <div>
+                    <MenuItem onClick={this.handleClose}>
+                      <Link to="/dashboard"><div className="user-classes">
+                        <p id="add-class-message">Dashboard</p>
+                      </div></Link>
+                    </MenuItem>
+                  </div>
             </MenuItem>
             {this.state.classNames.length !== 0 ?
               this.state.classNames.map((clss, index) => {
@@ -71,7 +79,7 @@ class MobileNav extends Component {
 
                   <div>
                     <MenuItem onClick={this.handleClose}>
-                      <Link to="classwizard"><div className="user-classes">
+                      <Link to="/class" onClick={() => this.setClassId(clss.class_id)}><div className="user-classes">
                         <p id="add-class-message">{clss.class_name}</p>
                       </div></Link>
                     </MenuItem>
@@ -99,4 +107,4 @@ function mapStateToProps(state) {
     user: state.user
   }
 }
-export default connect(mapStateToProps, { getUser })(MobileNav);
+export default connect(mapStateToProps, { getUser, setClassId })(MobileNav);

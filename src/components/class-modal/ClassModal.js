@@ -23,7 +23,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
-
+import Join from '../../components/join-class/Join';
 
 
 
@@ -58,6 +58,8 @@ class ClassModal extends Component {
             teacher: '',
             currentClassId: null,
             currentCalendarId: null,
+            classes: [],
+            cal_id: null
         }
         this.handleClassChange = this.handleClassChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
@@ -293,12 +295,19 @@ class ClassModal extends Component {
                                             options={this.state.options}
                                             onChange={this.handleSelect}
                                         /></div>
-                                        {this.state.selectedClass ? <Link to='/join'><span>Find Teachers</span></Link> :
-                                            <div>
-                                                <span>Didn't find your class? Press next to create one</span>
-                                                {this.renderStepActions(0)}
-                                            </div>
+                                        
+                                        {this.state.selectedClass ?    
+                                        <Join 
+                                        classForJoin={this.state.selectedClass}
+                                        selectTeachForClass={this.state.class} 
+                                        selectTeachForCal={this.state.cal_id}/>      
+                                        :
+                                        <div>
+                                        <span>Didn't find your class? Press next to create one</span>
+                                        {this.renderStepActions(0)}
+                                        </div>
                                         }
+
                                     </StepContent>
                                 </Step>
                                 <Step>

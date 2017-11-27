@@ -59,10 +59,23 @@
 .fetch {
   width: 90%; }
 
+.clickToAddMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; }
+
+.addMessage {
+  font-family: "Open Sans", sans-serif;
+  font-size: 4vw;
+  word-wrap: break-word;
+  color: rgba(128, 128, 128, 0.577); }
+
 .dashboardContainer {
   width: 80%;
   height: 100vh;
   float: right; }
 
 .calendarWrapper {
-  height: 50vh; }
+  height: 50vh;
+  z-index: -1; }

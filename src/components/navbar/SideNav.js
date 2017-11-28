@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './SideNav.css'
 import { connect } from 'react-redux';
-import { getUser } from '../../ducks/reducer'
+import { setClassId } from '../../ducks/reducer'
 import logo from '../../assets/due_logo.svg'
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
@@ -16,8 +16,10 @@ class SideNav extends Component {
         super(props)
         this.state = {
             //an array of each class for a specefied user.
-            classNames: []
+            classData: []
         }
+
+        this.setClassId = this.setClassId.bind(this);
     }
 
   
@@ -25,19 +27,21 @@ class SideNav extends Component {
 // redux. Use componentwillreceive to get the user_id and then make an axios call to get
 // all the classes associated to that user.
     componentWillReceiveProps(newProps) {
-        console.log('componentwillrecieveprops side',newProps.user.user_id)
-        
         axios.get(`/api/classes/getbyclassname/${newProps.user.user_id}`).then(response => {
-            console.log('response',response)
             this.setState({
-                classNames: response.data
+                classData: response.data
             })
         })
     }
 
-    render() {
-        console.log('this.state sideNave: ', this.state)
+    //sets the id of selected class to redux so it can be accessed in the class
+    //component.
+    setClassId(classId){
+        console.log('class id ', classId)
+        this.props.setClassId(classId)
+    }
 
+    render() {
         return (
             <div className='side'>
                 <div className='side-top'>
@@ -52,10 +56,11 @@ class SideNav extends Component {
                             <p>Dashboard</p>
                          </div>
                     </Link>
-                    {this.state.classNames.length !== 0 ?
-                        this.state.classNames.map((clss, index) => {
+                    {this.state.classData.length !== 0 ?
+                        this.state.classData.map((clss, index) => {
                             return (
-                                <Link to='class' className='class-btn'><div>
+                                //returns a button for every class with access to the name, subject, and id
+                                <Link to='class' className='class-btn' onClick={() => this.setClassId(clss.class_id)}><div>
                                     <p>{clss.class_name}</p>
                                 </div></Link>
                             )
@@ -88,4 +93,4 @@ function mapStateToProps(state) {
       user: state.user
     }
   }
-  export default connect(mapStateToProps, { getUser })(SideNav);
+  export default connect(mapStateToProps, { setClassId })(SideNav);

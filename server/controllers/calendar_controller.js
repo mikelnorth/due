@@ -17,8 +17,10 @@ module.exports = {
         const db = req.app.get('db');
         const { user_id, class_id } = req.params
         const { calendar_name, days } = req.body
+        console.log('req.body.days is',req.body.days)
+        let daysString = days.join(', ');
 
-        db.calendar_create_calendar([calendar_name, days, class_id, user_id]).then(
+        db.calendar_create_calendar([calendar_name, daysString, class_id, user_id]).then(
             calendar => {
                 res.status(200).send(calendar)
             }

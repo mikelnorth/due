@@ -26,7 +26,8 @@ class Dashboard extends Component {
             // hideModal: false,
             select: '',
             showNav: false,
-            events: []
+            events: [],
+            topFive: []
         }
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -49,6 +50,9 @@ class Dashboard extends Component {
                     console.log(this.state.events)
                 }
             )
+            axios.get(`/api/assignments/get/topfive/${res.value.user_id}`).then(response => {
+                this.setState({ topFive: response.data })
+            })
         })
 
     }
@@ -91,7 +95,7 @@ class Dashboard extends Component {
 
     render() {
         console.log('this.props', this.props)
-
+        console.log(this.state.topFive)
         const getOptions = (input) => {
             return fetch(`https://api.data.gov/ed/collegescorecard/v1/schools.json?school.name=${input}&_fields=school.name,id&api_key=YBXKnMOHVby0cMoDcpxpLSyv7dtBFZVawfqIVJ3s`)
                 .then((response) => {
@@ -122,11 +126,82 @@ class Dashboard extends Component {
         ];
 
         let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
+       
+        function formatDate(date) {
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+            return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
+          }
+       
         return (
             <div className='dashboard'>
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
                     <div className='dashboardContainer'>
+                        {this.state.topFive.length !== 0 ?
+                            <div className="upcomingContainer">
+                                {
+                                    this.state.topFive.map((assignment, index) => {
+
+                                        return (
+                                            <div className="upcomingAssignment">
+                                                <div className="assignmentContainer">
+                                                    <div className="assignmentDisplay">
+                                                        <span className="title">{assignment.title}</span>
+                                                        <span className="class">Class: {assignment.desc}</span>
+                                                        <span className="dueDate">{formatDate(new Date(assignment.start))}</span>
+                                                        <span className="pointsPoss">Points possible: {assignment.points_possible}</span>
+                                                    </div>
+                                                </div>
+                                                {index < this.state.topFive.length - 1 ? <div className="separator"></div> : null}
+                                            </div>
+                                        )
+
+
+                                    })
+                                }
+                            </div>
+
+
+                            :
+                            <div className="upcomingContainer">
+                                <div className="upcomingAssignment">
+                                    <div>
+
+                                    </div>
+                                </div>
+                                <div className="separator"></div>
+                                <div className="upcomingAssignment">
+                                    <div>
+
+                                    </div>
+                                </div>
+                                <div className="separator"></div>
+                                <div className="upcomingAssignment">
+                                    <div>
+
+                                    </div>
+                                </div>
+                                <div className="separator"></div>
+                                <div className="upcomingAssignment">
+                                    <div>
+
+                                    </div>
+                                </div>
+                                <div className="separator"></div>
+                                <div className="upcomingAssignment">
+                                    <div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
                         <div className="calendarWrapper">
                             {this.props.user.school_id ? <BigCalendar
                                 events={this.state.events}
@@ -136,11 +211,20 @@ class Dashboard extends Component {
                                 defaultDate={new Date()}
                             /> :
 
-                                <div className="clickToAddMessage">
-                                    <span className="addMessage">
-                                        ⇦ Click over there to add your first a class!
-                                    </span>
-                                </div>}
+                                <BigCalendar
+                                    events={this.state.events}
+                                    //   views={{month: true, week: true}}
+                                    views={allViews}
+                                    step={60}
+                                    defaultDate={new Date()}
+                                />
+                                // <div className="clickToAddMessage">
+                                //     <span className="addMessage">
+                                //         ⇦ Click over there to add your first a class!
+                                //     </span>
+                                // </div>
+
+                            }
                         </div>
                     </div>
 

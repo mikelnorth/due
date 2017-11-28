@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { getUser } from '../../ducks/reducer'
 import SideNav from '../navbar/SideNav.js';
 import MobileNav from '../navbar/MobileNav.js';
 import axios from 'axios';
@@ -20,7 +21,8 @@ class Class extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.classId)
+        this.props.getUser()
+        console.log(this.props)
         console.log(this.props.user.user_id)
         
         axios.get(`/api/assignments/get/class/${this.props.user.user_id}/${this.props.classId}`).then(
@@ -39,7 +41,21 @@ class Class extends Component {
     }
 
     componentWillReceiveProps(newProps){
-        console.log(newProps)
+        console.log(newProps.classId)
+
+        axios.get(`/api/assignments/get/class/${newProps.user.user_id}/${newProps.classId}`).then(
+            response =>{
+                console.log('get class response', response)
+                response.data.map((event, index) => {
+                    event.start = new Date(event.start)
+                    event.end = new Date(event.end)
+                    
+                })
+                this.setState({
+                    events: response.data
+                })
+                console.log(this.state.events)
+            })
     }
 
     render() {
@@ -66,7 +82,7 @@ class Class extends Component {
                     <div className="calendarWrapper">
                             <BigCalendar
                                 events={this.state.events}
-                                //   views={{month: true, week: true}}
+                                  views={{month: true, week: true}}
                                 // views={allViews}
                                 step={60}
                                 defaultDate={new Date()}
@@ -84,9 +100,9 @@ class Class extends Component {
 function mapStatetoProps(state) {
     return {
         user: state.user,
-        classId: state.classId
+        classId: state.classId,
     }
 
 }
 
-export default (connect(mapStatetoProps)(Class))
+export default (connect(mapStatetoProps, {getUser})(Class))

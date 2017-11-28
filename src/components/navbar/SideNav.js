@@ -37,6 +37,7 @@ class SideNav extends Component {
     //sets the id of selected class to redux so it can be accessed in the class
     //component.
     setClassId(classId){
+        console.log('class id ', classId)
         this.props.setClassId(classId)
     }
 

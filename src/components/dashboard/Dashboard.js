@@ -27,27 +27,13 @@ class Dashboard extends Component {
             // hideModal: false,
             select: '',
             showNav: false,
-            events: [],
-            topFive: []
         }
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
     }
 
-    componentDidMount(){
-        this.setState({
-            events: this.props.all.events,
-            topFive: this.props.all.topFive
-        })
-    }
-
     componentWillReceiveProps(newProps) {
-        console.log(newProps)
-        this.setState({
-            events: newProps.all.events,
-            topFive: newProps.all.topFive
-        })
         newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
     }
 
@@ -210,7 +196,7 @@ class Dashboard extends Component {
                         }
                         <div className="calendarWrapper">
                             {this.props.user.school_id ? <BigCalendar
-                                events={this.state.events}
+                                events={this.props.all.events}
                                 //   views={{month: true, week: true}}
                                 views={allViews}
                                 step={60}
@@ -219,7 +205,7 @@ class Dashboard extends Component {
                             /> :
 
                                 <BigCalendar
-                                    events={this.state.events}
+                                    events={this.props.all.events}
                                     //   views={{month: true, week: true}}
                                     views={allViews}
                                     step={60}

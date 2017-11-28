@@ -76,7 +76,20 @@ module.exports = {
         db.assignments_get_top_five([user_id]).then(response => {
             res.status(200).send(response)
         })
+    },
+
+    getTopFiveAssignmentsByClass: (req, res, next) => {
+        const db = req.app.get('db')
+
+        const {user_id, cal_id} = req.params
+
+        db.assignments_get_top_five_by_class([user_id, cal_id]).then(response => {
+            res.status(200).send(response)
+        })
     }
+
+
+
 
     // findAssignmetsByUser: (req, res, next) => {
     //     const db = req.app.get('db');

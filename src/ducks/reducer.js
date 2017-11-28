@@ -14,14 +14,14 @@ let initialState = {
         calendar_name: '',
         days: []
     },
-    classId: ''
+    calId: ''
 
 
 }
 
 const GET_USER = "GET_USER";
 // const SET_USER = "SET_USER"
-const SET_CLASS_ID = 'SET_CLASS_ID'
+const SET_CAL_ID = 'SET_CAL_ID'
 
 
 
@@ -30,21 +30,20 @@ export default function (state = initialState, action) {
     switch (action.type) {
         case GET_USER + "_FULFILLED":
             return Object.assign({}, state, { user: action.payload });
-        case SET_CLASS_ID:
-            return Object.assign({}, state, {classId: action.payload})
+        case SET_CAL_ID:
+            return Object.assign({}, state, {calId: action.payload})
 
         default:
             return state
     }
 }
 
-export function setClassId(id) {
-    console.log('redux wizard1 inputs', id)
-    const classId = id
+export function setCalId(id) {
+    const calId = id
 
     return {
-        type: SET_CLASS_ID,
-        payload: classId
+        type: SET_CAL_ID,
+        payload: calId
     }
 }
 

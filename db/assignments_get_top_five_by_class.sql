@@ -5,4 +5,7 @@ JOIN classes as c ON c.school_id = us.school_id
 JOIN calendar as cal ON cal.class_id = c.class_id
 JOIN user_calendars as uc ON uc.calendar_id = cal.calendar_id
 JOIN assignments as a ON a.calendar_id = cal.calendar_id
-WHERE uc.user_id = $1 and u.user_id = $1 and cal.calendar_id = $2;
+JOIN user_assignment as ua ON ua.user_id = uc.user_id
+WHERE uc.user_id = $1 and u.user_id = $1 and cal.calendar_id = $2 and a.datetime >= now()::date
+ORDER BY a.points_possible DESC
+LIMIT 5;

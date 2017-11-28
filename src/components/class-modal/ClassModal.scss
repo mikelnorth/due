@@ -1,6 +1,6 @@
-body{
-    background-color: white;
-}
+// body{
+//     background-color: white;
+// }
 
 .stepper{
     background: #ffffff;
@@ -30,6 +30,12 @@ body{
 }
 
 .sideBySide {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5vh;
+}
+
+.checkbox-sideBySide {
     display: flex;
     justify-content: space-between;
     margin-top: 5vh;
@@ -68,4 +74,68 @@ select{
 
 Input {
     width: 15vw;
+}
+
+@media (max-width: 700px){
+    .stepper{
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        background: #f2f2f6; 
+    }
+
+    .sideBySide {
+        display: flex;
+        flex-direction: column;
+    }
+    .checkbox-sideBySide {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100px;
+        margin: 20px 0;
+        padding: 0;
+        flex-wrap: wrap;
+        width: 200px;
+        input{
+            width: 70px;
+        }
+
+    }
+}
+
+@media (max-width: 1200px){
+    .stepper{
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        // background: #f2f2f6; 
+    }
+
+    .step2-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100vw;
+    }
+
+    .sideBySide {
+        display: flex;
+        // flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 80%
+        input{
+            
+        }
+    }
+    .checkbox-sideBySide {
+        // width: 80%;
+        margin-top: 2vh;
+        input{
+            padding: 0;
+            margin: 0;
+        }
+
+    }
 }

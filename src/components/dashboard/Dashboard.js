@@ -12,7 +12,7 @@ import MobileNav from '../navbar/MobileNav.js';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-// import ReactColor from '../../components/react-color/ReactColor';
+import ReactColor from '../../components/react-color/ReactColor';
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -37,7 +37,8 @@ class Dashboard extends Component {
     }
 
     componentWillMount() {
-        this.getAll(this.props.user.user_id)
+        console.log(this.props.user.user_id)
+        // this.getAll(this.props.user.user_id)
 
     }
     componentWillReceiveProps(newProps) {
@@ -46,22 +47,8 @@ class Dashboard extends Component {
     }
 
     getAll(userId){
-            axios.get(`/api/assignments/getall/${userId}`).then(
-                response => {
-                    response.data.map((event, index) => {
-                        event.start = new Date(event.start)
-                        event.end = new Date(event.end)
+        console.log(userId)
 
-                    })
-                    this.setState({
-                        events: response.data
-                    })
-                    console.log(this.state.events)
-                
-            axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
-                this.setState({ topFive: response.data })
-            })
-        })
     }
 
     handleOpenModal() {
@@ -83,8 +70,6 @@ class Dashboard extends Component {
         this.setState({
             select: val,
         })
-        console.log("select state", this.state.select.value)
-        console.log("select state", this.state.select.label)
     }
 
     submit() {
@@ -121,8 +106,6 @@ class Dashboard extends Component {
 
 
     render() {
-        console.log('this.props', this.props)
-        console.log(this.state.topFive)
         const getOptions = (input) => {
             return fetch(`https://api.data.gov/ed/collegescorecard/v1/schools.json?school.name=${input}&_fields=school.name,id&api_key=YBXKnMOHVby0cMoDcpxpLSyv7dtBFZVawfqIVJ3s`)
                 .then((response) => {
@@ -170,10 +153,10 @@ class Dashboard extends Component {
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
                     <div className='dashboardContainer'>
-                        {this.state.topFive.length !== 0 ?
+                        {this.props.all.topFive.length !== 0 ?
                             <div className="upcomingContainer">
                                 {
-                                    this.state.topFive.map((assignment, index) => {
+                                    this.props.all.topFive.map((assignment, index) => {
 
                                         return (
                                             <div className="upcomingAssignment">
@@ -185,7 +168,7 @@ class Dashboard extends Component {
                                                         <span className="pointsPoss">Points possible: {assignment.points_possible}</span>
                                                     </div>
                                                 </div>
-                                                {index < this.state.topFive.length - 1 ? <div className="separator"></div> : null}
+                                                {index < this.props.all.topFive.length - 1 ? <div className="separator"></div> : null}
                                             </div>
                                         )
 
@@ -231,7 +214,7 @@ class Dashboard extends Component {
                         }
                         <div className="calendarWrapper">
                             {this.props.user.school_id ? <BigCalendar
-                                events={this.state.events}
+                                events={this.props.all.events}
                                 //   views={{month: true, week: true}}
                                 views={allViews}
                                 step={60}
@@ -240,7 +223,7 @@ class Dashboard extends Component {
                             /> :
 
                                 <BigCalendar
-                                    events={this.state.events}
+                                    events={this.props.all.events}
                                     //   views={{month: true, week: true}}
                                     views={allViews}
                                     step={60}
@@ -302,11 +285,11 @@ class Dashboard extends Component {
 }
 
 function mapStatetoProps(state) {
-    console.log(state)
     return {
         user: state.user,
         email: state.email,
-        school_id: state.user.school_id
+        school_id: state.user.school_id,
+        all: state
     }
 }
 

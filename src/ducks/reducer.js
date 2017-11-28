@@ -15,16 +15,17 @@ let initialState = {
         days: []
     },
     calId: '',
-    classInfo: []
+    classInfo: [],
+    events: [],
+    topFive: [],
 }
 
 const GET_USER = "GET_USER";
 // const SET_USER = "SET_USER"
 const SET_CAL_ID = 'SET_CAL_ID';
 const GET_CLASS_INFO = 'GET_CLASS_INFO';
-
-
-
+const SET_EVENTS = 'SET_EVENTS';
+const SET_TOP_FIVE = 'SET_TOP_FIVE';
 
 
 export default function (state = initialState, action) {
@@ -35,15 +36,35 @@ export default function (state = initialState, action) {
         case SET_CAL_ID:
             return Object.assign({}, state, { calId: action.payload });
         case GET_CLASS_INFO + "_FULFILLED":
-        return Object.assign({}, state, { classInfo: action.payload });
+            return Object.assign({}, state, { classInfo: action.payload });
+        case SET_EVENTS:
+            return Object.assign({}, state, { events: action.payload });
+        case SET_TOP_FIVE:
+            return Object.assign({}, state, { topFive: action.payload });
 
         default:
             return state
     }
 }
 
+export function setTopFive(topFive) {
+    
+        return {
+            type: SET_TOP_FIVE,
+            payload: topFive
+        }
+    }
+
+export function setEvents(events) {
+
+    return {
+        type: SET_EVENTS,
+        payload: events
+    }
+}
+
 export function getClassInfo(userId) {
-   const classInfo =  axios.get(`/api/classes/getbyclassname/${userId}`).then(resp => {
+    const classInfo = axios.get(`/api/classes/getbyclassname/${userId}`).then(resp => {
         console.log('response in getclassinfo redux', resp)
         return resp.data
     })
@@ -64,9 +85,7 @@ export function setCalId(id) {
 }
 
 export function getUser() {
-    console.log("getUser in reducer")
     const user = axios.get('/auth/me').then(res => {
-        console.log('getUser response', res)
         return axios.get('/api/users/setuser/' + res.data.email)
             .then(res => {
                 console.log("User Info: ", res.data[0])

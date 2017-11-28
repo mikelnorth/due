@@ -24,7 +24,8 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import Join from '../../components/join-class/Join';
-import ReactColor from '../../components/react-color/ReactColor';
+import {CirclePicker} from 'react-color';
+import 'font-awesome/css/font-awesome.min.css';
 
 
 
@@ -52,7 +53,7 @@ class ClassModal extends Component {
             subject: '',
             options: [],
             selectedClass: '',
-            assignments: [{ assignment_name: '', points_possible: '', due_date: '', category: null, pick_color: null }],
+            assignments: [{ assignment_name: '', points_possible: '', due_date: '', category: null }],
             categoryOptions: [{ key: '1', value: '1', text: 'Essay' }, { key: '2', value: '2', text: 'Test' }],
             currentIndex: null,
             open: false,
@@ -68,18 +69,20 @@ class ClassModal extends Component {
             TH: false,
             F: false,
             ST: false,
-            SU: false
-
+            SU: false,
+            background: '#1485CB',
+            displayColorPicker: false,
             
         }
         this.handleClassChange = this.handleClassChange.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
-        this.handleAddAssignment = this.handleAddAssignment.bind(this)
-        this.handleRemoveAssignment = this.handleRemoveAssignment.bind(this)
-        this.handleSelectChange = this.handleSelectChange.bind(this)
-        this.submitClassAndCal = this.submitClassAndCal.bind(this)
+        this.handleAddAssignment = this.handleAddAssignment.bind(this);
+        this.handleRemoveAssignment = this.handleRemoveAssignment.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.submitClassAndCal = this.submitClassAndCal.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
-        this.addDays = this.addDays.bind(this)
+        this.addDays = this.addDays.bind(this);
+        this.handleChangeComplete = this.handleChangeComplete.bind(this);        
     }
 
 
@@ -177,7 +180,7 @@ class ClassModal extends Component {
 
     handleAddAssignment = () => {
         this.setState({
-            assignments: this.state.assignments.concat([{ assignment_name: '', points_possible: '', due_date: '', category: '', pick_color: '' }])
+            assignments: this.state.assignments.concat([{ assignment_name: '', points_possible: '', due_date: '', category: '' }])
         });
     }
 
@@ -275,7 +278,7 @@ class ClassModal extends Component {
             response => {
                 console.log('response data', response.data)
                 this.setState({ currentClassId: response.data[0].class_id })
-                axios.post(`/api/calendars/add/${this.props.user.user_id}/${response.data[0].class_id}`, calendarInfo).then(response => {
+                axios.post(`/api/calendars/add/${this.props.user.user_id}/${response.data[0].class_id}/${this.state.background}`, calendarInfo).then(response => {
                     console.log(response.data)
                     this.setState({ currentCalendarId: response.data[0].calendar_id })
                 })
@@ -291,6 +294,22 @@ class ClassModal extends Component {
 
 
     }
+
+    handleClick = () => {
+        this.setState({ displayColorPicker: !this.state.displayColorPicker })
+      };
+    
+      handleClose = () => {
+        this.setState({ displayColorPicker: false })
+      };
+    
+      handleChangeComplete = (color) => {
+        this.setState({ background: color.hex,
+            displayColorPicker: !this.state.displayColorPicker
+        });
+        console.log(this.state.background)
+      };
+    
 
     render() {
         const { finished, stepIndex } = this.state;
@@ -317,6 +336,19 @@ class ClassModal extends Component {
                 onClick={this.submitClassAndCal}
             />,
         ];
+
+        const popover = {
+            position: 'relative',
+            zIndex: '2',
+          }
+
+          const cover = {
+            float: 'right',
+            top: '0px',
+            right: '0px',
+            bottom: '0px',
+            left: '0px',
+          }
 
         return (
             <div className='stepper' >
@@ -359,6 +391,14 @@ class ClassModal extends Component {
                                         <div className="sideBySide">
                                             <TextField focus placeholder="Enter class subject" onChange={(e) => this.handleClassChange(e.target.value)} />
                                             <TextField focus placeholder="Enter teacher" onChange={(e) => this.handleTeacherChange(e.target.value)} />
+                                            {this.state.displayColorPicker ? null : <div>
+                                            <span>Select calendar color</span><i className="fa fa-circle fa-3x" aria-hidden="true" 
+                                            style={{color: this.state.background}} onClick={ this.handleClick }></i></div>}
+                                            { this.state.displayColorPicker ? <div style={ popover }>
+                                            <div style={ cover } onClick={ this.handleClose }/>
+                                            <CirclePicker color={ this.state.background }
+                                                onChangeComplete={ this.handleChangeComplete } />
+                                            </div> : null }
                                         </div>
                                         <div className="checkbox-sideBySide">
                                             <Checkbox
@@ -420,8 +460,14 @@ class ClassModal extends Component {
 
 
                                             <div className="assignmentInput">
-                                                <TextField className="name" focus placeholder="Assignment name" value={this.state.assignments[index].assignment_name} onChange={(e) => this.handleAssignmentChange(index, "assignment_name", e.target.value)} />
-                                                <TextField className="points" focus placeholder="Points" value={this.state.assignments[index].points_possible} type='number' min="0" onChange={(e) => this.handleAssignmentChange(index, "points_possible", e.target.value)} />
+                                                <TextField className="name"
+                                                 focus placeholder="Assignment name"
+                                                 value={this.state.assignments[index].assignment_name} 
+                                                 onChange={(e) => this.handleAssignmentChange(index, "assignment_name", e.target.value)} />
+                                                <TextField className="points" 
+                                                focus placeholder="Points" 
+                                                value={this.state.assignments[index].points_possible} 
+                                                type='number' min="0" onChange={(e) => this.handleAssignmentChange(index, "points_possible", e.target.value)} />
                                                 <DateTimePicker
                                                     className="dateTime"
                                                     format='MMM DD, YYYY hh:mm A'
@@ -447,10 +493,6 @@ class ClassModal extends Component {
                                                     <MenuItem value={4} primaryText="HW" />
                                                 </SelectField>
                                                 <Button onClick={() => this.handleRemoveAssignment(index)} id="delete">-</Button>
-                                                <ReactColor value={this.state.assignments[index].pick_color}
-                                                 onChange={(e) => 
-                                                 this.handleAssignmentChange(index, "pick_color", e.target.value)}
-                                                 addSubjectColor={this.state.handleChangeComplete} />
                                             </div>
                                         )
                                     })}

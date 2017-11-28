@@ -6,6 +6,11 @@
   overflow-y: scroll;
   padding: 50px; }
 
+.fa-circle {
+  cursor: pointer; }
+  .fa-circle:hover {
+    opacity: 0.8; }
+
 .REMOVEME {
   display: flex;
   justify-content: center;

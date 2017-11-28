@@ -32,6 +32,13 @@ class Profile extends Component {
         })
     }
 
+    //deletes a class associated to the user.
+    deleteClass(classId){
+        axios.delete(`/api/delete/class/${this.props.user.user_id}/${classId}`).then(res => {
+            console.log('delete resonse', res)
+        })
+    }
+
     render() {
         return (
             <div className='profile'>
@@ -44,7 +51,7 @@ class Profile extends Component {
                                 //returns a button for every class with access to the name, subject, and id
                                 <div className='edit-class' key={clss.class_id}>
                                     <span>{clss.class_name}</span>
-                                    <span className='delete'>x</span>
+                                    <span className='delete' onClick={() => this.deleteClass(clss.class_id)}>x</span>
                                 </div>
                             )
                         })

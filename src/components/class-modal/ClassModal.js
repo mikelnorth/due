@@ -24,6 +24,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import Join from '../../components/join-class/Join';
+import ReactColor from '../../components/react-color/ReactColor';
 
 
 
@@ -51,7 +52,7 @@ class ClassModal extends Component {
             subject: '',
             options: [],
             selectedClass: '',
-            assignments: [{ assignment_name: '', points_possible: '', due_date: '', category: null }],
+            assignments: [{ assignment_name: '', points_possible: '', due_date: '', category: null, pick_color: null }],
             categoryOptions: [{ key: '1', value: '1', text: 'Essay' }, { key: '2', value: '2', text: 'Test' }],
             currentIndex: null,
             open: false,
@@ -176,7 +177,7 @@ class ClassModal extends Component {
 
     handleAddAssignment = () => {
         this.setState({
-            assignments: this.state.assignments.concat([{ assignment_name: '', points_possible: '', due_date: '', category: '' }])
+            assignments: this.state.assignments.concat([{ assignment_name: '', points_possible: '', due_date: '', category: '', pick_color: '' }])
         });
     }
 
@@ -446,6 +447,10 @@ class ClassModal extends Component {
                                                     <MenuItem value={4} primaryText="HW" />
                                                 </SelectField>
                                                 <Button onClick={() => this.handleRemoveAssignment(index)} id="delete">-</Button>
+                                                <ReactColor value={this.state.assignments[index].pick_color}
+                                                 onChange={(e) => 
+                                                 this.handleAssignmentChange(index, "pick_color", e.target.value)}
+                                                 addSubjectColor={this.state.handleChangeComplete} />
                                             </div>
                                         )
                                     })}

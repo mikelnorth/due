@@ -11,7 +11,8 @@ import SideNav from '../navbar/SideNav.js';
 import MobileNav from '../navbar/MobileNav.js';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css'
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import ReactColor from '../../components/react-color/ReactColor';
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -90,6 +91,29 @@ class Dashboard extends Component {
         this.setState({
             showNav: true
         })
+    }
+
+    eventStyleGetter(event, start, end, isSelected, desc) {
+        console.log(event)
+
+
+
+        if(event.desc === "Testing React Color"){
+            let style = {
+                backgroundColor: '#222222',
+                color: 'white'
+            };
+            return {
+                style: style
+            }
+        }
+        let style = {
+            backgroundColor: '',
+            color: 'white'
+        };
+        return {
+            style: style
+        }
     }
 
 
@@ -209,6 +233,7 @@ class Dashboard extends Component {
                                 views={allViews}
                                 step={60}
                                 defaultDate={new Date()}
+                                eventPropGetter={(this.eventStyleGetter)}
                             /> :
 
                                 <BigCalendar

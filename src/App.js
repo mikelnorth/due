@@ -4,6 +4,7 @@ import './App.css';
 import { connect } from 'react-redux';
 import { getUser, getClassInfo, setEvents, setTopFive } from './ducks/reducer.js';
 import axios from 'axios';
+import {withRouter} from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class App extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    this.getAll(newProps.user.user_id)
+
   }
 
   getAll(userId){
@@ -57,7 +58,7 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     calId: state.calId,
-    classInfo: state.classInfo
+    classInfo: state.classInfo,
   }
 }
-export default connect(mapStateToProps, { getUser, getClassInfo, setEvents, setTopFive })(App);
+export default withRouter(connect(mapStateToProps, { getUser, getClassInfo, setEvents, setTopFive })(App));

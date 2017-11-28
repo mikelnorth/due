@@ -19,11 +19,6 @@ class SideNav extends Component {
     }
 
   
-  
-// used componentwillreceive because did mount fired bfore the usesr_id was set to
-// redux. Use componentwillreceive to get the user_id and then make an axios call to get
-// all the classes associated to that user.
-
 
     //sets the id of selected class to redux so it can be accessed in the class
     //component.
@@ -82,7 +77,8 @@ function mapStateToProps(state) {
     return {
       user: state.user,
       calId: state.calId,
-      classInfo: state.classInfo
+      classInfo: state.classInfo,
+      all: state
     }
   }
   export default connect(mapStateToProps, { setCalId, getClassInfo })(SideNav);

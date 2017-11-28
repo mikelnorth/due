@@ -33,35 +33,33 @@ class Dashboard extends Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
-        this.getAll = this.getAll.bind(this);
     }
 
-    componentWillMount() {
-        console.log(this.props.user.user_id)
-        // this.getAll(this.props.user.user_id)
-
+    componentDidMount(){
+        this.setState({
+            events: this.props.all.events,
+            topFive: this.props.all.topFive
+        })
     }
+
     componentWillReceiveProps(newProps) {
         console.log(newProps)
+        this.setState({
+            events: newProps.all.events,
+            topFive: newProps.all.topFive
+        })
         newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
-    }
-
-    getAll(userId){
-        console.log(userId)
-
     }
 
     handleOpenModal() {
         this.setState({
             showModal: true,
-            // hideModal: !this.state.hideModal
         })
     }
 
     handleCloseModal() {
         this.setState({
             showModal: false,
-            // hideModal: !this.state.hideModal
 
         })
     }
@@ -83,8 +81,6 @@ class Dashboard extends Component {
 
     eventStyleGetter(event, start, end, isSelected, desc) {
         console.log(event)
-
-
 
         if(event.desc === "Testing React Color"){
             let style = {
@@ -214,7 +210,7 @@ class Dashboard extends Component {
                         }
                         <div className="calendarWrapper">
                             {this.props.user.school_id ? <BigCalendar
-                                events={this.props.all.events}
+                                events={this.state.events}
                                 //   views={{month: true, week: true}}
                                 views={allViews}
                                 step={60}
@@ -223,7 +219,7 @@ class Dashboard extends Component {
                             /> :
 
                                 <BigCalendar
-                                    events={this.props.all.events}
+                                    events={this.state.events}
                                     //   views={{month: true, week: true}}
                                     views={allViews}
                                     step={60}
@@ -289,7 +285,8 @@ function mapStatetoProps(state) {
         user: state.user,
         email: state.email,
         school_id: state.user.school_id,
-        all: state
+        all: state,
+        update: state.update
     }
 }
 

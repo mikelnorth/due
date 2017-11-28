@@ -18,6 +18,7 @@ let initialState = {
     classInfo: [],
     events: [],
     topFive: [],
+    update: ''
 }
 
 const GET_USER = "GET_USER";
@@ -26,6 +27,7 @@ const SET_CAL_ID = 'SET_CAL_ID';
 const GET_CLASS_INFO = 'GET_CLASS_INFO';
 const SET_EVENTS = 'SET_EVENTS';
 const SET_TOP_FIVE = 'SET_TOP_FIVE';
+const UPDATE_DASHBOARD = 'UPDATE_DASHBOARD';
 
 
 export default function (state = initialState, action) {
@@ -48,12 +50,12 @@ export default function (state = initialState, action) {
 }
 
 export function setTopFive(topFive) {
-    
-        return {
-            type: SET_TOP_FIVE,
-            payload: topFive
-        }
+
+    return {
+        type: SET_TOP_FIVE,
+        payload: topFive
     }
+}
 
 export function setEvents(events) {
 

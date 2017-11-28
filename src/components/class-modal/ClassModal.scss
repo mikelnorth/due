@@ -12,6 +12,15 @@
 
 }
 
+.fa-circle {
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+
 .REMOVEME {
     display: flex;
     justify-content: center;

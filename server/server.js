@@ -110,7 +110,7 @@ app.get('/api/classes/getbyclassname/:user_id', classes_controller.getClassNames
 
 //CALENDARS
 app.get('/api/calendars/get/:class_id', calendar_controller.findCalendars);
-app.post('/api/calendars/add/:user_id/:class_id', calendar_controller.createCalendar);
+app.post('/api/calendars/add/:user_id/:class_id/:color', calendar_controller.createCalendar);
 app.get('/api/calendars/user/:user_id', calendar_controller.findCalendarByUser);
 app.get('/api/calendars/user/class/:user_id/:calendar_id', calendar_controller.findCalendarByUserClass);
 

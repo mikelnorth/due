@@ -12,7 +12,7 @@ import MobileNav from '../navbar/MobileNav.js';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import ReactColor from '../../components/react-color/ReactColor';
+// import ReactColor from '../../components/react-color/ReactColor';
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -33,13 +33,21 @@ class Dashboard extends Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
+        this.getAll = this.getAll.bind(this);
     }
 
     componentWillMount() {
-        this.props.getUser().then(res => {
-            axios.get(`/api/assignments/getall/${res.value.user_id}`).then(
+        this.getAll(this.props.user.user_id)
+
+    }
+    componentWillReceiveProps(newProps) {
+        console.log(newProps)
+        newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
+    }
+
+    getAll(userId){
+            axios.get(`/api/assignments/getall/${userId}`).then(
                 response => {
-                    console.log('HERE IT IS', response)
                     response.data.map((event, index) => {
                         event.start = new Date(event.start)
                         event.end = new Date(event.end)
@@ -49,18 +57,13 @@ class Dashboard extends Component {
                         events: response.data
                     })
                     console.log(this.state.events)
-                }
-            )
-            axios.get(`/api/assignments/get/topfive/${res.value.user_id}`).then(response => {
+                
+            axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
                 this.setState({ topFive: response.data })
             })
         })
+    }
 
-    }
-    componentWillReceiveProps(newProps) {
-        console.log(newProps)
-        newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
-    }
     handleOpenModal() {
         this.setState({
             showModal: true,

@@ -32,5 +32,21 @@ module.exports = {
                 res.status(200).send(classnames)
             }
         )
+    },
+
+    deleteClass: (req, res, next) => {
+        const db = req.app.get('db')
+        const { user_id, class_id} = req.params
+
+        db.delete_user_class([user_id, class_id]).then(
+            response => {
+               return db.classes_get_classnames_by_user([user_id]).then(
+                    classnames => {
+                        console.log('class names', classnames)
+                        res.status(200).send(classnames)
+                    }
+                )
+            }
+        )
     }
 }

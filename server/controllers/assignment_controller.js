@@ -41,6 +41,7 @@ module.exports = {
     getClassAssignments: (req, res, next) => {
         const db = req.app.get('db');
         const{ user_id, class_id } = req.params
+        console.log(req.params)
 
         db.assignments_get_class([ user_id, class_id ]).then(
             newAssignments => {

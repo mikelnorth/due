@@ -1,0 +1,27 @@
+.profile {
+  width: 100vw;
+  height: 100vh; }
+
+.profile-content {
+  width: 80vw;
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.edit-class {
+  width: 30%;
+  height: 50px;
+  margin-top: 20px;
+  border: 1px solid black;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.delete {
+  position: absolute;
+  top: -2px;
+  right: 3px; }

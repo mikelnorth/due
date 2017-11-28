@@ -39,6 +39,11 @@ class Class extends Component {
                 })
                 console.log(this.state.events)
             })
+                console.log(this.props)
+            axios.get(`/api/assignments/get/topfiveclass/${this.props.user.user_id}/${this.props.calId}`).then(response => {
+                console.log('top five response', response)
+                this.setState({ topFive: response.data })
+            })
 
             
             
@@ -46,9 +51,9 @@ class Class extends Component {
 
    
     componentWillReceiveProps(newProps) {
-        console.log(newProps.classId)
+        console.log(newProps.calId)
 
-        axios.get(`/api/assignments/get/class/${newProps.user.user_id}/${newProps.classId}`).then(
+        axios.get(`/api/assignments/get/class/${newProps.user.user_id}/${newProps.calId}`).then(
             response => {
                 console.log('get class response', response)
                 response.data.map((event, index) => {
@@ -61,10 +66,12 @@ class Class extends Component {
                 })
                 console.log(this.state.events)
             })
-
-            axios.get(`/api/assignments/get/topfiveclass/${this.props.user.user_id}/${this.props.calId}`).then(response => {
+            axios.get(`/api/assignments/get/topfiveclass/${this.props.user.user_id}/${newProps.calId}`).then(response => {
+                console.log('top five response', response)
                 this.setState({ topFive: response.data })
             })
+
+            
     }
 
     render() {

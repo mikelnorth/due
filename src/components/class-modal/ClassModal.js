@@ -216,18 +216,6 @@ class ClassModal extends Component {
                 
             })
         })
-
-
-<<<<<<< HEAD
-        
-
-        console.log(this.state.days)
-
-        window.location.reload(true)
-=======
-
-
->>>>>>> master
     }
 
     handleSelectChange = (event, index, value) => {
@@ -350,10 +338,7 @@ class ClassModal extends Component {
 
                                     {this.state.selectedClass ?
                                         <Join
-<<<<<<< HEAD
-=======
                                             class_id={this.state.currentClassId}
->>>>>>> master
                                             classForJoin={this.state.selectedClass}
                                             selectTeachForClass={this.state.class}
                                             selectTeachForCal={this.state.cal_id} />
@@ -361,7 +346,6 @@ class ClassModal extends Component {
                                         <div>
                                             <span>Didn't find your class? Press next to create one</span>
                                             {this.renderStepActions(0)}
-<<<<<<< HEAD
                                         </div>
                                     }
 
@@ -425,66 +409,6 @@ class ClassModal extends Component {
 
                                         {this.renderStepActions(1)}
                                     </div>
-=======
-                                        </div>
-                                    }
-
-                                </StepContent>
-                            </Step>
-                            <Step>
-                                <StepLabel>Create class</StepLabel>
-                                <StepContent>
-
-                                    <div className="sideBySide">
-                                        <p>Enter class subject</p>
-                                        <TextField focus placeholder="Subject" onChange={(e) => this.handleClassChange(e.target.value)} />
-                                        <p>Enter Teacher's name</p>
-                                        <TextField focus placeholder="Teacher" onChange={(e) => this.handleTeacherChange(e.target.value)} />
-                                    </div>
-                                    <div className="sideBySide">
-                                        <Checkbox
-                                            label="M"
-                                            value='M'
-                                            style={styles.checkbox}
-                                        // onChange={handleCheckbox}
-                                        />
-                                        <Checkbox
-                                            label="T"
-                                            style={styles.checkbox}
-                                        />
-                                        <Checkbox
-                                            label="W"
-                                            style={styles.checkbox}
-                                        />
-                                        <Checkbox
-                                            label="TH"
-                                            style={styles.checkbox}
-                                        />
-                                        <Checkbox
-                                            label="F"
-                                            style={styles.checkbox}
-                                        />
-                                        <Checkbox
-                                            label="ST"
-                                            style={styles.checkbox}
-                                        />
-                                        <Checkbox
-                                            label="SU"
-                                            style={styles.checkbox}
-                                        />
-                                        <Dialog
-                                            title="Dialog With Actions"
-                                            actions={actions}
-                                            modal={true}
-                                            open={this.state.open}
-                                        >
-                                            Only actions can close this dialog.
-                                            </Dialog>
-                                    </div>
-
-
-                                    {this.renderStepActions(1)}
->>>>>>> master
                                 </StepContent>
                             </Step>
                             <Step>

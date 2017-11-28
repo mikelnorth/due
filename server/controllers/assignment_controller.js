@@ -47,6 +47,35 @@ module.exports = {
                 res.status(200).send(newAssignments)
             }
         )
+    },
+    
+    addUserAssignments: (req, res, next) => {
+        const db = req.app.get('db');
+        
+        const { user_id, calendar_id, class_id } = req.params
+
+        console.log('user id: ', user_id)
+        console.log('cal id: ', calendar_id)
+        console.log('class id: ', class_id)
+        
+        db.assignments_get_by_cal([user_id, calendar_id]).then(response => {
+            console.log('user assignment response: ', response)
+            response.map((assign,index) => {
+                db.assignments_insert_user([user_id, class_id, calendar_id, assign.assignment_id])
+            })
+
+        })
+        res.status(200).send("Complete!")
+    },
+
+    getTopFiveAssignments: (req, res, next) => {
+        const db = req.app.get('db')
+
+        const {user_id} = req.params
+
+        db.assignments_get_top_five([user_id]).then(response => {
+            res.status(200).send(response)
+        })
     }
 
     // findAssignmetsByUser: (req, res, next) => {

@@ -123,7 +123,7 @@ app.get('/api/assignments/getall/:user_id', assignment_controller.getCalendarAss
 app.get('/api/assignments/get/class/:user_id/:class_id', assignment_controller.getClassAssignments);
 app.post('/api/assignments/add/user/assignments/:user_id/:class_id/:calendar_id', assignment_controller.addUserAssignments)
 app.get('/api/assignments/get/topfive/:user_id', assignment_controller.getTopFiveAssignments)
-
+app.get('/api/assignments/get/topfiveclass/:user_id/:cal_id', assignment_controller.getTopFiveAssignmentsByClass)
 
 // app.get('/api/calendars/user/:user_id', assignment_controller.findAssignmetsByUser);
 

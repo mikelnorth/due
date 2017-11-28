@@ -19,43 +19,28 @@ class Class extends Component {
             events: [],
             topFive: [],
         }
+
+        this.getClassInfo = this.getClassInfo.bind(this)
     }
 
     componentDidMount() {
         this.props.getUser()
         console.log(this.props)
-        console.log(this.props.user.user_id)
 
-        axios.get(`/api/assignments/get/class/${this.props.user.user_id}/${this.props.classId}`).then(
-            response => {
-                console.log('get class response', response)
-                response.data.map((event, index) => {
-                    event.start = new Date(event.start)
-                    event.end = new Date(event.end)
-
-                })
-                this.setState({
-                    events: response.data
-                })
-                console.log(this.state.events)
-            })
-                console.log(this.props)
-            axios.get(`/api/assignments/get/topfiveclass/${this.props.user.user_id}/${this.props.calId}`).then(response => {
-                console.log('top five response', response)
-                this.setState({ topFive: response.data })
-            })
-
-            
-            
+       this.getClassInfo(this.props.user.user_id, this.props.calId)
     }
 
-   
-    componentWillReceiveProps(newProps) {
-        console.log(newProps.calId)
 
-        axios.get(`/api/assignments/get/class/${newProps.user.user_id}/${newProps.calId}`).then(
+    componentWillReceiveProps(newProps) {
+        console.log(newProps)
+        this.getClassInfo(newProps.user.user_id, newProps.calId)
+    }
+
+    //reusable method that gets all classes for a specified user by userId and calId.
+    getClassInfo(userId, calId){
+        //gets the classes for the calendar
+        axios.get(`/api/assignments/get/class/${userId}/${calId}`).then(
             response => {
-                console.log('get class response', response)
                 response.data.map((event, index) => {
                     event.start = new Date(event.start)
                     event.end = new Date(event.end)
@@ -64,14 +49,11 @@ class Class extends Component {
                 this.setState({
                     events: response.data
                 })
-                console.log(this.state.events)
             })
-            axios.get(`/api/assignments/get/topfiveclass/${this.props.user.user_id}/${newProps.calId}`).then(response => {
-                console.log('top five response', response)
-                this.setState({ topFive: response.data })
-            })
-
-            
+            //gets the next 5 assignments.
+        axios.get(`/api/assignments/get/topfiveclass/${userId}/${calId}`).then(response => {
+            this.setState({ topFive: response.data })
+        })
     }
 
     render() {
@@ -82,10 +64,10 @@ class Class extends Component {
             var ampm = hours >= 12 ? 'pm' : 'am';
             hours = hours % 12;
             hours = hours ? hours : 12; // the hour '0' should be '12'
-            minutes = minutes < 10 ? '0'+minutes : minutes;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
             var strTime = hours + ':' + minutes + ' ' + ampm;
-            return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
-          }
+            return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
+        }
 
         return (
             <div className='class'>

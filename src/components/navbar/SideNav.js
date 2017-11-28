@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './SideNav.css'
 import { connect } from 'react-redux';
-import { setCalId } from '../../ducks/reducer'
+import { setCalId, getClassInfo } from '../../ducks/reducer'
 import logo from '../../assets/due_logo.svg'
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
@@ -14,25 +14,16 @@ import {Link} from 'react-router-dom'
 class SideNav extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            //an array of each class for a specefied user.
-            classData: []
-        }
 
         this.setCalId = this.setCalId.bind(this);
     }
 
   
+  
 // used componentwillreceive because did mount fired bfore the usesr_id was set to
 // redux. Use componentwillreceive to get the user_id and then make an axios call to get
 // all the classes associated to that user.
-    componentWillReceiveProps(newProps) {
-        axios.get(`/api/classes/getbyclassname/${newProps.user.user_id}`).then(response => {
-            this.setState({
-                classData: response.data
-            })
-        })
-    }
+
 
     //sets the id of selected class to redux so it can be accessed in the class
     //component.
@@ -56,8 +47,8 @@ class SideNav extends Component {
                             <p>Dashboard</p>
                          </div>
                     </Link>
-                    {this.state.classData.length !== 0 ?
-                        this.state.classData.map((clss, index) => {
+                    {this.props.classInfo.length !== 0 ?
+                        this.props.classInfo.map((clss, index) => {
                             console.log('classes from side nav: ',clss)
                             return (
                                 //returns a button for every class with access to the name, subject, and id
@@ -92,7 +83,8 @@ class SideNav extends Component {
 function mapStateToProps(state) {
     return {
       user: state.user,
-      calId: state.calId
+      calId: state.calId,
+      classInfo: state.classInfo
     }
   }
-  export default connect(mapStateToProps, { setCalId })(SideNav);
+  export default connect(mapStateToProps, { setCalId, getClassInfo })(SideNav);

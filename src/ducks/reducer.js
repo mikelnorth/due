@@ -14,14 +14,16 @@ let initialState = {
         calendar_name: '',
         days: []
     },
-    calId: ''
-
-
+    calId: '',
+    classInfo: []
 }
 
 const GET_USER = "GET_USER";
 // const SET_USER = "SET_USER"
-const SET_CAL_ID = 'SET_CAL_ID'
+const SET_CAL_ID = 'SET_CAL_ID';
+const GET_CLASS_INFO = 'GET_CLASS_INFO';
+
+
 
 
 
@@ -31,10 +33,24 @@ export default function (state = initialState, action) {
         case GET_USER + "_FULFILLED":
             return Object.assign({}, state, { user: action.payload });
         case SET_CAL_ID:
-            return Object.assign({}, state, {calId: action.payload})
+            return Object.assign({}, state, { calId: action.payload });
+        case GET_CLASS_INFO + "_FULFILLED":
+        return Object.assign({}, state, { classInfo: action.payload });
 
         default:
             return state
+    }
+}
+
+export function getClassInfo(userId) {
+   const classInfo =  axios.get(`/api/classes/getbyclassname/${userId}`).then(resp => {
+        console.log('response in getclassinfo redux', resp)
+        return resp.data
+    })
+
+    return {
+        type: GET_CLASS_INFO,
+        payload: classInfo
     }
 }
 

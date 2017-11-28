@@ -36,6 +36,9 @@ class Profile extends Component {
     deleteClass(classId){
         axios.delete(`/api/delete/class/${this.props.user.user_id}/${classId}`).then(res => {
             console.log('delete resonse', res)
+            this.setState({
+                classData: res.data
+            })
         })
     }
 

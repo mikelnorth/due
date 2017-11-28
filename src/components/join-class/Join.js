@@ -37,8 +37,12 @@ class Join extends Component {
     submitCalendar(){
         axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.cal_id}`).then( response => {
             console.log(response)
+            console.log(this.props)
+            axios.post(`/api/assignments/add/user/assignments/${this.props.user.user_id}/${this.props.classForJoin.value}/${this.state.cal_id}`).then(response => {
+                console.log("Added to User Assignment: ", response)
+            window.location.reload(true)
+            })
         })
-        window.location.reload(true)
     }
 
     render() {

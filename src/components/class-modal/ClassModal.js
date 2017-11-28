@@ -93,7 +93,7 @@ class ClassModal extends Component {
         this.setState({
             subject: val
         })
-        console.log('Subject: ' , this.state.subject)
+        console.log('Subject: ', this.state.subject)
     }
 
     handleTeacherChange(val) {
@@ -181,15 +181,21 @@ class ClassModal extends Component {
 
     submitAssignments() {
         console.log('assignments', this.state.assignments)
-        axios.post(`/api/assignments/add/${this.state.currentClassId}/${this.state.currentCalendarId}`, this.state.assignments).then(response => {
-            console.log(response.data)
-        })
-
         axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.currentCalendarId}`).then(response => {
-            console.log(response.data)
+            console.log("Added to user calendars.")
+        })
+        axios.post(`/api/assignments/add/${this.state.currentClassId}/${this.state.currentCalendarId}`, this.state.assignments).then(response => {
+            console.log("Got to assignments response.")
+            axios.post(`/api/assignments/add/user/assignments/${this.props.user.user_id}/${this.state.currentClassId}/${this.state.currentCalendarId}`).then(response => {
+                console.log("Added to User Assignment: ", response)
+                window.location.reload(true)
+                
+            })
         })
 
-        window.location.reload(true)
+
+
+
     }
 
     handleSelectChange = (event, index, value) => {
@@ -233,22 +239,24 @@ class ClassModal extends Component {
         console.log('subject', this.state.subject)
         axios.post(`/api/classes/add/${this.state.subject}/${this.props.user.school_id}`).then(
             response => {
-                console.log('response data',response.data)
-                this.setState({currentClassId: response.data[0].class_id})
-                axios.post(`/api/calendars/add/${this.props.user.user_id}/${response.data[0].class_id}`, calendarInfo).then( response => {
+                console.log('response data', response.data)
+                this.setState({ currentClassId: response.data[0].class_id })
+                axios.post(`/api/calendars/add/${this.props.user.user_id}/${response.data[0].class_id}`, calendarInfo).then(response => {
                     console.log(response.data)
-                    this.setState({currentCalendarId: response.data[0].calendar_id})
+                    this.setState({ currentCalendarId: response.data[0].calendar_id })
+                    
                 })
+
             }
         )
-        
+
         this.setState({
             stepIndex: 2,
             open: false
         })
-        
-        
-        
+
+
+
     }
 
     render() {
@@ -278,139 +286,140 @@ class ClassModal extends Component {
         ];
 
         return (
-                <div className='stepper' >
-                    <div className="yScroll">
+            <div className='stepper' >
+                <div className="yScroll">
 
-                        <MuiThemeProvider muiTheme={muiTheme} >
-                            <Stepper activeStep={stepIndex} orientation="vertical">
-                                <Step>
-                                    <StepLabel>Find your class</StepLabel>
-                                    <StepContent>
-                                        <span>Search for your class subject</span>
-                                        <div style={{ height: '150px' }}><Select
-                                            className='school-select'
-                                            name="form-field-name"
-                                            placeholder="Select a class"
-                                            value={this.state.selectedClass}
-                                            options={this.state.options}
-                                            onChange={this.handleSelect}
-                                        /></div>
-                                        
-                                        {this.state.selectedClass ?    
-                                        <Join 
-                                        classForJoin={this.state.selectedClass}
-                                        selectTeachForClass={this.state.class} 
-                                        selectTeachForCal={this.state.cal_id}/>      
+                    <MuiThemeProvider muiTheme={muiTheme} >
+                        <Stepper activeStep={stepIndex} orientation="vertical">
+                            <Step>
+                                <StepLabel>Find your class</StepLabel>
+                                <StepContent>
+                                    <span>Search for your class subject</span>
+                                    <div style={{ height: '150px' }}><Select
+                                        className='school-select'
+                                        name="form-field-name"
+                                        placeholder="Select a class"
+                                        value={this.state.selectedClass}
+                                        options={this.state.options}
+                                        onChange={this.handleSelect}
+                                    /></div>
+
+                                    {this.state.selectedClass ?
+                                        <Join
+                                            class_id={this.state.currentClassId}
+                                            classForJoin={this.state.selectedClass}
+                                            selectTeachForClass={this.state.class}
+                                            selectTeachForCal={this.state.cal_id} />
                                         :
                                         <div>
-                                        <span>Didn't find your class? Press next to create one</span>
-                                        {this.renderStepActions(0)}
+                                            <span>Didn't find your class? Press next to create one</span>
+                                            {this.renderStepActions(0)}
                                         </div>
-                                        }
+                                    }
 
-                                    </StepContent>
-                                </Step>
-                                <Step>
-                                    <StepLabel>Create class</StepLabel>
-                                    <StepContent>
+                                </StepContent>
+                            </Step>
+                            <Step>
+                                <StepLabel>Create class</StepLabel>
+                                <StepContent>
 
-                                        <div className="sideBySide">
-                                            <p>Enter class subject</p>
-                                            <TextField focus placeholder="Subject" onChange={(e) => this.handleClassChange(e.target.value)} />
-                                            <p>Enter Teacher's name</p>
-                                            <TextField focus placeholder="Teacher" onChange={(e) => this.handleTeacherChange(e.target.value)} />
-                                        </div>
-                                        <div className="sideBySide">
-                                            <Checkbox
-                                                label="M"
-                                                value='M'
-                                                style={styles.checkbox}
-                                            // onChange={handleCheckbox}
-                                            />
-                                            <Checkbox
-                                                label="T"
-                                                style={styles.checkbox}
-                                            />
-                                            <Checkbox
-                                                label="W"
-                                                style={styles.checkbox}
-                                            />
-                                            <Checkbox
-                                                label="TH"
-                                                style={styles.checkbox}
-                                            />
-                                            <Checkbox
-                                                label="F"
-                                                style={styles.checkbox}
-                                            />
-                                            <Checkbox
-                                                label="ST"
-                                                style={styles.checkbox}
-                                            />
-                                            <Checkbox
-                                                label="SU"
-                                                style={styles.checkbox}
-                                            />
-                                            <Dialog
-                                                title="Dialog With Actions"
-                                                actions={actions}
-                                                modal={true}
-                                                open={this.state.open}
-                                            >
-                                                Only actions can close this dialog.
+                                    <div className="sideBySide">
+                                        <p>Enter class subject</p>
+                                        <TextField focus placeholder="Subject" onChange={(e) => this.handleClassChange(e.target.value)} />
+                                        <p>Enter Teacher's name</p>
+                                        <TextField focus placeholder="Teacher" onChange={(e) => this.handleTeacherChange(e.target.value)} />
+                                    </div>
+                                    <div className="sideBySide">
+                                        <Checkbox
+                                            label="M"
+                                            value='M'
+                                            style={styles.checkbox}
+                                        // onChange={handleCheckbox}
+                                        />
+                                        <Checkbox
+                                            label="T"
+                                            style={styles.checkbox}
+                                        />
+                                        <Checkbox
+                                            label="W"
+                                            style={styles.checkbox}
+                                        />
+                                        <Checkbox
+                                            label="TH"
+                                            style={styles.checkbox}
+                                        />
+                                        <Checkbox
+                                            label="F"
+                                            style={styles.checkbox}
+                                        />
+                                        <Checkbox
+                                            label="ST"
+                                            style={styles.checkbox}
+                                        />
+                                        <Checkbox
+                                            label="SU"
+                                            style={styles.checkbox}
+                                        />
+                                        <Dialog
+                                            title="Dialog With Actions"
+                                            actions={actions}
+                                            modal={true}
+                                            open={this.state.open}
+                                        >
+                                            Only actions can close this dialog.
                                             </Dialog>
-                                        </div>
+                                    </div>
 
 
-                                        {this.renderStepActions(1)}
-                                    </StepContent>
-                                </Step>
-                                <Step>
-                                    <StepLabel>Add Asignments</StepLabel>
-                                    <StepContent>
-                                        {this.state.assignments.map((assignments, index) => {
-                                            return (
+                                    {this.renderStepActions(1)}
+                                </StepContent>
+                            </Step>
+                            <Step>
+                                <StepLabel>Add Asignments</StepLabel>
+                                <StepContent>
+                                    {this.state.assignments.map((assignments, index) => {
+                                        return (
 
 
-                                                <div className="assignmentInput">
-                                                    <TextField className="name" focus placeholder="Assignment name" value={this.state.assignments[index].assignment_name} onChange={(e) => this.handleAssignmentChange(index, "assignment_name", e.target.value)} />
-                                                    <TextField className="points" focus placeholder="Points" value={this.state.assignments[index].points_possible} type='number' min="0" onChange={(e) => this.handleAssignmentChange(index, "points_possible", e.target.value)} />
-                                                    <DateTimePicker
-                                                        className="dateTime"
-                                                        format='MMM DD, YYYY hh:mm A'
-                                                        value={this.state.assignments[index].due_date}
-                                                        placeholder='Due Date'
-                                                        onChange={this.setDate}
-                                                        DatePicker={DatePickerDialog}
-                                                        TimePicker={TimePickerDialog}
-                                                        onChange={(e) => this.handleAssignmentChange(index, "due_date", e)}
-                                                    />
-                                                    {/* <Dropdown placeholder='Category' search selection options={this.state.categoryOptions} value={this.state.assignments[index].category} onChange={(e, { value }) => this.handleAssignmentChange(index, "category", value)}/> */}
-                                                    <SelectField
-                                                        className="categorySelect"
-                                                        floatingLabelText=""
-                                                        value={this.state.assignments[index].category}
-                                                        onClick={() => this.setCurrentIndex(index)}
-                                                        onChange={this.handleSelectChange}
-                                                    // onChange={this.handleSelectChange}
-                                                    >
-                                                        <MenuItem value={1} primaryText="Essay" />
-                                                        <MenuItem value={2} primaryText="Test" />
-                                                        <MenuItem value={3} primaryText="Quiz" />
-                                                        <MenuItem value={4} primaryText="HW" />
-                                                    </SelectField>
-                                                    <Button onClick={() => this.handleRemoveAssignment(index)} id="delete">-</Button>
-                                                </div>
-                                            )
-                                        })}
-                                        <Button onClick={() => this.handleAddAssignment()}>ADD</Button>
-                                        {this.renderStepActions(2)}
-                                    </StepContent>
-                                </Step>
-                            </Stepper>
-                        </MuiThemeProvider>
-                    </div>
+                                            <div className="assignmentInput">
+                                                <TextField className="name" focus placeholder="Assignment name" value={this.state.assignments[index].assignment_name} onChange={(e) => this.handleAssignmentChange(index, "assignment_name", e.target.value)} />
+                                                <TextField className="points" focus placeholder="Points" value={this.state.assignments[index].points_possible} type='number' min="0" onChange={(e) => this.handleAssignmentChange(index, "points_possible", e.target.value)} />
+                                                <DateTimePicker
+                                                    className="dateTime"
+                                                    format='MMM DD, YYYY hh:mm A'
+                                                    value={this.state.assignments[index].due_date}
+                                                    placeholder='Due Date'
+                                                    onChange={this.setDate}
+                                                    DatePicker={DatePickerDialog}
+                                                    TimePicker={TimePickerDialog}
+                                                    onChange={(e) => this.handleAssignmentChange(index, "due_date", e)}
+                                                />
+                                                {/* <Dropdown placeholder='Category' search selection options={this.state.categoryOptions} value={this.state.assignments[index].category} onChange={(e, { value }) => this.handleAssignmentChange(index, "category", value)}/> */}
+                                                <SelectField
+                                                    className="categorySelect"
+                                                    floatingLabelText=""
+                                                    value={this.state.assignments[index].category}
+                                                    onClick={() => this.setCurrentIndex(index)}
+                                                    onChange={this.handleSelectChange}
+                                                // onChange={this.handleSelectChange}
+                                                >
+                                                    <MenuItem value={1} primaryText="Essay" />
+                                                    <MenuItem value={2} primaryText="Test" />
+                                                    <MenuItem value={3} primaryText="Quiz" />
+                                                    <MenuItem value={4} primaryText="HW" />
+                                                </SelectField>
+                                                <Button onClick={() => this.handleRemoveAssignment(index)} id="delete">-</Button>
+                                            </div>
+                                        )
+                                    })}
+                                    <Button onClick={() => this.handleAddAssignment()}>ADD</Button>
+                                    {this.renderStepActions(2)}
+                                </StepContent>
+                            </Step>
+                        </Stepper>
+                    </MuiThemeProvider>
                 </div>
+            </div>
 
         );
     }

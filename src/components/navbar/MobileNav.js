@@ -5,7 +5,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUser, setClassId } from '../../ducks/reducer';
+import { getUser, setCalId } from '../../ducks/reducer';
 import profilePic from '../../assets/profile.svg';
 import dueLogo from '../../assets/due_logo.svg';
 import axios from "axios"
@@ -21,7 +21,7 @@ class MobileNav extends Component {
       classNames: [],
     };
 
-    this.setClassId = this.setClassId.bind(this)
+    this.setCalId = this.setCalId.bind(this)
   }
 
   componentDidMount() {
@@ -38,8 +38,8 @@ class MobileNav extends Component {
 
   handleClose = () => this.setState({ open: false });
 
-  setClassId(classId){
-    this.props.setClassId(classId)
+  setCalId(classId){
+    this.props.setCalId(classId)
     // window.location.reload(true)
 }
 
@@ -79,7 +79,7 @@ class MobileNav extends Component {
 
                   <div>
                     <MenuItem onClick={this.handleClose}>
-                      <Link to="/class" onClick={() => this.setClassId(clss.class_id)}><div className="user-classes">
+                      <Link to="/class" onClick={() => this.setCalId(clss.class_id)}><div className="user-classes">
                         <p id="add-class-message">{clss.class_name}</p>
                       </div></Link>
                     </MenuItem>
@@ -107,4 +107,4 @@ function mapStateToProps(state) {
     user: state.user
   }
 }
-export default connect(mapStateToProps, { getUser, setClassId })(MobileNav);
+export default connect(mapStateToProps, { getUser, setCalId })(MobileNav);

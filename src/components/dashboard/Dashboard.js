@@ -27,51 +27,25 @@ class Dashboard extends Component {
             // hideModal: false,
             select: '',
             showNav: false,
-            events: [],
-            topFive: []
         }
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
     }
 
-    componentWillMount() {
-        this.props.getUser().then(res => {
-            axios.get(`/api/assignments/getall/${res.value.user_id}`).then(
-                response => {
-                    console.log('HERE IT IS', response)
-                    response.data.map((event, index) => {
-                        event.start = new Date(event.start)
-                        event.end = new Date(event.end)
-
-                    })
-                    this.setState({
-                        events: response.data
-                    })
-                    console.log(this.state.events)
-                }
-            )
-            axios.get(`/api/assignments/get/topfive/${res.value.user_id}`).then(response => {
-                this.setState({ topFive: response.data })
-            })
-        })
-
-    }
     componentWillReceiveProps(newProps) {
-        console.log(newProps)
         newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
     }
+
     handleOpenModal() {
         this.setState({
             showModal: true,
-            // hideModal: !this.state.hideModal
         })
     }
 
     handleCloseModal() {
         this.setState({
             showModal: false,
-            // hideModal: !this.state.hideModal
 
         })
     }
@@ -80,8 +54,6 @@ class Dashboard extends Component {
         this.setState({
             select: val,
         })
-        console.log("select state", this.state.select.value)
-        console.log("select state", this.state.select.label)
     }
 
     submit() {
@@ -95,8 +67,6 @@ class Dashboard extends Component {
 
     eventStyleGetter(event, start, end, isSelected, desc) {
         console.log(event)
-
-
 
         if(event.desc === "Testing React Color"){
             let style = {
@@ -118,8 +88,6 @@ class Dashboard extends Component {
 
 
     render() {
-        console.log('this.props', this.props)
-        console.log(this.state.topFive)
         const getOptions = (input) => {
             return fetch(`https://api.data.gov/ed/collegescorecard/v1/schools.json?school.name=${input}&_fields=school.name,id&api_key=YBXKnMOHVby0cMoDcpxpLSyv7dtBFZVawfqIVJ3s`)
                 .then((response) => {
@@ -167,10 +135,10 @@ class Dashboard extends Component {
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
                     <div className='dashboardContainer'>
-                        {this.state.topFive.length !== 0 ?
+                        {this.props.all.topFive.length !== 0 ?
                             <div className="upcomingContainer">
                                 {
-                                    this.state.topFive.map((assignment, index) => {
+                                    this.props.all.topFive.map((assignment, index) => {
 
                                         return (
                                             <div className="upcomingAssignment">
@@ -182,7 +150,7 @@ class Dashboard extends Component {
                                                         <span className="pointsPoss">Points possible: {assignment.points_possible}</span>
                                                     </div>
                                                 </div>
-                                                {index < this.state.topFive.length - 1 ? <div className="separator"></div> : null}
+                                                {index < this.props.all.topFive.length - 1 ? <div className="separator"></div> : null}
                                             </div>
                                         )
 
@@ -228,7 +196,7 @@ class Dashboard extends Component {
                         }
                         <div className="calendarWrapper">
                             {this.props.user.school_id ? <BigCalendar
-                                events={this.state.events}
+                                events={this.props.all.events}
                                 //   views={{month: true, week: true}}
                                 views={allViews}
                                 step={60}
@@ -237,7 +205,7 @@ class Dashboard extends Component {
                             /> :
 
                                 <BigCalendar
-                                    events={this.state.events}
+                                    events={this.props.all.events}
                                     //   views={{month: true, week: true}}
                                     views={allViews}
                                     step={60}
@@ -299,11 +267,12 @@ class Dashboard extends Component {
 }
 
 function mapStatetoProps(state) {
-    console.log(state)
     return {
         user: state.user,
         email: state.email,
-        school_id: state.user.school_id
+        school_id: state.user.school_id,
+        all: state,
+        update: state.update
     }
 }
 

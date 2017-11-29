@@ -3,11 +3,14 @@ import './Profile.css'
 import { connect } from 'react-redux';
 import { getUser, deleteClass, setCalandClassId } from '../../ducks/reducer';
 import SideNav from '../navbar/SideNav.js';
+import MobileNav from '../navbar/MobileNav.js';
 import axios from 'axios';
 import AddAssignment from '../class-modal/AddAssignment.js';
 import { withRouter } from 'react-router-dom'
 import Select from "react-select";
 import "../../../node_modules/react-select/dist/react-select.css";
+import MediaQuery from 'react-responsive';
+
 
 import { Input, Button, Header, Image, Modal, Dropdown } from 'semantic-ui-react';
 
@@ -82,7 +85,7 @@ class Profile extends Component {
     submitSchool() {
         console.log('submit')
         axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`).then(res => {
-            
+
         })
     }
 
@@ -111,56 +114,131 @@ class Profile extends Component {
 
         return (
             <div className='profile'>
-                <SideNav />
-                <div className='profile-content'>
-                    <span>hello world</span>
-                    {this.props.classInfo.length !== 0 ?
-                        this.props.classInfo.map((clss, index) => {
-                            return (
-                                //returns a button for every class with access to the name, subject, and id
-                                <div className='edit-class' key={clss.calendar_id}>
-                                    <span className='inner'>{clss.class_name}</span>
-                                    <span onClick={() => this.deleteClass(clss.calendar_id)}>Unsubscribe</span>
-                                </div>
-                            )
-                        })
-                        : null}
+                <MediaQuery query="(min-width: 1024.1px)">
 
-                    <span>Admin calendars</span>
-                    {console.log(this.props.adminCalendars)}
-                    {this.props.adminCalendars.length !== 0 ?
-                        this.props.adminCalendars.map((clss, index) => {
-                            return (
-                                //returns a button for every class with access to the name, subject, and id
-                                <div className='edit-class' key={clss.calendar_id}>
-                                    <span className='inner'>{clss.calendar_name}</span>
-                                    <span onClick={() => this.addAssignments(clss.calendar_id, clss.class_id)}>Add Assignments</span>
-                                </div>
-                            )
-                        })
-                        : null}
-                   
-                    <button onClick={() => this.submitSchool()}>Submit</button>
+                    <SideNav />
+                    <div className='profile-content'>
+                    <div className='profile-classes'>
+                        <div className='subscribed'>
+                            <span>Subscribed classes</span>
 
-                    <Select.Async
-                        className='fetch'
-                        name="form-field-name"
-                        value={this.state.select}
-                        loadOptions={getOptions}
-                        isLoading={isLoadingExternally}
-                        onChange={this.handleSelect}
+                            {this.props.classInfo.length !== 0 ?
+                                this.props.classInfo.map((clss, index) => {
+                                    return (
+                                        //returns a button for every class with access to the name, subject, and id
+                                        <div id='remove' className='edit-class' key={clss.calendar_id}>
+                                            <span className='inner'>{clss.class_name}</span>
+                                            <span onClick={() => this.deleteClass(clss.calendar_id)}>Unsubscribe</span>
+                                        </div>
+                                    )
+                                })
+                                : null}
+                        </div>
 
-                    />
-                </div>
+                        <div className='admin-classes'>
+                            <span>Admin calendars</span>
+                            {console.log(this.props.adminCalendars)}
+                            {this.props.adminCalendars.length !== 0 ?
+                                this.props.adminCalendars.map((clss, index) => {
+                                    return (
+                                        //returns a button for every class with access to the name, subject, and id
+                                        <div id='add' className='edit-class' key={clss.calendar_id}>
+                                            <span className='inner'>{clss.calendar_name}</span>
+                                            <span onClick={() => this.addAssignments(clss.calendar_id, clss.class_id)}>Add Assignments</span>
+                                        </div>
+                                    )
+                                })
+                                : null}
+                        </div>
+                        </div>
+                        <div className='fetch-container'>
+                            <span>Change Schools</span>
+                            <Select.Async
+                                className='fetch-profile'
+                                name="form-field-name"
+                                value={this.state.select}
+                                loadOptions={getOptions}
+                                isLoading={isLoadingExternally}
+                                onChange={this.handleSelect}
+                            />
+                            <button onClick={() => this.submitSchool()}>Submit</button>
+                        </div>
 
 
-                <Modal open={this.state.open}>
-                    <span className='delete' onClick={() => this.addAssignments()}>X</span>
-                    <Modal.Header>Join or Create a Class</Modal.Header>
-                    <Modal.Content image style={{ padding: '0px' }}>
-                        <AddAssignment />
-                    </Modal.Content>
-                </Modal>
+                    </div>
+
+
+                    <Modal open={this.state.open}>
+                        <span className='delete' onClick={() => this.addAssignments()}>X</span>
+                        <Modal.Header>Join or Create a Class</Modal.Header>
+                        <Modal.Content image style={{ padding: '0px' }}>
+                            <AddAssignment />
+                        </Modal.Content>
+                    </Modal>
+
+                </MediaQuery>
+
+                <MediaQuery query="(max-width: 1024px)">
+                    <MobileNav />
+
+                    <div className='profile-content'>
+                        <div className='subscribed'>
+                            <span>Subscribed classes</span>
+
+                            {this.props.classInfo.length !== 0 ?
+                                this.props.classInfo.map((clss, index) => {
+                                    return (
+                                        //returns a button for every class with access to the name, subject, and id
+                                        <div id='remove' className='edit-class' key={clss.calendar_id}>
+                                            <span className='inner'>{clss.class_name}</span>
+                                            <span onClick={() => this.deleteClass(clss.calendar_id)}>Unsubscribe</span>
+                                        </div>
+                                    )
+                                })
+                                : null}
+                        </div>
+
+                        <div className='admin-classes'>
+                            <span>Admin calendars</span>
+                            {console.log(this.props.adminCalendars)}
+                            {this.props.adminCalendars.length !== 0 ?
+                                this.props.adminCalendars.map((clss, index) => {
+                                    return (
+                                        //returns a button for every class with access to the name, subject, and id
+                                        <div id='add' className='edit-class' key={clss.calendar_id}>
+                                            <span className='inner'>{clss.calendar_name}</span>
+                                            <span onClick={() => this.addAssignments(clss.calendar_id, clss.class_id)}>Add Assignments</span>
+                                        </div>
+                                    )
+                                })
+                                : null}
+                        </div>
+
+                        <div className='fetch-container'>
+                            <span>Change Schools</span>
+                            <Select.Async
+                                className='fetch-profile'
+                                name="form-field-name"
+                                value={this.state.select}
+                                loadOptions={getOptions}
+                                isLoading={isLoadingExternally}
+                                onChange={this.handleSelect}
+                            />
+                            <button onClick={() => this.submitSchool()}>Submit</button>
+                        </div>
+
+
+                    </div>
+
+
+                    <Modal open={this.state.open}>
+                        <span className='delete' onClick={() => this.addAssignments()}>X</span>
+                        <Modal.Header>Join or Create a Class</Modal.Header>
+                        <Modal.Content image style={{ padding: '0px' }}>
+                            <AddAssignment />
+                        </Modal.Content>
+                    </Modal>
+                </MediaQuery>
             </div>
         )
     }

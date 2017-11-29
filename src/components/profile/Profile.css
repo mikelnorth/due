@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:200,400");
 .profile {
   width: 100vw;
   height: 100vh; }
@@ -7,6 +8,28 @@
   height: 100vh;
   position: absolute;
   right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.profile-classes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%; }
+
+.admin-classes > span {
+  border-bottom: 1px solid black; }
+
+.subscribed > span {
+  border-bottom: 1px solid black; }
+
+.subscribed {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.admin-classes {
   display: flex;
   flex-direction: column;
   align-items: center; }
@@ -31,6 +54,16 @@
 .edit-class:hover .inner {
   margin-top: -4em; }
 
+#add:hover {
+  border: 1px solid #1485CB;
+  transition: .6s;
+  color: #1485CB; }
+
+#remove:hover {
+  border: 1px solid red;
+  transition: .6s;
+  color: red; }
+
 .inner {
   margin-top: 0em; }
 
@@ -38,3 +71,30 @@
   position: absolute;
   top: -2px;
   right: 3px; }
+
+.fetch-container {
+  margin-top: 40px;
+  width: 40vw; }
+  .fetch-container .fetch-profile {
+    margin-top: 5px;
+    margin-bottom: 20px; }
+  .fetch-container button {
+    margin-bottom: 20px; }
+
+@media (max-width: 1024px) {
+  .profile-content {
+    width: 100vw;
+    transition: .3s;
+    flex-direction: column;
+    align-items: center; }
+  .fetch-container {
+    margin-top: 20px; } }
+
+@media (max-width: 500px) {
+  .profile-content {
+    width: 100vw;
+    transition: .3s;
+    flex-direction: column;
+    align-items: center; }
+  .fetch-container {
+    width: 80vw; } }

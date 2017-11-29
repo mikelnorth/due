@@ -31,6 +31,7 @@ const SET_TOP_FIVE = 'SET_TOP_FIVE';
 const UPDATE_DASHBOARD = 'UPDATE_DASHBOARD';
 const DELETE_CLASS = 'DELETE_CLASS';
 const GET_ADMIN_CALENDARS = 'GET_ADMIN_CALENDARS';
+const SET_CAL_CLASS_ID = 'SET_CAL_CLASS_ID';
 
 
 export default function (state = initialState, action) {
@@ -50,9 +51,22 @@ export default function (state = initialState, action) {
             return Object.assign({}, state, { classInfo: action.payload });
         case GET_ADMIN_CALENDARS + "_FULFILLED":
             return Object.assign({}, state, { adminCalendars: action.payload });
+        case SET_CAL_CLASS_ID:
+            return Object.assign({}, state, { calendarId: action.payload.calendarId, classId: action.payload.classId });
 
         default:
             return state
+    }
+}
+
+export function setCalandClassId(calendarId, classId) {
+    console.log(classId, calendarId)
+    return {
+        type: SET_CAL_ID,
+        payload: {
+            calendarId: calendarId,
+            classId: classId
+        }
     }
 }
 

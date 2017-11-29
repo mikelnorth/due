@@ -9,6 +9,8 @@ import Profile from "./components/profile/Profile.js";
 import MobileNav from "./components/navbar/MobileNav";
 import SideNav from "./components/navbar/SideNav";
 import ClassModal from "./components/class-modal/ClassModal";
+import AddAssignment from "./components/class-modal/AddAssignment";
+
 
 export default (
     <div>
@@ -22,7 +24,8 @@ export default (
             <Route component={SideNav} path='/side' />
             <Route component={MobileNav} path='/mobilenav' />
             <Route component={ClassModal} path="/classmodal"/>
-            <Route component={Profile} path="/profile"/>            
+            <Route component={Profile} path="/profile"/> 
+            <Route component={AddAssignment} path="/test"/>                        
         </Switch>
     </div>
 )

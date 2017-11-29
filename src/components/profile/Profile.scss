@@ -14,14 +14,34 @@
 }
 
 .edit-class{
-    width: 30%;
-    height: 50px;
-    margin-top: 20px;
+    margin-top:  20px;
+    height: 64px;
+    font: normal normal 700 1em/4em Arial,sans-serif;
+    overflow: hidden;
+    width: 250px;
+    // background-color: #3b5998;
     border: 1px solid black;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-radius: 3px; 
+    
+    span{
+        // color: white;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+        cursor: pointer;
+    }
+}
+
+.edit-class .inner{
+    transition: 0.3s;
+}
+
+.edit-class:hover .inner{
+    margin-top: -4em;
+}
+
+.inner{
+    margin-top: 0em;
 }
 
 .delete{

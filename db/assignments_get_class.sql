@@ -1,4 +1,4 @@
-SELECT a.assignment_name as title, a.datetime as start, a.datetime as end, c.class_name as desc, a.points_possible FROM users as u
+SELECT a.assignment_name as title, a.datetime as start, a.datetime as end, c.class_name as desc, a.points_possible, uc.color FROM users as u
 JOIN user_schools as us ON u.user_id = us.user_id
 JOIN schools as s ON s.school_id = us.school_id
 JOIN classes as c ON c.school_id = us.school_id

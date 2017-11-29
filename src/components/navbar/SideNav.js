@@ -8,7 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios';
 import MobileNav from '../navbar/MobileNav.js';
 import ClassModal from '../class-modal/ClassModal.js'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 class SideNav extends Component {
@@ -18,11 +18,11 @@ class SideNav extends Component {
         this.setCalId = this.setCalId.bind(this);
     }
 
-  
+
 
     //sets the id of selected class to redux so it can be accessed in the class
     //component.
-    setCalId(calId){
+    setCalId(calId) {
         this.props.setCalId(calId)
     }
 
@@ -37,16 +37,17 @@ class SideNav extends Component {
                 if true maps over each class to create a button that links to each individual class */}
                 <div className='side-container'>
                     <Link to='dashboard' className='class-btn'>
-                         <div>
+                        <div>
                             <p>Dashboard</p>
-                         </div>
+                        </div>
                     </Link>
                     {this.props.classInfo.length !== 0 ?
                         this.props.classInfo.map((clss, index) => {
+                            console.log(clss)
                             return (
                                 //returns a button for every class with access to the name, subject, and id
                                 <Link to='class' className='class-btn' onClick={() => this.setCalId(clss.calendar_id)}><div>
-                                    <p>{clss.class_name}</p>
+                                    <p style={{ borderBottom: `#${clss.color} 2.5px solid` }}>{clss.class_name}</p>
                                 </div></Link>
                             )
                         })
@@ -56,17 +57,17 @@ class SideNav extends Component {
                     for desktop view. */}
                     <Modal trigger={<Button className='class-btn'>Add Class</Button>}>
                         <Modal.Header>Join or Create a Class</Modal.Header>
-                        <Modal.Content image style={{padding: '0px'}}>
-                                <ClassModal />            
+                        <Modal.Content image style={{ padding: '0px' }}>
+                            <ClassModal />
                         </Modal.Content>
                     </Modal>
-                    
-                    </div>
-                    <div className='side-bottom'>
-                        <img className='nav_logo' src={logo} alt='#' />
-                        <a className="login" href={process.env.REACT_APP_LOGOUT}><button>Logout</button></a>
-                    </div>
-                
+
+                </div>
+                <div className='side-bottom'>
+                    <img className='nav_logo' src={logo} alt='#' />
+                    <a className="login" href={process.env.REACT_APP_LOGOUT}><button>Logout</button></a>
+                </div>
+
             </div>
         )
     }
@@ -75,10 +76,10 @@ class SideNav extends Component {
 //used redux to make the user object acessible.
 function mapStateToProps(state) {
     return {
-      user: state.user,
-      calId: state.calId,
-      classInfo: state.classInfo,
-      all: state
+        user: state.user,
+        calId: state.calId,
+        classInfo: state.classInfo,
+        all: state
     }
-  }
-  export default connect(mapStateToProps, { setCalId, getClassInfo })(SideNav);
+}
+export default connect(mapStateToProps, { setCalId, getClassInfo })(SideNav);

@@ -13,7 +13,8 @@ class Join extends Component {
 
         this.state = {
             classes: [],
-            cal_id: null
+            cal_id: null,
+            color: ''
         }
         this.selectCal = this.selectCal.bind(this)
         this.submitCalendar = this.submitCalendar.bind(this)
@@ -27,15 +28,16 @@ class Join extends Component {
         })
     }
 
-    selectCal(calendar_id){
+    selectCal(calendar_id, color){
         this.setState({
-            cal_id: calendar_id
+            cal_id: calendar_id,
+            color: color
         })
         console.log(this.state.cal_id)
     }
 
     submitCalendar(){
-        axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.cal_id}`).then( response => {
+        axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.cal_id}/${this.state.color}`).then( response => {
             console.log(response)
             console.log(this.props)
             axios.post(`/api/assignments/add/user/assignments/${this.props.user.user_id}/${this.props.classForJoin.value}/${this.state.cal_id}`).then(response => {
@@ -55,7 +57,7 @@ class Join extends Component {
                 </div>
                 {this.state.classes.map((clss, index) => {
                     return (
-                        <button className='classes' onClick={() => this.selectCal(clss.calendar_id)}>
+                        <button className='classes' onClick={() => this.selectCal(clss.calendar_id, clss.color)}>
                             <div className="teacher-and-days">
                                 <span>{clss.calendar_name}</span>
                                 <span>{clss.days}</span>

@@ -27,14 +27,14 @@ class Class extends Component {
 
     componentDidMount() {
         this.props.getUser()
-        console.log(this.props)
+        //console.log(this.props)
 
         this.getClassInfo(this.props.user.user_id, this.props.calId)
     }
 
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps)
+        //console.log(newProps)
         this.getClassInfo(newProps.user.user_id, newProps.calId)
     }
 

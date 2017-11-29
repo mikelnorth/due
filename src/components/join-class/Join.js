@@ -21,9 +21,9 @@ class Join extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.classForJoin)
+        //console.log(this.props.classForJoin)
         axios.get(`/api/calendars/get/${this.props.classForJoin.value}`).then(response => {
-            console.log("classes: " , response.data)
+            //console.log("classes: " , response.data)
             this.setState({ classes: response.data })
         })
     }
@@ -33,22 +33,22 @@ class Join extends Component {
             cal_id: calendar_id,
             color: color
         })
-        console.log(this.state.cal_id)
+        //console.log(this.state.cal_id)
     }
 
     submitCalendar(){
         axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.cal_id}/${this.state.color}`).then( response => {
-            console.log(response)
-            console.log(this.props)
+            //console.log(response)
+            //console.log(this.props)
             axios.post(`/api/assignments/add/user/assignments/${this.props.user.user_id}/${this.props.classForJoin.value}/${this.state.cal_id}`).then(response => {
-                console.log("Added to User Assignment: ", response)
+                //console.log("Added to User Assignment: ", response)
             window.location.reload(true)
             })
         })
     }
 
     render() {
-        console.log(this.state.classes)
+        //console.log(this.state.classes)
         return (
             <div className="classes-container">
                 <span>Select your teacher</span>

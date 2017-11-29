@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+
 import Headroom from "react-headroom"
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed'
 import "../../../node_modules/animate.css/animate.min.css"
-import ScrollAnimation from 'react-animate-on-scroll';
+//import ScrollAnimation from 'react-animate-on-scroll';
 
 import "./Landing.css"
 import logo from "../../assets/due-logo.png"
@@ -76,8 +76,7 @@ class Landing extends Component {
         <div ref={this.setTopNode}></div>
 
         <Headroom
-          onPin={() => console.log('pinned')}
-          onUnpin={() => console.log('unpinned')}
+          
           style={{
             height: 60,
             background: 'rgba(0, 0, 255, 1)',
@@ -86,7 +85,7 @@ class Landing extends Component {
         >
           <header>
             <div className="sideBySide" onClick={this.goToTop}>
-              <img src={logo} className="logo"></img>
+              <img src={logo} className="logo" alt="logo"></img>
               <span className="dueTitle">due.</span>
             </div>
             <div className="sideBySide">
@@ -99,8 +98,8 @@ class Landing extends Component {
           </header>
         </Headroom>
         <div className="placeholder">
-          <img src={iphone} className="iphone"></img>
-          <img src={lappy} className="lappy"></img>
+          <img src={iphone} className="iphone" alt="iphone"></img>
+          <img src={lappy} className="lappy" alt="lappy"></img>
         </div>
         <div className="placeholder">
         </div>

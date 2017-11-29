@@ -44,7 +44,7 @@ passport.use(new Auth0Strategy({
         const db = app.get('db')
         //find and add users here
 
-        console.log(profile)
+        //console.log(profile)
         db.users_find_user([profile._json.email]).then(user => {
             if (user[0]) {
                 return done(null, user[0].user_id)
@@ -55,7 +55,7 @@ passport.use(new Auth0Strategy({
                         return done(null, user[0].user_id)
                     })
             }
-            console.log(user)
+            //console.log(user)
         })
 
     }

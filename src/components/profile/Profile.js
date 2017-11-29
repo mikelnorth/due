@@ -20,7 +20,9 @@ class Profile extends Component {
 
         this.state = {
             open: false,
-            select: {}
+            select: {},
+            calId: '',
+            class_id: ''
         }
         this.handleSelect = this.handleSelect.bind(this);
         this.submitSchool = this.submitSchool.bind(this);
@@ -36,17 +38,9 @@ class Profile extends Component {
         this.setState({
             select: val,
         })
-        console.log(this.state.select.label)
     }
 
-    addAssignments(calId, classId) {
-        this.setState({
-            open: !this.state.open
-        })
-        console.log('ids', calId, classId)
 
-        this.props.setCalandClassId(calId, classId)
-    }
 
     handleAddAssignment = () => {
         this.setState({
@@ -61,25 +55,6 @@ class Profile extends Component {
         this.setState({
             assignments: this.state.assignments.filter((s, sidx) => idx !== sidx)
         });
-    }
-
-    setCurrentIndex(index) {
-        this.setState({ currentIndex: index })
-        console.log(this.state.currentIndex)
-    }
-
-    handleAssignmentChange = (index, field, value) => {
-        let tempArr = this.state.assignments
-
-        console.log(value)
-
-        tempArr[index][field] = value;
-        //console.log(temp)
-        this.setState({
-            assignments: tempArr
-        })
-
-        console.log(this.state.assignments)
     }
 
     submitSchool() {
@@ -118,38 +93,38 @@ class Profile extends Component {
 
                     <SideNav />
                     <div className='profile-content'>
-                    <div className='profile-classes'>
-                        <div className='subscribed'>
-                            <span>Subscribed classes</span>
+                        <div className='profile-classes'>
+                            <div className='subscribed'>
+                                <span>Subscribed classes</span>
 
-                            {this.props.classInfo.length !== 0 ?
-                                this.props.classInfo.map((clss, index) => {
-                                    return (
-                                        //returns a button for every class with access to the name, subject, and id
-                                        <div id='remove' className='edit-class' key={clss.calendar_id}>
-                                            <span className='inner'>{clss.class_name}</span>
-                                            <span onClick={() => this.deleteClass(clss.calendar_id)}>Unsubscribe</span>
-                                        </div>
-                                    )
-                                })
-                                : null}
-                        </div>
+                                {this.props.classInfo.length !== 0 ?
+                                    this.props.classInfo.map((clss, index) => {
+                                        return (
+                                            //returns a button for every class with access to the name, subject, and id
+                                            <div id='remove' className='edit-class' key={clss.calendar_id}>
+                                                <span className='inner'>{clss.class_name}</span>
+                                                <span onClick={() => this.deleteClass(clss.calendar_id)}>Unsubscribe</span>
+                                            </div>
+                                        )
+                                    })
+                                    : null}
+                            </div>
 
-                        <div className='admin-classes'>
-                            <span>Admin calendars</span>
-                            {console.log(this.props.adminCalendars)}
-                            {this.props.adminCalendars.length !== 0 ?
-                                this.props.adminCalendars.map((clss, index) => {
-                                    return (
-                                        //returns a button for every class with access to the name, subject, and id
-                                        <div id='add' className='edit-class' key={clss.calendar_id}>
-                                            <span className='inner'>{clss.calendar_name}</span>
-                                            <span onClick={() => this.addAssignments(clss.calendar_id, clss.class_id)}>Add Assignments</span>
-                                        </div>
-                                    )
-                                })
-                                : null}
-                        </div>
+                            <div className='admin-classes'>
+                                <span>Admin calendars</span>
+                                {console.log(this.props.adminCalendars)}
+                                {this.props.adminCalendars.length !== 0 ?
+                                    this.props.adminCalendars.map((clss, index) => {
+                                        return (
+                                            //returns a button for every class with access to the name, subject, and id
+                                            <div id='add' className='edit-class' key={clss.calendar_id}>
+                                                <span className='inner'>{clss.calendar_name}</span>
+                                                <span onClick={() => this.setState({calId: clss.calendar_id, class_id: clss.class_id, open: !this.state.open})}>Add Assignments</span>
+                                            </div>
+                                        )
+                                    })
+                                    : null}
+                            </div>
                         </div>
                         <div className='fetch-container'>
                             <span>Change Schools</span>
@@ -169,10 +144,10 @@ class Profile extends Component {
 
 
                     <Modal open={this.state.open}>
-                        <span className='delete' onClick={() => this.addAssignments()}>X</span>
+                        <span className='delete' onClick={() => this.setState({open: !this.state.open})}>X</span>
                         <Modal.Header>Join or Create a Class</Modal.Header>
                         <Modal.Content image style={{ padding: '0px' }}>
-                            <AddAssignment />
+                            <AddAssignment class_id={this.state.class_id} calId={this.state.calId} />
                         </Modal.Content>
                     </Modal>
 
@@ -232,7 +207,7 @@ class Profile extends Component {
 
 
                     <Modal open={this.state.open}>
-                        <span className='delete' onClick={() => this.addAssignments()}>X</span>
+                        <span className='delete' onClick={() => this.setState({open: !this.state.open})}>X</span>
                         <Modal.Header>Join or Create a Class</Modal.Header>
                         <Modal.Content image style={{ padding: '0px' }}>
                             <AddAssignment />

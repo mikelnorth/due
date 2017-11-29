@@ -19,7 +19,8 @@ let initialState = {
     events: [],
     topFive: [],
     update: '',
-    adminCalendars: []
+    adminCalendars: [],
+    
 }
 
 const GET_USER = "GET_USER";

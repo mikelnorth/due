@@ -6,6 +6,7 @@ import "../../../node_modules/react-select/dist/react-select.css";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { withRouter } from 'react-router-dom'
 
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -51,16 +52,27 @@ class AddAssignment extends Component {
             stepIndex: 0,
             assignments: [{ assignment_name: '', points_possible: '', due_date: '', category: null }],
             categoryOptions: [{ key: '1', value: '1', text: 'Essay' }, { key: '2', value: '2', text: 'Test' }],
+            currentIndex: null,
         }
 
         this.handleAddAssignment = this.handleAddAssignment.bind(this);
         this.handleRemoveAssignment = this.handleRemoveAssignment.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.setCurrentIndex = this.setCurrentIndex.bind(this);
     }
 
-    componentWillReceiveProps(newProps){
-        console.log(newProps)
+    componentDidMount(){
+        this.setState({
+            calId: this.props.calId,
+            class_id: this.props.class_id
+        })
     }
+
+    setCurrentIndex(index) {
+        this.setState({ currentIndex: index })
+        console.log(this.state.currentIndex)
+    }
+
 
     setDate = (dateTime) => {
         this.setState({ dateTime })
@@ -116,12 +128,10 @@ class AddAssignment extends Component {
 
     submitAssignments() {
         console.log('assignments', this.state.assignments)
-        axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.currentCalendarId}`).then(response => {
-            console.log("Added to user calendars.")
-        })
-        axios.post(`/api/assignments/add/${this.state.currentClassId}/${this.state.currentCalendarId}`, this.state.assignments).then(response => {
+
+        axios.post(`/api/assignments/add/${this.state.class_id}/${this.state.calId}`, this.state.assignments).then(response => {
             console.log("Got to assignments response.")
-            axios.post(`/api/assignments/add/user/assignments/${this.props.user.user_id}/${this.state.currentClassId}/${this.state.currentCalendarId}`).then(response => {
+            axios.post(`/api/assignments/add/user/assignments/${this.props.user.user_id}/${this.state.class_id}/${this.state.calId}`).then(response => {
                 console.log("Added to User Assignment: ", response)
                 window.location.reload(true)
 
@@ -139,7 +149,7 @@ class AddAssignment extends Component {
                     disableTouchRipple={false}
                     disableFocusRipple={false}
                     primary={true}
-                    onClick={() => this.submitAssignments}
+                    onClick={() => this.submitAssignments()}
                     style={{ marginRight: 12 }}
                 />
 
@@ -158,7 +168,7 @@ class AddAssignment extends Component {
                 onClick={this.handleClose}
             />,
             <FlatButton
-                label="Submit"
+                label="Submitss"
                 primary={true}
                 disabled={false}
                 onClick={this.handleOpen}
@@ -236,4 +246,4 @@ function mapStatetoProps(state) {
     }
 }
 
-export default (connect(mapStatetoProps)(AddAssignment))
+export default withRouter((connect(mapStatetoProps)(AddAssignment)))

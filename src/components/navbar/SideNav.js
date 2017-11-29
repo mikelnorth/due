@@ -30,7 +30,7 @@ class SideNav extends Component {
         return (
             <div className='side'>
                 <div className='side-top'>
-                    <img className='profile_pic' src={this.props.user.user_pic} alt='' />
+                    <Link to='/profile'><img className='profile_pic' src={this.props.user.user_pic} alt='' /></Link>
                     <div className='profile_name'>{this.props.user.user_name}</div>
                 </div>
                 {/* Checks to see if classes exist on state.

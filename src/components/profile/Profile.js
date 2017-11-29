@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Profile.css'
 import { connect } from 'react-redux';
-import { getUser, deleteClass, setCalandClassId } from '../../ducks/reducer';
+import { getUser, deleteClass } from '../../ducks/reducer';
 import SideNav from '../navbar/SideNav.js';
 import MobileNav from '../navbar/MobileNav.js';
 import axios from 'axios';
@@ -119,7 +119,7 @@ class Profile extends Component {
                                             //returns a button for every class with access to the name, subject, and id
                                             <div id='add' className='edit-class' key={clss.calendar_id}>
                                                 <span className='inner'>{clss.calendar_name}</span>
-                                                <span onClick={() => this.setState({calId: clss.calendar_id, class_id: clss.class_id, open: !this.state.open})}>Add Assignments</span>
+                                                <span onClick={() => this.setState({ calId: clss.calendar_id, class_id: clss.class_id, open: !this.state.open })}>Add Assignments</span>
                                             </div>
                                         )
                                     })
@@ -144,7 +144,7 @@ class Profile extends Component {
 
 
                     <Modal open={this.state.open}>
-                        <span className='delete' onClick={() => this.setState({open: !this.state.open})}>X</span>
+                        <span className='delete' onClick={() => this.setState({ open: !this.state.open })}>X</span>
                         <Modal.Header>Join or Create a Class</Modal.Header>
                         <Modal.Content image style={{ padding: '0px' }}>
                             <AddAssignment class_id={this.state.class_id} calId={this.state.calId} />
@@ -207,7 +207,7 @@ class Profile extends Component {
 
 
                     <Modal open={this.state.open}>
-                        <span className='delete' onClick={() => this.setState({open: !this.state.open})}>X</span>
+                        <span className='delete' onClick={() => this.setState({ open: !this.state.open })}>X</span>
                         <Modal.Header>Join or Create a Class</Modal.Header>
                         <Modal.Content image style={{ padding: '0px' }}>
                             <AddAssignment />
@@ -228,4 +228,4 @@ function mapStateToProps(state) {
         all: state
     }
 }
-export default withRouter(connect(mapStateToProps, { getUser, deleteClass, setCalandClassId })(Profile));
+export default withRouter(connect(mapStateToProps, { getUser, deleteClass })(Profile));

@@ -83,6 +83,9 @@ class ClassModal extends Component {
         this.handleCheckbox = this.handleCheckbox.bind(this);
         this.addDays = this.addDays.bind(this);
         this.handleChangeComplete = this.handleChangeComplete.bind(this);        
+        this.handleClose = this.handleClose.bind(this)  
+        this.handleCloseDialog = this.handleCloseDialog.bind(this)      
+
     }
 
 
@@ -209,7 +212,7 @@ class ClassModal extends Component {
 
     submitAssignments() {
         console.log('assignments', this.state.assignments)
-        axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.currentCalendarId}`).then(response => {
+        axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.currentCalendarId}/${this.state.background.replace(/\#/g, '')}`).then(response => {
             console.log("Added to user calendars.")
         })
         axios.post(`/api/assignments/add/${this.state.currentClassId}/${this.state.currentCalendarId}`, this.state.assignments).then(response => {
@@ -262,9 +265,11 @@ class ClassModal extends Component {
         this.setState({ open: true });
     };
 
-    handleClose = () => {
-        this.setState({ open: false });
-    };
+
+
+    handleCloseDialog() {
+        this.setState({open: false})
+    }
 
     submitClassAndCal() {
 
@@ -278,7 +283,8 @@ class ClassModal extends Component {
             response => {
                 console.log('response data', response.data)
                 this.setState({ currentClassId: response.data[0].class_id })
-                axios.post(`/api/calendars/add/${this.props.user.user_id}/${response.data[0].class_id}/${this.state.background}`, calendarInfo).then(response => {
+                console.log(this.state.background)
+                axios.post(`/api/calendars/add/${this.props.user.user_id}/${response.data[0].class_id}/${this.state.background.replace(/\#/g, '')}`, calendarInfo).then(response => {
                     console.log(response.data)
                     this.setState({ currentCalendarId: response.data[0].calendar_id })
                 })
@@ -441,7 +447,7 @@ class ClassModal extends Component {
                                                 title="Are you sure?"
                                                 actions={actions}
                                                 modal={true}
-                                                open={this.state.open}
+                                                
                                             >
                                                 Once submitted, You cannot return to step(s) 1 & 2.
                                             </Dialog>

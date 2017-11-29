@@ -31,6 +31,7 @@ class Dashboard extends Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
+        this.eventStyleGetter = this.eventStyleGetter.bind(this);
     }
 
     componentWillReceiveProps(newProps) {
@@ -66,23 +67,16 @@ class Dashboard extends Component {
     }
 
     eventStyleGetter(event, start, end, isSelected, desc) {
-        console.log(event)
 
-        if(event.desc === "Testing React Color"){
-            let style = {
-                backgroundColor: '#222222',
-                color: 'white'
-            };
-            return {
-                style: style
-            }
-        }
+        console.log("GOT INTO THE IF STATEMENT!!!!")
         let style = {
-            backgroundColor: '',
+
+            backgroundColor: `#${event.color}`,
             color: 'white'
         };
         return {
             style: style
+
         }
     }
 
@@ -118,18 +112,18 @@ class Dashboard extends Component {
         ];
 
         let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
-       
+
         function formatDate(date) {
             var hours = date.getHours();
             var minutes = date.getMinutes();
             var ampm = hours >= 12 ? 'pm' : 'am';
             hours = hours % 12;
             hours = hours ? hours : 12; // the hour '0' should be '12'
-            minutes = minutes < 10 ? '0'+minutes : minutes;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
             var strTime = hours + ':' + minutes + ' ' + ampm;
-            return date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
-          }
-       
+            return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
+        }
+
         return (
             <div className='dashboard'>
                 <MediaQuery query="(min-width: 1024.1px)">
@@ -272,6 +266,7 @@ function mapStatetoProps(state) {
         email: state.email,
         school_id: state.user.school_id,
         all: state,
+        classInfo: state.classInfo,
         update: state.update
     }
 }

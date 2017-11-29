@@ -268,7 +268,8 @@ class ClassModal extends Component {
 
 
     handleCloseDialog() {
-        this.setState({open: false})
+        console.log("Close hit")
+        this.setState({open: !this.state.open})
     }
 
     submitClassAndCal() {
@@ -333,7 +334,7 @@ class ClassModal extends Component {
             <FlatButton
                 label="Cancel"
                 primary={true}
-                onClick={this.handleClose}
+                onClick={this.handleCloseDialog}
             />,
             <FlatButton
                 label="Submit"
@@ -447,6 +448,7 @@ class ClassModal extends Component {
                                                 title="Are you sure?"
                                                 actions={actions}
                                                 modal={true}
+                                                open={this.state.open}
                                                 
                                             >
                                                 Once submitted, You cannot return to step(s) 1 & 2.

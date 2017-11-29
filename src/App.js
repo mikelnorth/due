@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import router from './router.js'
 import './App.css';
 import { connect } from 'react-redux';
-import { getUser, getClassInfo, setEvents, setTopFive } from './ducks/reducer.js';
+import { getUser, getClassInfo, setEvents, setTopFive, getAdminCalendars } from './ducks/reducer.js';
 import axios from 'axios';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -20,11 +20,11 @@ class App extends Component {
     })
   }
 
-  componentWillReceiveProps(newProps){
+  componentWillReceiveProps(newProps) {
 
   }
 
-  getAll(userId){
+  getAll(userId) {
     axios.get(`/api/assignments/getall/${userId}`).then(
       events => {
         events.data.map((event, index) => {
@@ -32,7 +32,6 @@ class App extends Component {
           event.end = new Date(event.end)
 
         })
-        
         this.props.setEvents(events.data)
 
         axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
@@ -43,6 +42,8 @@ class App extends Component {
     this.props.getClassInfo(userId).then(res => {
       console.log('app res', res)
     });
+
+    this.props.getAdminCalendars(userId)
   }
 
   render() {
@@ -61,4 +62,4 @@ function mapStateToProps(state) {
     classInfo: state.classInfo,
   }
 }
-export default withRouter(connect(mapStateToProps, { getUser, getClassInfo, setEvents, setTopFive })(App));
+export default withRouter(connect(mapStateToProps, { getUser, getClassInfo, setEvents, setTopFive, getAdminCalendars })(App));

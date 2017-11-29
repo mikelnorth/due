@@ -45,12 +45,12 @@
 //   }
 
 //   componentDidMount() {
-//     console.log(this.props.user.school)
+//     //console.log(this.props.user.school)
 //     axios.get(`/api/classes/get/${this.props.user.school_id}`).then(response => {
 //       this.setState({
 //         options: response.data
 //       })
-//       console.log('classWizard',response.data)
+//       //console.log('classWizard',response.data)
 //     })
 //   }
 
@@ -58,15 +58,15 @@
 //     this.setState({
 //       selectedClass: val,
 //     })
-//     console.log("select state", this.state.selectedClass)
-//     // console.log("select state", this.state.select.label)
+//     //console.log("select state", this.state.selectedClass)
+//     // //console.log("select state", this.state.select.label)
 //   }
 
 //   handleClassChange(val) {
 //     this.setState({
 //       subject: val
 //     })
-//     console.log(this.state.subject)
+//     //console.log(this.state.subject)
 //   }
 
 //   handleNext = () => {
@@ -113,7 +113,7 @@
 
 //   setDate = (dateTime) => {
 //     this.setState({ dateTime })
-//     console.log(dateTime)
+//     //console.log(dateTime)
 //   }
 
 //   render() {

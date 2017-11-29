@@ -37,12 +37,12 @@ module.exports = {
     deleteClass: (req, res, next) => {
         const db = req.app.get('db')
         const { user_id, calendar_id } = req.params
-        console.log('wahoo', user_id, calendar_id, req.params)
+        //console.log('wahoo', user_id, calendar_id, req.params)
         db.delete_user_class([user_id, calendar_id]).then(
             response => {
                 return db.classes_get_classnames_by_user([user_id]).then(
                     classnames => {
-                        console.log('class names', classnames)
+                        //console.log('class names', classnames)
                         res.status(200).send(classnames)
                     }
                 )

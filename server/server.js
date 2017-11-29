@@ -44,7 +44,7 @@ passport.use(new Auth0Strategy({
         const db = app.get('db')
         //find and add users here
 
-        console.log(profile)
+        //console.log(profile)
         db.users_find_user([profile._json.email]).then(user => {
             if (user[0]) {
                 return done(null, user[0].user_id)
@@ -55,7 +55,7 @@ passport.use(new Auth0Strategy({
                         return done(null, user[0].user_id)
                     })
             }
-            console.log(user)
+            //console.log(user)
         })
 
     }
@@ -112,7 +112,7 @@ app.delete('/api/delete/class/:user_id/:calendar_id', classes_controller.deleteC
 
 //CALENDARS
 app.get('/api/calendars/get/:class_id', calendar_controller.findCalendars);
-app.post('/api/calendars/add/:user_id/:class_id', calendar_controller.createCalendar);
+app.post('/api/calendars/add/:user_id/:class_id/:color', calendar_controller.createCalendar);
 app.get('/api/calendars/user/:user_id', calendar_controller.findCalendarByUser);
 app.get('/api/calendars/user/class/:user_id/:calendar_id', calendar_controller.findCalendarByUserClass);
 app.get('/api/calendars/admin/:user_id', calendar_controller.getAdminCalendars)

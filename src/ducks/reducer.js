@@ -35,7 +35,7 @@ const GET_ADMIN_CALENDARS = 'GET_ADMIN_CALENDARS';
 
 
 export default function (state = initialState, action) {
-    console.log(action)
+    //console.log(action)
     switch (action.type) {
         case GET_USER + "_FULFILLED":
             return Object.assign({}, state, { user: action.payload });
@@ -58,9 +58,9 @@ export default function (state = initialState, action) {
 }
 
 export function getAdminCalendars(userId) {
-    console.log('in the get admin calendars, redux')
+    //console.log('in the get admin calendars, redux')
     const adminCal = axios.get(`/api/calendars/admin/${userId}`).then(resp => {
-        console.log('response in getadminCal redux', resp)
+        //console.log('response in getadminCal redux', resp)
         return resp.data
     })
 
@@ -71,9 +71,9 @@ export function getAdminCalendars(userId) {
 }
 
 export function deleteClass(userId, calId) {
-    console.log('delete function redux', userId, calId)
+    //console.log('delete function redux', userId, calId)
     const classInfo = axios.delete(`/api/delete/class/${userId}/${calId}`).then(res => {
-        console.log('delete resonse', res)
+        //console.log('delete resonse', res)
         return res.data
     })
 
@@ -101,7 +101,7 @@ export function setEvents(events) {
 
 export function getClassInfo(userId) {
     const classInfo = axios.get(`/api/classes/getbyclassname/${userId}`).then(resp => {
-        console.log('response in getclassinfo redux', resp)
+        //console.log('response in getclassinfo redux', resp)
         return resp.data
     })
 
@@ -124,7 +124,7 @@ export function getUser() {
     const user = axios.get('/auth/me').then(res => {
         return axios.get('/api/users/setuser/' + res.data.email)
             .then(res => {
-                console.log("User Info: ", res.data[0])
+                //console.log("User Info: ", res.data[0])
                 return res.data[0]
             })
 

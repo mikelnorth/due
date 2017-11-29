@@ -12,7 +12,6 @@ import MobileNav from '../navbar/MobileNav.js';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import ReactColor from '../../components/react-color/ReactColor';
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -68,7 +67,7 @@ class Dashboard extends Component {
 
     eventStyleGetter(event, start, end, isSelected, desc) {
 
-        console.log("GOT INTO THE IF STATEMENT!!!!")
+        //console.log("GOT INTO THE IF STATEMENT!!!!")
         let style = {
 
             backgroundColor: `#${event.color}`,

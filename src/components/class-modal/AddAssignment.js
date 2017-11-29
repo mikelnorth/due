@@ -1,36 +1,26 @@
 import React, { Component } from "react"
 import { connect } from 'react-redux';
 import './ClassModal.css';
-import Select from "react-select";
-import "../../../node_modules/react-select/dist/react-select.css";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { withRouter } from 'react-router-dom'
 
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import Checkbox from 'material-ui/Checkbox';
 import DateTimePicker from 'material-ui-datetimepicker';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
-import { Input, Button, Header, Image, Modal, Dropdown } from 'semantic-ui-react';
-import MediaQuery from 'react-responsive';
+import {  Button } from 'semantic-ui-react';
+// import MediaQuery from 'react-responsive';
 import axios from "axios";
-import { Link } from 'react-router-dom';
 
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import Dialog from 'material-ui/Dialog';
-import Join from '../../components/join-class/Join';
-import { CirclePicker } from 'react-color';
 import 'font-awesome/css/font-awesome.min.css';
 
 
 
-import { lightblue600 } from 'material-ui/styles/colors';
 
 
 const muiTheme = getMuiTheme({
@@ -70,13 +60,13 @@ class AddAssignment extends Component {
 
     setCurrentIndex(index) {
         this.setState({ currentIndex: index })
-        console.log(this.state.currentIndex)
+        //console.log(this.state.currentIndex)
     }
 
 
     setDate = (dateTime) => {
         this.setState({ dateTime })
-        console.log(dateTime)
+        //console.log(dateTime)
     }
 
     handleAddAssignment = () => {
@@ -88,19 +78,19 @@ class AddAssignment extends Component {
     handleAssignmentChange = (index, field, value) => {
         let tempArr = this.state.assignments
 
-        console.log(value)
+        //console.log(value)
 
         tempArr[index][field] = value;
-        //console.log(temp)
+        ////console.log(temp)
         this.setState({
             assignments: tempArr
         })
 
-        console.log(this.state.assignments)
+        //console.log(this.state.assignments)
     }
 
     handleRemoveAssignment = (idx) => {
-        console.log('here')
+        //console.log('here')
         // let temp = this.state.assignments
         // temp.splice(idx,1)
         this.setState({
@@ -109,30 +99,30 @@ class AddAssignment extends Component {
     }
 
     handleSelectChange = (event, index, value) => {
-        console.log('event', event)
-        console.log('index', index)
-        console.log('value', value)
+        //console.log('event', event)
+        //console.log('index', index)
+        //console.log('value', value)
 
         let temp = this.state.assignments
-        console.log(temp)
+        //console.log(temp)
 
 
-        console.log(this.state.currentIndex)
+        //console.log(this.state.currentIndex)
 
         var tempIndex = this.state.currentIndex
         temp[tempIndex].category = value
         this.setState({ assignments: temp })
-        console.log(this.state.assignments)
+        //console.log(this.state.assignments)
 
     }
 
     submitAssignments() {
-        console.log('assignments', this.state.assignments)
+        //console.log('assignments', this.state.assignments)
 
         axios.post(`/api/assignments/add/${this.state.class_id}/${this.state.calId}`, this.state.assignments).then(response => {
-            console.log("Got to assignments response.")
+            //console.log("Got to assignments response.")
             axios.post(`/api/assignments/add/user/assignments/${this.props.user.user_id}/${this.state.class_id}/${this.state.calId}`).then(response => {
-                console.log("Added to User Assignment: ", response)
+                //console.log("Added to User Assignment: ", response)
                 window.location.reload(true)
 
             })
@@ -140,7 +130,7 @@ class AddAssignment extends Component {
     }
 
     renderStepActions(step) {
-        const { stepIndex } = this.state;
+        //const { stepIndex } = this.state;
 
         return (
             <div style={{ margin: '12px 0' }}>
@@ -158,22 +148,8 @@ class AddAssignment extends Component {
     }
 
     render() {
-        console.log(this.props)
-        const { finished, stepIndex } = this.state;
-
-        const actions = [
-            <FlatButton
-                label="Cancel"
-                primary={true}
-                onClick={this.handleClose}
-            />,
-            <FlatButton
-                label="Submitss"
-                primary={true}
-                disabled={false}
-                onClick={this.handleOpen}
-            />,
-        ];
+        //console.log(this.props)
+        const {  stepIndex } = this.state;
 
         return (
             <div className='stepper-add' >

@@ -7,7 +7,7 @@ module.exports = {
     },
     setUserOnRedux: (req, res, next) => {
         const db = req.app.get('db');
-        console.log(req.params)
+        //console.log(req.params)
         const {user_id} = req.params
         db.users_set_user([req.params.user_id])
         .then( user => res.status(200).send(user))

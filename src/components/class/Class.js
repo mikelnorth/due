@@ -21,13 +21,15 @@ class Class extends Component {
         }
 
         this.getClassInfo = this.getClassInfo.bind(this)
+        this.eventStyleGetter = this.eventStyleGetter.bind(this);
+        
     }
 
     componentDidMount() {
         this.props.getUser()
         console.log(this.props)
 
-       this.getClassInfo(this.props.user.user_id, this.props.calId)
+        this.getClassInfo(this.props.user.user_id, this.props.calId)
     }
 
 
@@ -37,7 +39,7 @@ class Class extends Component {
     }
 
     //reusable method that gets all classes for a specified user by userId and calId.
-    getClassInfo(userId, calId){
+    getClassInfo(userId, calId) {
         //gets the classes for the calendar
         axios.get(`/api/assignments/get/class/${userId}/${calId}`).then(
             response => {
@@ -50,10 +52,23 @@ class Class extends Component {
                     events: response.data
                 })
             })
-            //gets the next 5 assignments.
+        //gets the next 5 assignments.
         axios.get(`/api/assignments/get/topfiveclass/${userId}/${calId}`).then(response => {
             this.setState({ topFive: response.data })
         })
+    }
+
+    eventStyleGetter(event, start, end, isSelected, desc) {
+
+        let style = {
+
+            backgroundColor: `#${event.color}`,
+            color: 'white'
+        };
+        return {
+            style: style
+
+        }
     }
 
     render() {
@@ -105,35 +120,8 @@ class Class extends Component {
 
                             :
                             <div className="upcomingContainer">
-                                <div className="upcomingAssignment">
-                                    <div>
+                                No Upcoming Assignments
 
-                                    </div>
-                                </div>
-                                <div className="separator"></div>
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div className="separator"></div>
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div className="separator"></div>
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div className="separator"></div>
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
                             </div>
 
                         }
@@ -146,6 +134,8 @@ class Class extends Component {
                                 // views={allViews}
                                 step={60}
                                 defaultDate={new Date()}
+                                eventPropGetter={(this.eventStyleGetter)}
+                                
                             />
                         </div>
                     </div>

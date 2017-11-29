@@ -50,9 +50,9 @@ module.exports = {
 
     subscribeToCalendar: (req, res, next) => {
         const db = req.app.get('db');
-        const { user_id, calendar_id } = req.params
+        const { user_id, calendar_id, color} = req.params
 
-        db.calendar_sub_to_calendar([user_id, calendar_id]).then(
+        db.calendar_sub_to_calendar([user_id, calendar_id, color]).then(
             calendar => {
                 res.status(200).send(calendar)
             }

@@ -18,7 +18,8 @@ let initialState = {
     classInfo: [],
     events: [],
     topFive: [],
-    update: ''
+    update: '',
+    adminCalendars: []
 }
 
 const GET_USER = "GET_USER";
@@ -28,6 +29,8 @@ const GET_CLASS_INFO = 'GET_CLASS_INFO';
 const SET_EVENTS = 'SET_EVENTS';
 const SET_TOP_FIVE = 'SET_TOP_FIVE';
 const UPDATE_DASHBOARD = 'UPDATE_DASHBOARD';
+const DELETE_CLASS = 'DELETE_CLASS';
+const GET_ADMIN_CALENDARS = 'GET_ADMIN_CALENDARS';
 
 
 export default function (state = initialState, action) {
@@ -43,9 +46,39 @@ export default function (state = initialState, action) {
             return Object.assign({}, state, { events: action.payload });
         case SET_TOP_FIVE:
             return Object.assign({}, state, { topFive: action.payload });
+        case DELETE_CLASS + "_FULFILLED":
+            return Object.assign({}, state, { classInfo: action.payload });
+        case GET_ADMIN_CALENDARS + "_FULFILLED":
+            return Object.assign({}, state, { adminCalendars: action.payload });
 
         default:
             return state
+    }
+}
+
+export function getAdminCalendars(userId) {
+    console.log('in the get admin calendars, redux')
+    const adminCal = axios.get(`/api/calendars/admin/${userId}`).then(resp => {
+        console.log('response in getadminCal redux', resp)
+        return resp.data
+    })
+
+    return {
+        type: GET_ADMIN_CALENDARS,
+        payload: adminCal
+    }
+}
+
+export function deleteClass(userId, calId) {
+    console.log('delete function redux', userId, calId)
+    const classInfo = axios.delete(`/api/delete/class/${userId}/${calId}`).then(res => {
+        console.log('delete resonse', res)
+        return res.data
+    })
+
+    return {
+        type: DELETE_CLASS,
+        payload: classInfo
     }
 }
 
@@ -100,9 +133,3 @@ export function getUser() {
         payload: user
     }
 }
-
-// export function setUser(user_id) {
-//     return {
-//         type: SET_USER,
-//         payload: axios.get('/api/users/setuser/' + user_id).then(res => res.data)
-//     }

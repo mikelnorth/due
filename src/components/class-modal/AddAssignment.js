@@ -176,7 +176,7 @@ class AddAssignment extends Component {
         ];
 
         return (
-            <div className='stepper' >
+            <div className='stepper-add' >
                 <div className="yScroll">
 
                     <MuiThemeProvider muiTheme={muiTheme} >

@@ -5,7 +5,6 @@
 
 .profile-content {
   width: 80vw;
-  height: 100vh;
   position: absolute;
   right: 0;
   display: flex;
@@ -14,25 +13,35 @@
 
 .profile-classes {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-evenly;
-  width: 100%; }
+  width: 100%;
+  align-items: center; }
 
-.admin-classes > span {
-  border-bottom: 1px solid black; }
-
-.subscribed > span {
-  border-bottom: 1px solid black; }
+.profile-classes > span {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  color: #1485CB;
+  border-bottom: 1px solid #1485CB;
+  padding: 10px;
+  margin-top: 10px; }
 
 .subscribed {
   display: flex;
-  flex-direction: column;
-  align-items: center; }
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center; }
+  .subscribed div {
+    margin: 20px; }
 
 .admin-classes {
   display: flex;
-  flex-direction: column;
-  align-items: center; }
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center; }
+  .admin-classes div {
+    margin: 20px; }
 
 .edit-class {
   margin-top: 20px;
@@ -71,17 +80,49 @@
 
 .delete {
   position: absolute;
-  top: -2px;
-  right: 3px; }
+  top: 10px;
+  right: 13px;
+  color: gray;
+  font-size: 20px;
+  cursor: pointer; }
+
+.delete:hover {
+  color: black; }
 
 .fetch-container {
-  margin-top: 40px;
+  margin-top: 20px;
   width: 40vw; }
   .fetch-container .fetch-profile {
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 20px; }
   .fetch-container button {
     margin-bottom: 20px; }
+
+.fetch-container > span {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  color: #1485CB;
+  border-bottom: 1px solid #1485CB;
+  padding: 3px; }
+
+.ui.modal {
+  transition: .6s; }
+
+.close-modal {
+  background: transparent;
+  width: 100px;
+  height: 40px;
+  font-size: 20px;
+  border: 1px solid gray;
+  color: gray;
+  border-radius: 0;
+  transition: .3s; }
+
+.close-modal:hover {
+  color: black;
+  border: 1px solid black;
+  transition: .5s; }
 
 @media (max-width: 1024px) {
   .profile-content {

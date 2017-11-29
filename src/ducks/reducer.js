@@ -106,4 +106,3 @@ export function getUser() {
 //         type: SET_USER,
 //         payload: axios.get('/api/users/setuser/' + user_id).then(res => res.data)
 //     }
-// }

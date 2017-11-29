@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import router from './router.js'
 import './App.css';
 import { connect } from 'react-redux';
-import { getUser, getClassInfo, setEvents, setTopFive } from './ducks/reducer.js';
+import { getUser, getClassInfo, setEvents, setTopFive, getAdminCalendars } from './ducks/reducer.js';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 
@@ -43,6 +43,8 @@ class App extends Component {
     this.props.getClassInfo(userId).then(res => {
       console.log('app res', res)
     });
+
+    this.props.getAdminCalendars(userId)
   }
 
   render() {
@@ -61,4 +63,4 @@ function mapStateToProps(state) {
     classInfo: state.classInfo,
   }
 }
-export default withRouter(connect(mapStateToProps, { getUser, getClassInfo, setEvents, setTopFive })(App));
+export default withRouter(connect(mapStateToProps, { getUser, getClassInfo, setEvents, setTopFive, getAdminCalendars })(App));

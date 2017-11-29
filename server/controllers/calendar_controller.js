@@ -58,6 +58,17 @@ module.exports = {
                 res.status(200).send(calendar)
             }
         )
+    },
+
+    getAdminCalendars: (req, res, next) => {
+        const db = req.app.get('db');        
+        const { user_id } = req.params
+        
+        db.calendar_get_admin([user_id]).then(
+            calendar => {
+                res.status(200).send(calendar)
+            }
+        )
     }
 
 

@@ -101,6 +101,8 @@ app.get('/api/users/setuser/:user_id', users_controller.setUserOnRedux)
 
 //SCHOOLS
 app.post('/api/schools/insert/:school_id/:user_id/:school_name', schools_controller.addSchool);
+app.post('/api/schools/update/:school_id/:user_id/:school_name', schools_controller.updateSchool);
+
 
 //CLASSES
 app.get('/api/classes/get/:school_id', classes_controller.findClass);

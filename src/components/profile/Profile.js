@@ -40,23 +40,6 @@ class Profile extends Component {
         })
     }
 
-
-
-    handleAddAssignment = () => {
-        this.setState({
-            assignments: this.state.assignments.concat([{ assignment_name: '', points_possible: '', due_date: '', category: '' }])
-        });
-    }
-
-    handleRemoveAssignment = (idx) => {
-        console.log('here')
-        // let temp = this.state.assignments
-        // temp.splice(idx,1)
-        this.setState({
-            assignments: this.state.assignments.filter((s, sidx) => idx !== sidx)
-        });
-    }
-
     submitSchool() {
         console.log('submit')
         axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`).then(res => {
@@ -87,6 +70,7 @@ class Profile extends Component {
 
         let isLoadingExternally = true;
 
+        console.log(this.props)
         return (
             <div className='profile'>
                 <MediaQuery query="(min-width: 1024.1px)">
@@ -105,11 +89,11 @@ class Profile extends Component {
                                                 <span className='inner'>{clss.class_name}</span>
                                                 <span onClick={() => this.deleteClass(clss.calendar_id)}>Unsubscribe</span>
                                             </div>
+                                            
                                         )
                                     })
                                     : null}
                             </div>
-
                             <div className='admin-classes'>
                                 <span>Admin calendars</span>
                                 {console.log(this.props.adminCalendars)}

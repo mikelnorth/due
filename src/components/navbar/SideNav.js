@@ -43,7 +43,7 @@ class SideNav extends Component {
                     </Link>
                     {this.props.classInfo.length !== 0 ?
                         this.props.classInfo.map((clss, index) => {
-                            console.log(clss)
+                            //console.log(clss)
                             return (
                                 //returns a button for every class with access to the name, subject, and id
                                 <Link to='class' className='class-btn' onClick={() => this.setCalId(clss.calendar_id)}><div>

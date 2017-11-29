@@ -18,7 +18,7 @@ module.exports = {
 
             db.assignments_create_assignment(assignmentForAdd).then(
                 assignment => {
-                    console.log(assignment)
+                    //console.log(assignment)
                 }
             )
         })
@@ -41,7 +41,7 @@ module.exports = {
     getClassAssignments: (req, res, next) => {
         const db = req.app.get('db');
         const{ user_id, class_id } = req.params
-        console.log(req.params)
+        //console.log(req.params)
 
         db.assignments_get_class([ user_id, class_id ]).then(
             newAssignments => {
@@ -55,12 +55,12 @@ module.exports = {
         
         const { user_id, calendar_id, class_id } = req.params
 
-        console.log('user id: ', user_id)
-        console.log('cal id: ', calendar_id)
-        console.log('class id: ', class_id)
+        //console.log('user id: ', user_id)
+        //console.log('cal id: ', calendar_id)
+        //console.log('class id: ', class_id)
         
         db.assignments_get_by_cal([user_id, calendar_id]).then(response => {
-            console.log('user assignment response: ', response)
+            //console.log('user assignment response: ', response)
             response.map((assign,index) => {
                 db.assignments_insert_user([user_id, class_id, calendar_id, assign.assignment_id])
             })

@@ -25,9 +25,9 @@ class MobileNav extends Component {
   }
 
   componentDidMount() {
-    console.log('mobileNav didmount', this.props.user.user_id)
+    //console.log('mobileNav didmount', this.props.user.user_id)
     axios.get(`/api/classes/getbyclassname/${this.props.user.user_id}`).then(response => {
-      console.log(response)
+      //console.log(response)
       this.setState({
         classNames: response.data
       })

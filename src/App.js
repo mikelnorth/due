@@ -15,7 +15,7 @@ class App extends Component {
 
   componentWillMount() {
     this.props.getUser().then(res => {
-      console.log('faslkdfjaosifjhaosdifjasdo', res)
+      //console.log('faslkdfjaosifjhaosdifjasdo', res)
       this.getAll(res.value.user_id)
     })
   }
@@ -40,7 +40,7 @@ class App extends Component {
         })
       })
     this.props.getClassInfo(userId).then(res => {
-      console.log('app res', res)
+      //console.log('app res', res)
     });
 
     this.props.getAdminCalendars(userId)

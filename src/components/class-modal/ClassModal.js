@@ -91,12 +91,12 @@ class ClassModal extends Component {
 
 
     componentDidMount() {
-        console.log(this.props.user.school)
+        //console.log(this.props.user.school)
         axios.get(`/api/classes/get/${this.props.user.school_id}`).then(response => {
             this.setState({
                 options: response.data
             })
-            console.log('ClassModal', response.data)
+            //console.log('ClassModal', response.data)
         })
     }
 
@@ -109,29 +109,29 @@ class ClassModal extends Component {
         this.state.ST ? this.state.days.push(this.state.ST) : null;
         this.state.SU ? this.state.days.push(this.state.SU) : null;
 
-        console.log(this.state)
+        //console.log(this.state)
     }
 
     handleSelect(val) {
         this.setState({
             selectedClass: val,
         })
-        console.log("select state", this.state.selectedClass)
-        // console.log("select state", this.state.select.label)
+        //console.log("select state", this.state.selectedClass)
+        // //console.log("select state", this.state.select.label)
     }
 
     handleClassChange(val) {
         this.setState({
             subject: val
         })
-        console.log('Subject: ', this.state.subject)
+        //console.log('Subject: ', this.state.subject)
     }
 
     handleTeacherChange(val) {
         this.setState({
             teacher: val
         })
-        console.log(this.state.teacher)
+        //console.log(this.state.teacher)
     }
 
     handleNext = () => {
@@ -177,7 +177,7 @@ class ClassModal extends Component {
 
     setDate = (dateTime) => {
         this.setState({ dateTime })
-        console.log(dateTime)
+        //console.log(dateTime)
     }
 
 
@@ -188,7 +188,7 @@ class ClassModal extends Component {
     }
 
     handleRemoveAssignment = (idx) => {
-        console.log('here')
+        //console.log('here')
         // let temp = this.state.assignments
         // temp.splice(idx,1)
         this.setState({
@@ -199,26 +199,26 @@ class ClassModal extends Component {
     handleAssignmentChange = (index, field, value) => {
         let tempArr = this.state.assignments
 
-        console.log(value)
+        //console.log(value)
 
         tempArr[index][field] = value;
-        //console.log(temp)
+        ////console.log(temp)
         this.setState({
             assignments: tempArr
         })
 
-        console.log(this.state.assignments)
+        //console.log(this.state.assignments)
     }
 
     submitAssignments() {
-        console.log('assignments', this.state.assignments)
+        //console.log('assignments', this.state.assignments)
         axios.post(`/api/usercalendar/add/${this.props.user.user_id}/${this.state.currentCalendarId}/${this.state.background.replace(/\#/g, '')}`).then(response => {
-            console.log("Added to user calendars.")
+            //console.log("Added to user calendars.")
         })
         axios.post(`/api/assignments/add/${this.state.currentClassId}/${this.state.currentCalendarId}`, this.state.assignments).then(response => {
-            console.log("Got to assignments response.")
+            //console.log("Got to assignments response.")
             axios.post(`/api/assignments/add/user/assignments/${this.props.user.user_id}/${this.state.currentClassId}/${this.state.currentCalendarId}`).then(response => {
-                console.log("Added to User Assignment: ", response)
+                //console.log("Added to User Assignment: ", response)
                 window.location.reload(true)
                 
             })
@@ -226,20 +226,20 @@ class ClassModal extends Component {
     }
 
     handleSelectChange = (event, index, value) => {
-        console.log('event', event)
-        console.log('index', index)
-        console.log('value', value)
+        //console.log('event', event)
+        //console.log('index', index)
+        //console.log('value', value)
 
         let temp = this.state.assignments
-        console.log(temp)
+        //console.log(temp)
 
 
-        console.log(this.state.currentIndex)
+        //console.log(this.state.currentIndex)
 
         var tempIndex = this.state.currentIndex
         temp[tempIndex].category = value
         this.setState({ assignments: temp })
-        console.log(this.state.assignments)
+        //console.log(this.state.assignments)
 
     }
 
@@ -251,24 +251,24 @@ class ClassModal extends Component {
         this.setState({
             [prop]: val
         })
-        console.log(this.state)
+        //console.log(this.state)
     }
 
     setCurrentIndex(index) {
         this.setState({ currentIndex: index })
-        console.log(this.state.currentIndex)
+        //console.log(this.state.currentIndex)
     }
 
 
     handleOpen = () => {
-        console.log('handle open got hit')
+        //console.log('handle open got hit')
         this.setState({ open: true });
     };
 
 
 
     handleCloseDialog() {
-        console.log("Close hit")
+        //console.log("Close hit")
         this.setState({open: !this.state.open})
     }
 
@@ -279,14 +279,14 @@ class ClassModal extends Component {
             days: this.state.days
         }
 
-        console.log('subject', this.state.subject)
+        //console.log('subject', this.state.subject)
         axios.post(`/api/classes/add/${this.state.subject}/${this.props.user.school_id}`).then(
             response => {
-                console.log('response data', response.data)
+                //console.log('response data', response.data)
                 this.setState({ currentClassId: response.data[0].class_id })
-                console.log(this.state.background)
+                //console.log(this.state.background)
                 axios.post(`/api/calendars/add/${this.props.user.user_id}/${response.data[0].class_id}/${this.state.background.replace(/\#/g, '')}`, calendarInfo).then(response => {
-                    console.log(response.data)
+                    //console.log(response.data)
                     this.setState({ currentCalendarId: response.data[0].calendar_id })
                 })
 
@@ -314,7 +314,7 @@ class ClassModal extends Component {
         this.setState({ background: color.hex,
             displayColorPicker: !this.state.displayColorPicker
         });
-        console.log(this.state.background)
+        //console.log(this.state.background)
       };
     
 

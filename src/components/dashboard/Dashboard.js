@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Dashboard.css';
 import { connect } from 'react-redux';
 import ReactModal from "react-modal";
-import { getUser } from '../../ducks/reducer'
+import { getUser, setEvents, setTopFive } from '../../ducks/reducer'
 import Select from "react-select";
 import "../../../node_modules/react-select/dist/react-select.css";
 import axios from 'axios';
@@ -12,6 +12,9 @@ import MobileNav from '../navbar/MobileNav.js';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { Doughnut } from 'react-chartjs-2'
+import { elastic as Menu } from 'react-burger-menu'
+
 
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
@@ -31,6 +34,7 @@ class Dashboard extends Component {
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.eventStyleGetter = this.eventStyleGetter.bind(this);
+        this.completeAssignment = this.completeAssignment.bind(this)
     }
 
     componentWillReceiveProps(newProps) {
@@ -79,6 +83,36 @@ class Dashboard extends Component {
         }
     }
 
+    completeAssignment(userId, assignmentId) {
+
+        axios.put(`/api/assignments/complete/${userId}/${assignmentId}`).then(res => {
+           
+                axios.get(`/api/assignments/getall/${userId}`).then(events => {
+                    events.data.map((event, index) => {
+                        event.start = new Date(event.start)
+                        event.end = new Date(event.end)
+    
+                    })
+                    this.props.setEvents(events.data)
+                    axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
+                        // this.setState({ topFive: response.data })
+                        response.data.map((assignment, index) => {
+                          axios.get(`/api/assignment/get/countincomplete/${assignment.assignment_id}`).then(comp => {
+                            assignment.incomplete = parseInt(comp.data[0].incomplete, 10)
+                            axios.get(`/api/assignment/get/countcomplete/${assignment.assignment_id}`).then(incom => {
+                              assignment.complete = parseInt(incom.data[0].complete, 10)
+                              this.props.setTopFive(response.data)
+                            })
+                          })
+                        })
+                      })
+                })
+            
+        })
+        
+    }
+
+
 
     render() {
         const getOptions = (input) => {
@@ -123,16 +157,89 @@ class Dashboard extends Component {
             return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
         }
 
+        var styles = {
+            bmBurgerButton: {
+                position: 'fixed',
+                width: '36px',
+                height: '30px',
+                right: '36px',
+                top: '36px'
+            },
+            bmBurgerBars: {
+                background: '#373a47'
+            },
+            bmCrossButton: {
+                height: '24px',
+                width: '24px'
+            },
+            bmCross: {
+                background: '#bdc3c7'
+            },
+            bmMenu: {
+                background: '#373a47',
+                padding: '2.5em 1.5em 0',
+                fontSize: '1.15em'
+            },
+            bmMorphShape: {
+                fill: '#373a47'
+            },
+            bmItemList: {
+                color: '#b8b7ad',
+                padding: '0.8em'
+            },
+            bmOverlay: {
+                background: 'rgba(0, 0, 0, 0.3)'
+            }
+        }
+
         return (
             <div className='dashboard'>
+                <Menu styles={styles} right>
+                    <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'scroll' }}>
+                        {this.props.all.events.map((assignment, index) => {
+                            console.log(assignment)
+                            return (
+                                <div> {
+                                    assignment.completed ? <span style={{ color: 'limegreen', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span> :
+                                        <span style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span>
+                                }
+                                </div>
+                            )
+
+                        })}
+
+                    </div>
+                </Menu>
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
                     <div className='dashboardContainer'>
+
+
+
+
                         {this.props.all.topFive.length !== 0 ?
                             <div className="upcomingContainer">
                                 {
                                     this.props.all.topFive.map((assignment, index) => {
+                                        let data2 = {
+                                            labels: ['Complete', 'Not Yet Completed'],
+                                            datasets: [{
+                                                data: [assignment.complete, assignment.incomplete],
+                                                backgroundColor: [
+                                                    '#1485CB',
+                                                    'gray'
+                                                ]
+                                            }]
+                                        }
 
+                                        let option = {
+                                            legend: {
+                                                display: false,
+                                                labels: {
+                                                    display: false
+                                                }
+                                            }
+                                        }
                                         return (
                                             <div className="upcomingAssignment">
                                                 <div className="assignmentContainer">
@@ -141,6 +248,7 @@ class Dashboard extends Component {
                                                         <span className="class">Class: {assignment.desc}</span>
                                                         <span className="dueDate">{formatDate(new Date(assignment.start))}</span>
                                                         <span className="pointsPoss">Points possible: {assignment.points_possible}</span>
+                                                        <Doughnut height={50} width={100} data={data2} options={option}></Doughnut>
                                                     </div>
                                                 </div>
                                                 {index < this.props.all.topFive.length - 1 ? <div className="separator"></div> : null}
@@ -155,35 +263,7 @@ class Dashboard extends Component {
 
                             :
                             <div className="upcomingContainer">
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div className="separator"></div>
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div className="separator"></div>
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div className="separator"></div>
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
-                                <div className="separator"></div>
-                                <div className="upcomingAssignment">
-                                    <div>
-
-                                    </div>
-                                </div>
+                                No Upcoming Assignments
                             </div>
 
                         }
@@ -270,4 +350,4 @@ function mapStatetoProps(state) {
     }
 }
 
-export default (connect(mapStatetoProps, { getUser })(Dashboard))
+export default (connect(mapStatetoProps, { getUser, setEvents, setTopFive })(Dashboard))

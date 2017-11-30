@@ -130,7 +130,7 @@ class Profile extends Component {
 
                     <Modal open={this.state.open} size={'large'}>
                         <span className='delete' onClick={() => this.setState({ open: !this.state.open })}>X</span>
-                        <Modal.Header>Add assignments to: {this.state.class_name}</Modal.Header>
+                        <Modal.Header>Add assignments to:{this.state.class_name}</Modal.Header>
                         <Modal.Content image style={{ padding: '0px' }}>
                             <AddAssignment class_id={this.state.class_id} calId={this.state.calId} />
                         </Modal.Content>

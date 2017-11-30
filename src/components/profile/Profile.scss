@@ -2,7 +2,104 @@
 
 .profile{
     width: 100vw;
-    height: 100vh;
+}
+
+.edit-profile{
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.info-header{
+    font-size: 35px;
+    width: 100%;
+    text-align: left;
+    padding: 20px;
+    color: $primary-color;
+}
+
+.info-content{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .pic-btn{
+        margin-top: 5px;
+        color: gray;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    .pic-btn:hover{
+        color: black;
+    }
+}
+
+.info-img{
+    margin: 5px 50px 0 0;
+}
+
+.info-names{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 20px;
+    width: 250px;
+
+    input{
+        width: 300px;
+        border-radius: 3px;
+        border: 1px solid #aaa;
+        height: 30px;
+    }
+
+    span{
+        margin-top: 10px;
+    }
+
+    .fetch-btn{
+        width: 60px;
+        margin-top: 5px;
+        color: gray;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .fetch-btn:hover{
+        color: black;
+    }
+}
+
+.fetch-school-container{
+    margin-top: 10px;
+    text-align: left;
+}
+
+.change-schools{
+    font-size: 20px;
+}
+
+.Select{
+    width: 300px;
+    text-align: left;
+    font-size: 20px;
+}
+
+.edit-pic{
+    display: flex;
+    width: 150px;
+    height: 150px;
+    background-image: url('../../assets/profile.svg');
+    background-size: 80px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    border: 1px solid #1485CB;
 }
 
 .profile-content{
@@ -115,26 +212,8 @@
     
 }
 
-.fetch-container{
-    margin-top: 20px;
-    width: 40vw;
-    .fetch-profile{
-        margin-top: 15px;        
-        margin-bottom: 20px;
-    }
-    button{
-        margin-bottom: 20px;
-    }
-}
 
-.fetch-container>span{
-    font-family: $primary-font;
-    font-weight: 700;
-    font-size: 30px;
-    color: $primary-color;
-    border-bottom: 1px solid $primary-color;
-    padding: 3px;
-}
+
 
 .ui.modal{
     transition: .6s;
@@ -166,9 +245,7 @@
         flex-direction: column;
         align-items: center;
     }
-    .fetch-container{
-        margin-top: 20px;
-    }
+
 
 }
 
@@ -180,9 +257,7 @@
         align-items: center;
     }
 
-    .fetch-container{
-        width: 80vw;
-    }
+
 
 
 }

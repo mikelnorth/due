@@ -1,7 +1,84 @@
 @import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:200,400");
 .profile {
-  width: 100vw;
-  height: 100vh; }
+  width: 100vw; }
+
+.edit-profile {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px; }
+
+.info-header {
+  font-size: 35px;
+  width: 100%;
+  text-align: left;
+  padding: 20px;
+  color: #1485CB; }
+
+.info-content {
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
+  .info-content .pic-btn {
+    margin-top: 5px;
+    color: gray;
+    cursor: pointer;
+    font-size: 20px; }
+  .info-content .pic-btn:hover {
+    color: black; }
+
+.info-img {
+  margin: 5px 50px 0 0; }
+
+.info-names {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 20px;
+  width: 250px; }
+  .info-names input {
+    width: 300px;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+    height: 30px; }
+  .info-names span {
+    margin-top: 10px; }
+  .info-names .fetch-btn {
+    width: 60px;
+    margin-top: 5px;
+    color: gray;
+    font-size: 15px;
+    cursor: pointer; }
+  .info-names .fetch-btn:hover {
+    color: black; }
+
+.fetch-school-container {
+  margin-top: 10px;
+  text-align: left; }
+
+.change-schools {
+  font-size: 20px; }
+
+.Select {
+  width: 300px;
+  text-align: left;
+  font-size: 20px; }
+
+.edit-pic {
+  display: flex;
+  width: 150px;
+  height: 150px;
+  background-image: url("../../assets/profile.svg");
+  background-size: 80px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  border: 1px solid #1485CB; }
 
 .profile-content {
   width: 80vw;
@@ -89,23 +166,6 @@
 .delete:hover {
   color: black; }
 
-.fetch-container {
-  margin-top: 20px;
-  width: 40vw; }
-  .fetch-container .fetch-profile {
-    margin-top: 15px;
-    margin-bottom: 20px; }
-  .fetch-container button {
-    margin-bottom: 20px; }
-
-.fetch-container > span {
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 700;
-  font-size: 30px;
-  color: #1485CB;
-  border-bottom: 1px solid #1485CB;
-  padding: 3px; }
-
 .ui.modal {
   transition: .6s; }
 
@@ -129,15 +189,11 @@
     width: 100vw;
     transition: .3s;
     flex-direction: column;
-    align-items: center; }
-  .fetch-container {
-    margin-top: 20px; } }
+    align-items: center; } }
 
 @media (max-width: 500px) {
   .profile-content {
     width: 100vw;
     transition: .3s;
     flex-direction: column;
-    align-items: center; }
-  .fetch-container {
-    width: 80vw; } }
+    align-items: center; } }

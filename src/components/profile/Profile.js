@@ -98,6 +98,7 @@ class Profile extends Component {
                                         <Select.Async
                                             className='fetch-profile'
                                             name="form-field-name"
+                                            loadingPlaceholder="Loading Schools..."
                                             placeholder="University of Utah"
                                             value={this.state.select}
                                             loadOptions={getOptions}

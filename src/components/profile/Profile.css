@@ -48,14 +48,16 @@
     height: 30px; }
   .info-names span {
     margin-top: 10px; }
-  .info-names .fetch-btn {
-    width: 60px;
-    margin-top: 5px;
-    color: gray;
-    font-size: 15px;
-    cursor: pointer; }
-  .info-names .fetch-btn:hover {
-    color: black; }
+
+.fetch-btn {
+  width: 60px;
+  margin-top: 5px;
+  color: gray;
+  font-size: 15px;
+  cursor: pointer; }
+
+.fetch-btn:hover {
+  color: black; }
 
 .fetch-school-container {
   margin-top: 10px;

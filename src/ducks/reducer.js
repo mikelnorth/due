@@ -20,7 +20,7 @@ let initialState = {
     topFive: [],
     update: '',
     adminCalendars: [],
-    
+
 }
 
 const GET_USER = "GET_USER";
@@ -56,6 +56,8 @@ export default function (state = initialState, action) {
             return state
     }
 }
+
+
 
 export function getAdminCalendars(userId) {
     //console.log('in the get admin calendars, redux')

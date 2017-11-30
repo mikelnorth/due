@@ -4,7 +4,7 @@ module.exports = {
 
         let assignments = req.body
 
-        const {class_id, calendar_id} = req.params
+        const { class_id, calendar_id } = req.params
 
         assignments.map((assignment, index) => {
             let assignmentForAdd = [
@@ -28,9 +28,9 @@ module.exports = {
     //used to return all assignments for all class of a specified user.
     getCalendarAssignments: (req, res, next) => {
         const db = req.app.get('db');
-        const{ user_id } = req.params
+        const { user_id } = req.params
 
-        db.assignments_get_all([ user_id ]).then(
+        db.assignments_get_all([user_id]).then(
             assignments => {
                 res.status(200).send(assignments)
             }
@@ -40,28 +40,28 @@ module.exports = {
     //used to return each assignment for an individual class on user id and class id
     getClassAssignments: (req, res, next) => {
         const db = req.app.get('db');
-        const{ user_id, class_id } = req.params
+        const { user_id, class_id } = req.params
         //console.log(req.params)
 
-        db.assignments_get_class([ user_id, class_id ]).then(
+        db.assignments_get_class([user_id, class_id]).then(
             newAssignments => {
                 res.status(200).send(newAssignments)
             }
         )
     },
-    
+
     addUserAssignments: (req, res, next) => {
         const db = req.app.get('db');
-        
+
         const { user_id, calendar_id, class_id } = req.params
 
         //console.log('user id: ', user_id)
         //console.log('cal id: ', calendar_id)
         //console.log('class id: ', class_id)
-        
+
         db.assignments_get_by_cal([user_id, calendar_id]).then(response => {
             //console.log('user assignment response: ', response)
-            response.map((assign,index) => {
+            response.map((assign, index) => {
                 db.assignments_insert_user([user_id, class_id, calendar_id, assign.assignment_id])
             })
 
@@ -72,7 +72,7 @@ module.exports = {
     getTopFiveAssignments: (req, res, next) => {
         const db = req.app.get('db')
 
-        const {user_id} = req.params
+        const { user_id } = req.params
 
         db.assignments_get_top_five([user_id]).then(response => {
             res.status(200).send(response)
@@ -82,12 +82,41 @@ module.exports = {
     getTopFiveAssignmentsByClass: (req, res, next) => {
         const db = req.app.get('db')
 
-        const {user_id, cal_id} = req.params
+        const { user_id, cal_id } = req.params
 
         db.assignments_get_top_five_by_class([user_id, cal_id]).then(response => {
             res.status(200).send(response)
         })
-    }
+    },
+
+    getComplete: (req, res, next) => {
+        const db = req.app.get('db')
+        const { assignment_id } = req.params
+
+        db.assignments_get_complete([assignment_id]).then(response => {
+            res.status(200).send(response)
+        })
+    },
+
+    getIncomplete: (req, res, next) => {
+        const db = req.app.get('db')
+        const { assignment_id } = req.params
+
+        db.assignments_get_incomplete([assignment_id]).then(response => {
+            res.status(200).send(response)
+        })
+    },
+
+    completeAssignment: (req, res, next) => {
+        const db = req.app.get('db')
+        const { user_id, assignment_id } = req.params
+
+        db.assignments_user_complete([user_id, assignment_id]).then(response => {
+            res.status(200).send(response)
+        })
+    },
+
+
 
 
 
@@ -102,6 +131,6 @@ module.exports = {
     //         }
     //     )
 
-        
+
     // }
 }

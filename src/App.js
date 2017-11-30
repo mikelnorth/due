@@ -25,8 +25,7 @@ class App extends Component {
   }
 
   getAll(userId) {
-    axios.get(`/api/assignments/getall/${userId}`).then(
-      events => {
+    axios.get(`/api/assignments/getall/${userId}`).then( events => {
         events.data.map((event, index) => {
           event.start = new Date(event.start)
           event.end = new Date(event.end)
@@ -36,10 +35,18 @@ class App extends Component {
 
         axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
           // this.setState({ topFive: response.data })
-          this.props.setTopFive(response.data)
+          response.data.map((assignment, index) => {
+            axios.get(`/api/assignment/get/countincomplete/${assignment.assignment_id}`).then(comp => {
+              assignment.incomplete = parseInt(comp.data[0].incomplete, 10)
+              axios.get(`/api/assignment/get/countcomplete/${assignment.assignment_id}`).then(incom => {
+                assignment.complete = parseInt(incom.data[0].complete, 10)
+                this.props.setTopFive(response.data)
+              })
+            })
+          })
         })
       })
-    this.props.getClassInfo(userId).then(res => {
+      this.props.getClassInfo(userId).then(res => {
       //console.log('app res', res)
     });
 

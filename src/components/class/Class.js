@@ -8,6 +8,9 @@ import MediaQuery from 'react-responsive';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import { elastic as Menu } from 'react-burger-menu'
+import "./Class.css"
+import { Doughnut } from "react-chartjs-2"
 
 
 
@@ -18,11 +21,12 @@ class Class extends Component {
         this.state = {
             events: [],
             topFive: [],
+            hidden: false,
         }
 
         this.getClassInfo = this.getClassInfo.bind(this)
         this.eventStyleGetter = this.eventStyleGetter.bind(this);
-        
+
     }
 
     componentDidMount() {
@@ -54,7 +58,18 @@ class Class extends Component {
             })
         //gets the next 5 assignments.
         axios.get(`/api/assignments/get/topfiveclass/${userId}/${calId}`).then(response => {
-            this.setState({ topFive: response.data })
+            response.data.map((assignment, index) => {
+                axios.get(`/api/assignment/get/countincomplete/${assignment.assignment_id}`).then(comp => {
+                    assignment.incomplete = parseInt(comp.data[0].incomplete, 10)
+                    axios.get(`/api/assignment/get/countcomplete/${assignment.assignment_id}`).then(incom => {
+                        assignment.complete = parseInt(incom.data[0].complete, 10)
+                        console.log(response.data)
+                        this.setState({ topFive: response.data })
+                    })
+                })
+            })
+
+
         })
     }
 
@@ -71,6 +86,13 @@ class Class extends Component {
         }
     }
 
+    showSettings(event) {
+        event.preventDefault();
+
+    }
+
+
+
     render() {
 
         function formatDate(date) {
@@ -84,19 +106,81 @@ class Class extends Component {
             return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
         }
 
+        var styles = {
+            bmBurgerButton: {
+                position: 'fixed',
+                width: '36px',
+                height: '30px',
+                right: '36px',
+                top: '36px'
+            },
+            bmBurgerBars: {
+                background: '#373a47'
+            },
+            bmCrossButton: {
+                height: '24px',
+                width: '24px'
+            },
+            bmCross: {
+                background: '#bdc3c7'
+            },
+            bmMenu: {
+                background: '#373a47',
+                padding: '2.5em 1.5em 0',
+                fontSize: '1.15em'
+            },
+            bmMorphShape: {
+                fill: '#373a47'
+            },
+            bmItemList: {
+                color: '#b8b7ad',
+                padding: '0.8em'
+            },
+            bmOverlay: {
+                background: 'rgba(0, 0, 0, 0.3)'
+            }
+        }
+
         return (
             <div className='class'>
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
                     <div className='dashboardContainer'>
 
+                        <Menu styles={styles} right>
+                            <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'scroll' }}>
+
+
+                            </div>
+                        </Menu>
+
+
 
 
                         {this.state.topFive.length !== 0 ?
                             <div className="upcomingContainer">
                                 {
-                                    this.state.topFive.map((assignment, index) => {
 
+                                    this.state.topFive.map((assignment, index) => {
+                                        let data2 = {
+                                            labels: ['Complete', 'Not Yet Completed'],
+                                            datasets: [{
+                                                data: [assignment.complete, assignment.incomplete],
+                                                backgroundColor: [
+                                                    '#1485CB',
+                                                    'gray'
+                                                ]
+                                            }]
+                                        }
+
+                                        let option = {
+                                            legend: {
+                                                display: false,
+                                                labels: {
+                                                    display: false
+                                                }
+                                            }
+                                        }
                                         return (
                                             <div className="upcomingAssignment">
                                                 <div className="assignmentContainer">
@@ -106,6 +190,8 @@ class Class extends Component {
                                                         <span className="dueDate">{formatDate(new Date(assignment.start))}</span>
                                                         <span className="pointsPoss">Points possible: {assignment.points_possible}</span>
                                                         {/* <input type="checkbox" value={assignment.complete}/> */}
+                                                        <Doughnut height={50} width={100} data={data2} options={option}></Doughnut>
+
                                                     </div>
                                                 </div>
                                                 {index < this.state.topFive.length - 1 ? <div className="separator"></div> : null}
@@ -135,7 +221,7 @@ class Class extends Component {
                                 step={60}
                                 defaultDate={new Date()}
                                 eventPropGetter={(this.eventStyleGetter)}
-                                
+
                             />
                         </div>
                     </div>

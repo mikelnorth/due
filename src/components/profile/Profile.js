@@ -135,7 +135,7 @@ class Profile extends Component {
                                         return (
                                             //returns a button for every class with access to the name, subject, and id
                                             <div id='add' className='edit-class' key={clss.calendar_id}>
-                                                <span className='inner'>{clss.class_name}</span>
+                                                <span className='inner'>`{clss.class_name}, {clss.calendar_name}`</span>
                                                 <span onClick={() => this.setState({ calId: clss.calendar_id, class_id: clss.class_id, class_name: clss.class_name, open: !this.state.open })}>Add Assignments</span>
                                             </div>
                                         )

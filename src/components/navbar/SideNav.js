@@ -8,7 +8,8 @@ import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios';
 import MobileNav from '../navbar/MobileNav.js';
 import ClassModal from '../class-modal/ClassModal.js'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import settingLogo from '../../assets/settings.png';
 
 
 class SideNav extends Component {
@@ -31,7 +32,8 @@ class SideNav extends Component {
             <div className='side'>
                 <div className='side-top'>
                     <Link to='/profile'><img className='profile_pic' src={this.props.user.user_pic} alt='' /></Link>
-                    <div className='profile_name'>{this.props.user.user_name}</div>
+                    <Link to='/profile'><div className='profile_name'>{this.props.user.user_name}</div></Link>
+                    <Link to='/profile'><img className='settings' src={settingLogo}/></Link>
                 </div>
                 {/* Checks to see if classes exist on state.
                 if true maps over each class to create a button that links to each individual class */}

@@ -2,12 +2,108 @@
 
 .profile{
     width: 100vw;
-    height: 100vh;
+}
+
+.edit-profile{
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.info-header{
+    font-size: 35px;
+    width: 100%;
+    text-align: left;
+    padding: 20px;
+    color: $primary-color;
+}
+
+.info-content{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .pic-btn{
+        margin-top: 5px;
+        color: gray;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    .pic-btn:hover{
+        color: black;
+    }
+}
+
+.info-img{
+    margin: 5px 50px 0 0;
+}
+
+.info-names{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 20px;
+    width: 250px;
+
+    input{
+        width: 300px;
+        border-radius: 3px;
+        border: 1px solid #aaa;
+        height: 30px;
+    }
+
+    span{
+        margin-top: 10px;
+    }
+
+}
+.fetch-btn{
+    width: 60px;
+    margin-top: 5px;
+    color: gray;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.fetch-btn:hover{
+    color: black;
+}
+
+.fetch-school-container{
+    margin-top: 10px;
+    text-align: left;
+}
+
+.change-schools{
+    font-size: 20px;
+}
+
+.Select{
+    width: 300px;
+    text-align: left;
+    font-size: 20px;
+}
+
+.edit-pic{
+    display: flex;
+    width: 150px;
+    height: 150px;
+    background-image: url('../../assets/profile.svg');
+    background-size: 80px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    border: 1px solid #1485CB;
 }
 
 .profile-content{
     width: 80vw;
-    height: 100vh;
     position: absolute;
     right: 0;
     display: flex;
@@ -17,38 +113,52 @@
 
 .profile-classes{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-evenly;
     width: 100%;
+    align-items: center
 }
 
-.admin-classes>span{
-    border-bottom: 1px solid black;
+.profile-classes>span{
+    font-family: $primary-font;
+    font-weight: 700;
+    font-size: 30px;
+    color: $primary-color;
+    border-bottom: 1px solid $primary-color;
+    padding: 10px;
+    margin-top: 10px;
 }
-.subscribed>span{
-    border-bottom: 1px solid black;
-}
+
 
 .subscribed{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    div{
+        margin: 20px;
+    }
 }
 
 .admin-classes{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    div{
+        margin: 20px;
+    }
 }
 
 .edit-class{
     margin-top:  20px;
-    height: 64px;
-    font: normal normal 700 1em/4em Arial,sans-serif;
+    height: 50px;
+    font: normal normal 200 20px/80px $primary-font;
+    font-size: 20px;
     overflow: hidden;
-    width: 250px;
+    width: 200px;
     // background-color: #3b5998;
-    border: 1px solid black;
+    border: 0.5px solid black;
     border-radius: 3px; 
     
     span{
@@ -62,11 +172,13 @@
 
 .edit-class .inner{
     transition: 0.3s;
+    margin: -17px; 
 }
 
 .edit-class:hover .inner{
-    margin-top: -4em;
+    margin-top: -80px;
 }
+
 
 #add:hover{
     border: 1px solid $primary-color;
@@ -88,21 +200,43 @@
 
 .delete{
     position: absolute;
-    top: -2px;
-    right: 3px
+    top: 10px;
+    right: 13px;
+    color: gray;
+    font-size: 20px;
+    cursor: pointer;
 }
 
-.fetch-container{
-    margin-top: 40px;
-    width: 40vw;
-    .fetch-profile{
-        margin-top: 5px;        
-        margin-bottom: 20px;
-    }
-    button{
-        margin-bottom: 20px;
-    }
+.delete:hover {
+    color: black;
+    
 }
+
+
+
+
+.ui.modal{
+    transition: .6s;
+}
+
+.close-modal{
+    background: transparent;
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
+    border: 1px solid gray;
+    color: gray;
+    border-radius: 0;
+    transition: .3s;
+}
+
+.close-modal:hover{
+    color: black;
+    border: 1px solid black;
+    transition: .5s;
+
+}
+
 
 @media(max-width: 1024px){
     .profile-content{
@@ -111,9 +245,7 @@
         flex-direction: column;
         align-items: center;
     }
-    .fetch-container{
-        margin-top: 20px;
-    }
+
 
 }
 
@@ -125,8 +257,7 @@
         align-items: center;
     }
 
-    .fetch-container{
-        width: 80vw;
-    }
+
+
 
 }

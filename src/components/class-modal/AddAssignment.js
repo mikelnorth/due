@@ -152,7 +152,7 @@ class AddAssignment extends Component {
         const {  stepIndex } = this.state;
 
         return (
-            <div className='stepper' >
+            <div className='stepper-add' >
                 <div className="yScroll">
 
                     <MuiThemeProvider muiTheme={muiTheme} >

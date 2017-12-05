@@ -44,13 +44,13 @@ passport.use(new Auth0Strategy({
         const db = app.get('db')
         //find and add users here
 
-        //console.log(profile)
+        console.log(profile)
         db.users_find_user([profile._json.email]).then(user => {
             if (user[0]) {
                 return done(null, user[0].user_id)
             }
             else {
-                db.users_create_user([profile._json.name, profile._json.email, profile._json.picture])
+                db.users_create_user([profile._json.name, profile._json.email, profile._json.picture, profile._json.given_name, profile._json.last_name])
                     .then(user => {
                         return done(null, user[0].user_id)
                     })

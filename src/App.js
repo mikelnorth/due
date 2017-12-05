@@ -15,7 +15,7 @@ class App extends Component {
 
   componentWillMount() {
     this.props.getUser().then(res => {
-      //console.log('faslkdfjaosifjhaosdifjasdo', res)
+      console.log('testing user response', res)
       this.getAll(res.value.user_id)
     })
   }

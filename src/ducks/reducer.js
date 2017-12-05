@@ -7,7 +7,7 @@ let initialState = {
         name: '',
         email: '',
         user_pic: '',
-        school_id: null
+        school_id: ''
     },
     class: {
         class_name: '',
@@ -126,7 +126,7 @@ export function getUser() {
     const user = axios.get('/auth/me').then(res => {
         return axios.get('/api/users/setuser/' + res.data.email)
             .then(res => {
-                //console.log("User Info: ", res.data[0])
+                console.log("User Info: ", res.data[0])
                 return res.data[0]
             })
 

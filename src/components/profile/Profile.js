@@ -30,6 +30,7 @@ class Profile extends Component {
         }
         this.handleSelect = this.handleSelect.bind(this);
         this.submitSchool = this.submitSchool.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
 
@@ -52,9 +53,10 @@ class Profile extends Component {
                 axios.get(data.secure_url).then(res => {
                     //this is where you set state to your uploaded imgUrl so it will show up in the turnary <img src={} />
                     this.setState({
+                        first_name: '',
+                        last_name: '',
                         imgUrl: res.config.url
                     })
-                    console.log(this.state)
                 })
             })
 
@@ -79,16 +81,30 @@ class Profile extends Component {
         })
     }
 
-    submitSchool() {
-        console.log('submit')
-        axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`).then(res => {
-
+    handleUpdate(prop, val){
+        this.setState({
+            [prop]: val
         })
+
+    }
+
+    submitSchool() {
+        console.log('submit', this.state)
+        this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`).then(res => {
+
+        }) : null
+        
+        this.state.first_name ? axios.put(`/api/user/update/firstname/${this.state.first_name}/${this.props.user.user_id}`).then(res => {
+            console.log(res)
+        }) : null
+        
+        this.state.last_name ? axios.put(`/api/user/update/lastname/${this.state.last_name}/${this.props.user.user_id}`) : null
+        
+        this.state.imgUrl ? axios.put(`/api/user/update/img/${this.props.user.user_id}`, this.state) : null
+        window.location.reload(true)
     }
 
     render() {
-        console.log(this.props)
-
         const dropZoneStyles = {
             // border: 'none'
         }
@@ -114,7 +130,6 @@ class Profile extends Component {
 
         let isLoadingExternally = true;
 
-        console.log(this.props)
         return (
             <div className='profile'>
                 <MediaQuery query="(min-width: 1024.1px)">
@@ -141,8 +156,8 @@ class Profile extends Component {
                                 </div>
                                 <div>
                                     <div className='info-names'>
-                                        <span className='first'>First Name:</span><input placeholder={this.props.user.first_name}></input>
-                                        <span className='last'>Last Name:</span><input placeholder={this.props.user.last_name}></input>
+                                        <span className='first'>First Name:</span><input onChange={(e) => this.handleUpdate("first_name", e.target.value)} placeholder={this.props.user.first_name}></input>
+                                        <span className='last'>Last Name:</span><input onChange={(e) => this.handleUpdate("last_name", e.target.value)} placeholder={this.props.user.last_name}></input>
                                     </div>
                                     <div className='fetch-school-container'>
                                         <span className='change-schools'>Change Schools</span>
@@ -180,7 +195,6 @@ class Profile extends Component {
                             </div>
                             {<span>Edit Your Calendars</span>}
                             <div className='admin-classes'>
-                                {console.log(this.props.adminCalendars)}
                                 {this.props.adminCalendars.length !== 0 ?
                                     this.props.adminCalendars.map((clss, index) => {
                                         return (
@@ -266,7 +280,7 @@ class Profile extends Component {
                             </div>
                             {<span>Edit Your Calendars</span>}
                             <div className='admin-classes'>
-                                {console.log(this.props.adminCalendars)}
+
                                 {this.props.adminCalendars.length !== 0 ?
                                     this.props.adminCalendars.map((clss, index) => {
                                         return (

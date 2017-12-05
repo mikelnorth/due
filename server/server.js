@@ -50,7 +50,7 @@ passport.use(new Auth0Strategy({
                 return done(null, user[0].user_id)
             }
             else {
-                db.users_create_user([profile._json.name, profile._json.email, profile._json.picture, profile._json.given_name, profile._json.last_name])
+                db.users_create_user([profile._json.name, profile._json.email, profile._json.picture, profile._json.given_name, profile._json.family_name])
                     .then(user => {
                         return done(null, user[0].user_id)
                     })
@@ -98,6 +98,9 @@ passport.deserializeUser(function (user_id, done) {
 
 //USER
 app.get('/api/users/setuser/:user_id', users_controller.setUserOnRedux)
+app.put('/api/user/update/firstname/:first_name/:user_id', users_controller.updateFirst)
+app.put('/api/user/update/lastname/:last_name/:user_id', users_controller.updateLast)
+app.put('/api/user/update/img/:user_id', users_controller.updateImg)
 
 //SCHOOLS
 app.post('/api/schools/insert/:school_id/:user_id/:school_name', schools_controller.addSchool);

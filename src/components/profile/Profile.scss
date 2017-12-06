@@ -94,7 +94,7 @@
     display: flex;
     width: 150px;
     height: 150px;
-    // background-image: url('../../assets/profile.svg');
+    background-image: url('../../assets/profile.svg');
     background-size: 80px;
     background-repeat: no-repeat;
     background-position: center;
@@ -246,6 +246,25 @@
         align-items: center;
     }
 
+    .info-content{
+        width: 100%;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: row;
+        flex-direction: column;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -ms-flex-align: center;
+        align-items: center;
+
+        .info-img{
+            margin: 20px;
+        }
+    }
+
+    .edit-pic{
+        margin-bottom: 5px;
+    }
 
 }
 

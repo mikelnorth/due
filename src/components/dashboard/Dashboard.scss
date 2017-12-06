@@ -79,14 +79,15 @@
 }
 
 .dashboardContainer{
-    width: 80%;
+    width: 85%;
     height: 100vh;
     float: right;
 }
 
 .upcomingContainer {
     height: 30%;
-    width: 100%;
+    width: 92%;
+    padding-left: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,7 +98,7 @@
         background-color: darkslategray;
     }
     .upcomingAssignment {
-        width: 20%;
+        width: 180px;
         display: flex;
         height: 90%;
         justify-content: space-around;
@@ -109,6 +110,7 @@
     flex-direction: column;
     font-size: 1em;
     align-items: left;
+    width: 150px;
     .title {
         font-weight: 900;
         color: $primary-color;
@@ -118,15 +120,42 @@
     }
 }
 
-
-
-
-
-
-
-
 .calendarWrapper {
     height: 70vh;
     z-index: -1;
+    width: 100%;
+    padding: 0px 20px 5px 20px;
   }
+
+  .rbc-month-view{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  .rbc-time-view{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  .rbc-agenda-view{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+
+  .rbc-event-content{
+      font-size: 10px;
+  }
+
+  canvas.chartjs-render-monitor {
+    width: 160px !important;
+    height: 80px !important;
+}
+
+  @media(max-width: 1200px){
+    .dashboardContainer{
+        width: 82vw;
+    }
+
+}
+
+@media(max-width: 1024){
+
+
+}
+
 

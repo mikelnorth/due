@@ -100,8 +100,6 @@ class Dashboard extends Component {
     }
 
     eventStyleGetter(event, start, end, isSelected, desc) {
-
-        //console.log("GOT INTO THE IF STATEMENT!!!!")
         let style = {
 
             backgroundColor: `#${event.color}`,
@@ -279,10 +277,6 @@ class Dashboard extends Component {
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
                     <div className='dashboardContainer'>
-
-
-
-
                         {this.props.all.topFive.length !== 0 ?
                             <div className="upcomingContainer">
                                 {
@@ -362,7 +356,36 @@ class Dashboard extends Component {
 
                 </MediaQuery>
                 <MediaQuery query="(max-width: 1024px)">
-                    {this.state.showNav || this.props.user.school_id ? <MobileNav /> : null}
+                    {this.state.modal ? null : <MobileNav />}
+
+                    <div className='dashboardContainer'>
+                      
+                        <div className="calendarWrapper">
+                            {this.props.user.school_id ? <BigCalendar
+                                events={this.props.all.events}
+                                  views={{month: true, week: true}}
+                                // views={allViews}
+                                step={60}
+                                defaultDate={new Date()}
+                                eventPropGetter={(this.eventStyleGetter)}
+                            /> :
+
+                                <BigCalendar
+                                    events={this.props.all.events}
+                                      views={{month: true, week: true}}
+                                    // views={allViews}
+                                    step={60}
+                                    defaultDate={new Date()}
+                                />
+                                // <div className="clickToAddMessage">code
+                                //     <span className="addMessage">
+                                //         ⇦ Click over there to add your first a class!
+                                //     </span>
+                                // </div>
+
+                            }
+                        </div>
+                    </div>
 
                 </MediaQuery>
                 <div>

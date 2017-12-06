@@ -105,36 +105,5 @@
     padding: 2px 10px 2px 10px; }
 
 @media (max-width: 1200px) {
-  .side-top {
-    height: 25vh; }
-  .profile_pic {
-    width: 100px;
-    height: 100px; }
-  .profile_name {
-    font-size: 20px; }
-  .class-btn {
-    height: 50px;
-    transition: .64s !important;
-    font-size: 20px !important; }
-  .side-container {
-    height: 65vh; }
-  .side-bottom {
-    position: relative;
-    bottom: 0;
-    height: 10vh;
-    background: #ebebeb;
-    background: linear-gradient(#b95959, rgba(235, 235, 235, 0));
-    background: white;
-    width: 100%; }
-    .side-bottom .nav_logo {
-      position: absolute;
-      bottom: 5px;
-      left: 10%;
-      width: 40px; }
-    .side-bottom .login button {
-      position: absolute;
-      bottom: 5px;
-      right: 10%;
-      font-size: 15px;
-      border: none;
-      padding: 2px 10px 2px 10px; } }
+  .side {
+    width: 18vw; } }

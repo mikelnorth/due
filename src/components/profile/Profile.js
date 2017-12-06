@@ -81,7 +81,7 @@ class Profile extends Component {
         })
     }
 
-    handleUpdate(prop, val){
+    handleUpdate(prop, val) {
         this.setState({
             [prop]: val
         })
@@ -89,24 +89,22 @@ class Profile extends Component {
     }
 
     submitSchool() {
-        console.log('submit', this.state)
         this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`).then(res => {
+        }) : null
 
-        }) : null
-        
         this.state.first_name ? axios.put(`/api/user/update/firstname/${this.state.first_name}/${this.props.user.user_id}`).then(res => {
-            console.log(res)
         }) : null
-        
+
         this.state.last_name ? axios.put(`/api/user/update/lastname/${this.state.last_name}/${this.props.user.user_id}`) : null
-        
+
         this.state.imgUrl ? axios.put(`/api/user/update/img/${this.props.user.user_id}`, this.state) : null
+
         window.location.reload(true)
     }
 
     render() {
         const dropZoneStyles = {
-            // border: 'none'
+
         }
 
 
@@ -148,11 +146,11 @@ class Profile extends Component {
                                         multiple
                                         accept="image/*"
                                         style={dropZoneStyles}
-                                    ><img className='edit-pic' src={this.state.imgUrl ? this.state.imgUrl : profilePlaceholder} alt='profileimg' />
-                                    <button className='pic-btn'>Edit</button>
+                                    ><img className='edit-pic' src={this.state.imgUrl ? this.state.imgUrl : null} alt='' />
+                                        <button className='pic-btn'>Edit</button>
                                     </Dropzone>
 
-                                   
+
                                 </div>
                                 <div>
                                     <div className='info-names'>
@@ -193,7 +191,7 @@ class Profile extends Component {
                                     })
                                     : null}
                             </div>
-                            {<span>Edit Your Calendars</span>}
+                            {this.props.adminCalendars.length ? <span>Edit Your Calendars</span> : null}
                             <div className='admin-classes'>
                                 {this.props.adminCalendars.length !== 0 ?
                                     this.props.adminCalendars.map((clss, index) => {
@@ -220,7 +218,7 @@ class Profile extends Component {
                         <Modal.Actions>
                             <button className='close-modal' onClick={() => this.setState({ open: !this.state.open })}>
                                 Close
-                                                                    </button>
+                            </button>
                         </Modal.Actions>
                     </Modal>
 
@@ -236,31 +234,39 @@ class Profile extends Component {
 
                             <div className='info-content'>
                                 <div className='info-img'>
-                                    <img className='edit-pic' alt='' />
-                                    <button className='pic-btn'>Edit</button>
+                                    <Dropzone
+                                        onDrop={this.handleDrop}
+                                        multiple
+                                        accept="image/*"
+                                        style={dropZoneStyles}
+                                    ><img className='edit-pic' src={this.state.imgUrl ? this.state.imgUrl : null} alt='' />
+                                        <button className='pic-btn'>Edit</button>
+                                    </Dropzone>
+
+
                                 </div>
-
-                                <div className='info-names'>
-                                    <span className='first'>First Name:</span><input placeholder={this.props.user.user_name}></input>
-                                    <span className='last'>Last Name:</span><input></input>
-
-                                    <span>Change Schools</span>
-                                    <Select.Async
-                                        className='fetch-profile'
-                                        name="form-field-name"
-                                        value={this.state.select}
-                                        loadOptions={getOptions}
-                                        isLoading={isLoadingExternally}
-                                        onChange={this.handleSelect}
-                                    />
-                                    <button className='fetch-btn' onClick={() => this.submitSchool()}>Submit</button>
-
+                                <div>
+                                    <div className='info-names'>
+                                        <span className='first'>First Name:</span><input onChange={(e) => this.handleUpdate("first_name", e.target.value)} placeholder={this.props.user.first_name}></input>
+                                        <span className='last'>Last Name:</span><input onChange={(e) => this.handleUpdate("last_name", e.target.value)} placeholder={this.props.user.last_name}></input>
+                                    </div>
+                                    <div className='fetch-school-container'>
+                                        <span className='change-schools'>Change Schools</span>
+                                        <Select.Async
+                                            className='fetch-profile'
+                                            name="form-field-name"
+                                            loadingPlaceholder="Loading Schools..."
+                                            placeholder={this.props.user.school_name}
+                                            value={this.state.select}
+                                            loadOptions={getOptions}
+                                            isLoading={isLoadingExternally}
+                                            onChange={this.handleSelect}
+                                        />
+                                        <button className='fetch-btn' onClick={() => this.submitSchool()}>Submit</button>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
-
-
                         <div className='profile-classes'>
                             {this.props.classInfo.length ? <span>Subscribed Classes</span> : null}
                             <div className='subscribed'>
@@ -278,15 +284,14 @@ class Profile extends Component {
                                     })
                                     : null}
                             </div>
-                            {<span>Edit Your Calendars</span>}
+                            {this.props.adminCalendars.length ? <span>Edit Your Calendars</span> : null}
                             <div className='admin-classes'>
-
                                 {this.props.adminCalendars.length !== 0 ?
                                     this.props.adminCalendars.map((clss, index) => {
                                         return (
                                             //returns a button for every class with access to the name, subject, and id
                                             <div id='add' className='edit-class' key={clss.calendar_id}>
-                                                <span className='inner'>{clss.class_name}</span>
+                                                <span className='inner'>{clss.class_name},  {clss.calendar_name}</span>
                                                 <span onClick={() => this.setState({ calId: clss.calendar_id, class_id: clss.class_id, class_name: clss.class_name, open: !this.state.open })}>Add Assignments</span>
                                             </div>
                                         )
@@ -306,11 +311,12 @@ class Profile extends Component {
                         <Modal.Actions>
                             <button className='close-modal' onClick={() => this.setState({ open: !this.state.open })}>
                                 Close
-                                                </button>
+                            </button>
                         </Modal.Actions>
                     </Modal>
+
                 </MediaQuery>
-            </div>
+            </div >
         )
     }
 }

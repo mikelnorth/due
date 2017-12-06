@@ -70,8 +70,6 @@ class Dashboard extends Component {
     }
 
     eventStyleGetter(event, start, end, isSelected, desc) {
-
-        //console.log("GOT INTO THE IF STATEMENT!!!!")
         let style = {
 
             backgroundColor: `#${event.color}`,
@@ -86,30 +84,30 @@ class Dashboard extends Component {
     completeAssignment(userId, assignmentId) {
 
         axios.put(`/api/assignments/complete/${userId}/${assignmentId}`).then(res => {
-           
-                axios.get(`/api/assignments/getall/${userId}`).then(events => {
-                    events.data.map((event, index) => {
-                        event.start = new Date(event.start)
-                        event.end = new Date(event.end)
-    
-                    })
-                    this.props.setEvents(events.data)
-                    axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
-                        // this.setState({ topFive: response.data })
-                        response.data.map((assignment, index) => {
-                          axios.get(`/api/assignment/get/countincomplete/${assignment.assignment_id}`).then(comp => {
+
+            axios.get(`/api/assignments/getall/${userId}`).then(events => {
+                events.data.map((event, index) => {
+                    event.start = new Date(event.start)
+                    event.end = new Date(event.end)
+
+                })
+                this.props.setEvents(events.data)
+                axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
+                    // this.setState({ topFive: response.data })
+                    response.data.map((assignment, index) => {
+                        axios.get(`/api/assignment/get/countincomplete/${assignment.assignment_id}`).then(comp => {
                             assignment.incomplete = parseInt(comp.data[0].incomplete, 10)
                             axios.get(`/api/assignment/get/countcomplete/${assignment.assignment_id}`).then(incom => {
-                              assignment.complete = parseInt(incom.data[0].complete, 10)
-                              this.props.setTopFive(response.data)
+                                assignment.complete = parseInt(incom.data[0].complete, 10)
+                                this.props.setTopFive(response.data)
                             })
-                          })
                         })
-                      })
+                    })
                 })
-            
+            })
+
         })
-        
+
     }
 
 
@@ -213,10 +211,6 @@ class Dashboard extends Component {
                 <MediaQuery query="(min-width: 1024.1px)">
                     <SideNav />
                     <div className='dashboardContainer'>
-
-
-
-
                         {this.props.all.topFive.length !== 0 ?
                             <div className="upcomingContainer">
                                 {
@@ -296,7 +290,36 @@ class Dashboard extends Component {
 
                 </MediaQuery>
                 <MediaQuery query="(max-width: 1024px)">
-                    {this.state.showNav || this.props.user.school_id ? <MobileNav /> : null}
+                    {this.state.modal ? null : <MobileNav />}
+
+                    <div className='dashboardContainer'>
+                      
+                        <div className="calendarWrapper">
+                            {this.props.user.school_id ? <BigCalendar
+                                events={this.props.all.events}
+                                  views={{month: true, week: true}}
+                                // views={allViews}
+                                step={60}
+                                defaultDate={new Date()}
+                                eventPropGetter={(this.eventStyleGetter)}
+                            /> :
+
+                                <BigCalendar
+                                    events={this.props.all.events}
+                                      views={{month: true, week: true}}
+                                    // views={allViews}
+                                    step={60}
+                                    defaultDate={new Date()}
+                                />
+                                // <div className="clickToAddMessage">code
+                                //     <span className="addMessage">
+                                //         ⇦ Click over there to add your first a class!
+                                //     </span>
+                                // </div>
+
+                            }
+                        </div>
+                    </div>
 
                 </MediaQuery>
                 <div>

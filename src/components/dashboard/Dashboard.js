@@ -29,6 +29,11 @@ class Dashboard extends Component {
             // hideModal: false,
             select: '',
             showNav: false,
+
+            essays: [],
+            quizzes: [],
+            tests: [],
+            hw: []
         }
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -37,8 +42,33 @@ class Dashboard extends Component {
         this.completeAssignment = this.completeAssignment.bind(this)
     }
 
+    componentDidMount() {
+        console.log("Assignments: ", this.props.events)
+        // var tests = this.props.
+    }
+
     componentWillReceiveProps(newProps) {
         newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
+        //console.log(newProps)
+
+
+        let essays = newProps.all.events.filter((event) => event.category === 1)
+        let tests = newProps.all.events.filter((event) => event.category === 2)
+        let quizzes = newProps.all.events.filter((event) => event.category === 3)
+        let hw = newProps.all.events.filter((event) => event.category === 4)
+
+        console.log("essays: ", essays)
+        console.log("tests: ", tests)
+        console.log("quizzes: ", quizzes)
+        console.log("hw: ", hw)
+
+        this.setState({
+            essays,
+            tests,
+            quizzes,
+            hw
+        })
+
     }
 
     handleOpenModal() {
@@ -176,26 +206,27 @@ class Dashboard extends Component {
             bmMenu: {
                 background: '#373a47',
                 padding: '2.5em 1.5em 0',
-                fontSize: '1.15em'
+                fontSize: '1.15em',
             },
             bmMorphShape: {
-                fill: '#373a47'
+                fill: '#373a47',
             },
             bmItemList: {
                 color: '#b8b7ad',
                 padding: '0.8em'
             },
             bmOverlay: {
-                background: 'rgba(0, 0, 0, 0.3)'
+                background: 'rgba(0, 0, 0, 0.5)'
             }
         }
 
         return (
             <div className='dashboard'>
                 <Menu styles={styles} right>
-                    <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'scroll' }}>
-                        {this.props.all.events.map((assignment, index) => {
-                            console.log(assignment)
+                    <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'scroll', textAlign: 'left'}}>
+                        Essays<br/>-----<br/>
+                        {this.state.essays.map((assignment, index) => {
+                            //console.log(assignment)
                             return (
                                 <div> {
                                     assignment.completed ? <span style={{ color: 'limegreen', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span> :
@@ -205,7 +236,42 @@ class Dashboard extends Component {
                             )
 
                         })}
+                        <br/>Quizzes<br/>-----<br/>
+                        {this.state.quizzes.map((assignment, index) => {
+                            //console.log(assignment)
+                            return (
+                                <div> {
+                                    assignment.completed ? <span style={{ color: 'limegreen', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span> :
+                                        <span style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span>
+                                }
+                                </div>
+                            )
 
+                        })}
+                       <br/>Tests<br/>-----<br/>
+                        {this.state.tests.map((assignment, index) => {
+                            //console.log(assignment)
+                            return (
+                                <div> {
+                                    assignment.completed ? <span style={{ color: 'limegreen', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span> :
+                                        <span style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span>
+                                }
+                                </div>
+                            )
+
+                        })}
+                        <br/>Homework<br/>--------<br/>
+                        {this.state.hw.map((assignment, index) => {
+                            //console.log(assignment)
+                            return (
+                                <div> {
+                                    assignment.completed ? <span style={{ color: 'limegreen', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span> :
+                                        <span style={{ color: 'red', cursor: 'pointer' }} onClick={() => this.completeAssignment(this.props.user.user_id, assignment.assignment_id)}>{assignment.title}</span>
+                                }
+                                </div>
+                            )
+
+                        })}
                     </div>
                 </Menu>
                 <MediaQuery query="(min-width: 1024.1px)">

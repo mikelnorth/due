@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getUser, getClassInfo, setEvents, setTopFive, getAdminCalendars } from './ducks/reducer.js';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
   constructor(props) {
@@ -25,28 +26,28 @@ class App extends Component {
   }
 
   getAll(userId) {
-    axios.get(`/api/assignments/getall/${userId}`).then( events => {
-        events.data.map((event, index) => {
-          event.start = new Date(event.start)
-          event.end = new Date(event.end)
+    axios.get(`/api/assignments/getall/${userId}`).then(events => {
+      events.data.map((event, index) => {
+        event.start = new Date(event.start)
+        event.end = new Date(event.end)
 
-        })
-        this.props.setEvents(events.data)
+      })
+      this.props.setEvents(events.data)
 
-        axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
-          // this.setState({ topFive: response.data })
-          response.data.map((assignment, index) => {
-            axios.get(`/api/assignment/get/countincomplete/${assignment.assignment_id}`).then(comp => {
-              assignment.incomplete = parseInt(comp.data[0].incomplete, 10)
-              axios.get(`/api/assignment/get/countcomplete/${assignment.assignment_id}`).then(incom => {
-                assignment.complete = parseInt(incom.data[0].complete, 10)
-                this.props.setTopFive(response.data)
-              })
+      axios.get(`/api/assignments/get/topfive/${userId}`).then(response => {
+        // this.setState({ topFive: response.data })
+        response.data.map((assignment, index) => {
+          axios.get(`/api/assignment/get/countincomplete/${assignment.assignment_id}`).then(comp => {
+            assignment.incomplete = parseInt(comp.data[0].incomplete, 10)
+            axios.get(`/api/assignment/get/countcomplete/${assignment.assignment_id}`).then(incom => {
+              assignment.complete = parseInt(incom.data[0].complete, 10)
+              this.props.setTopFive(response.data)
             })
           })
         })
       })
-      this.props.getClassInfo(userId).then(res => {
+    })
+    this.props.getClassInfo(userId).then(res => {
       //console.log('app res', res)
     });
 
@@ -56,7 +57,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {router}
+        <MuiThemeProvider>
+          {router}
+        </MuiThemeProvider>
       </div>
     );
   }

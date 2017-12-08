@@ -16,6 +16,11 @@ import { Doughnut } from 'react-chartjs-2'
 import { elastic as Menu } from 'react-burger-menu'
 
 
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+
+
 BigCalendar.setLocalizer(
     BigCalendar.momentLocalizer(moment)
 );
@@ -33,7 +38,9 @@ class Dashboard extends Component {
             essays: [],
             quizzes: [],
             tests: [],
-            hw: []
+            hw: [],
+            open: false,
+            selectedEvent: [],
         }
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -43,24 +50,23 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        console.log("Assignments: ", this.props.events)
         // var tests = this.props.
     }
 
     componentWillReceiveProps(newProps) {
         newProps.user.school_id ? this.handleCloseModal() : this.handleOpenModal()
         //console.log(newProps)
-
+        console.log("Assignments: ", newProps.all.events)
 
         let essays = newProps.all.events.filter((event) => event.category === 1)
         let tests = newProps.all.events.filter((event) => event.category === 2)
         let quizzes = newProps.all.events.filter((event) => event.category === 3)
         let hw = newProps.all.events.filter((event) => event.category === 4)
 
-        console.log("essays: ", essays)
-        console.log("tests: ", tests)
-        console.log("quizzes: ", quizzes)
-        console.log("hw: ", hw)
+        // console.log("essays: ", essays)
+        // console.log("tests: ", tests)
+        // console.log("quizzes: ", quizzes)
+        // console.log("hw: ", hw)
 
         this.setState({
             essays,
@@ -140,9 +146,56 @@ class Dashboard extends Component {
 
     }
 
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
 
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+    dialogCompleteAssignment = () => {
+        console.log('User Id: ', this.props.user.user_id)
+        console.log('Assignment Id: ', this.state.selectedEvent)
+        this.completeAssignment(this.props.user.user_id, this.state.selectedEvent.assignment_id)
+        let temp = this.state.selectedEvent;
+        temp.completed = !temp.completed;
+        this.setState({ selectedEvent: temp })
+    }
+
+    daysLeft = (date) => {
+        var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        var firstDate = new Date(date);
+        var secondDate = Date.now();
+
+        return Math.round(((firstDate.getTime() - secondDate) / (oneDay)))
+    }
 
     render() {
+        const actions = [
+            this.state.selectedEvent.completed ?
+                <FlatButton
+                    label="Assignment Complete"
+                    style={{ backgroundColor: '#EEFFEA', color: 'black', marginRight: '15px' }}
+                    primary={true}
+                    onClick={this.dialogCompleteAssignment}
+                />
+                :
+                <FlatButton
+                    label="Assignment Incomplete"
+                    style={{ backgroundColor: '#FFF0EC', color: 'black', marginRight: '15px' }}
+                    primary={true}
+                    onClick={this.dialogCompleteAssignment}
+                />
+            ,
+            <FlatButton
+                label="Close"
+                primary={true}
+                style={{ color: "#1485CB" }}
+                keyboardFocused={true}
+                onClick={this.handleClose}
+            />,
+        ];
         const getOptions = (input) => {
             return fetch(`https://api.data.gov/ed/collegescorecard/v1/schools.json?school.name=${input}&_fields=school.name,id&api_key=YBXKnMOHVby0cMoDcpxpLSyv7dtBFZVawfqIVJ3s`)
                 .then((response) => {
@@ -223,8 +276,8 @@ class Dashboard extends Component {
         return (
             <div className='dashboard'>
                 <Menu styles={styles} right>
-                    <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'scroll', textAlign: 'left'}}>
-                        Essays<br/>-----<br/>
+                    <div style={{ display: 'flex', flexDirection: 'column', overflowY: 'scroll', textAlign: 'left' }}>
+                        Essays<br />-----<br />
                         {this.state.essays.map((assignment, index) => {
                             //console.log(assignment)
                             return (
@@ -236,7 +289,7 @@ class Dashboard extends Component {
                             )
 
                         })}
-                        <br/>Quizzes<br/>-----<br/>
+                        <br />Quizzes<br />-----<br />
                         {this.state.quizzes.map((assignment, index) => {
                             //console.log(assignment)
                             return (
@@ -248,7 +301,7 @@ class Dashboard extends Component {
                             )
 
                         })}
-                       <br/>Tests<br/>-----<br/>
+                        <br />Tests<br />-----<br />
                         {this.state.tests.map((assignment, index) => {
                             //console.log(assignment)
                             return (
@@ -260,7 +313,7 @@ class Dashboard extends Component {
                             )
 
                         })}
-                        <br/>Homework<br/>--------<br/>
+                        <br />Homework<br />--------<br />
                         {this.state.hw.map((assignment, index) => {
                             //console.log(assignment)
                             return (
@@ -282,7 +335,7 @@ class Dashboard extends Component {
                                 {
                                     this.props.all.topFive.map((assignment, index) => {
                                         let data2 = {
-                                            labels: ['Complete', 'Not Yet Completed'],
+                                            labels: ['Complete', 'Not Complete'],
                                             datasets: [{
                                                 data: [assignment.complete, assignment.incomplete],
                                                 backgroundColor: [
@@ -335,6 +388,7 @@ class Dashboard extends Component {
                                 step={60}
                                 defaultDate={new Date()}
                                 eventPropGetter={(this.eventStyleGetter)}
+                                onSelectEvent={event => this.setState({ selectedEvent: event, open: true })}
                             /> :
 
                                 <BigCalendar
@@ -343,6 +397,7 @@ class Dashboard extends Component {
                                     views={allViews}
                                     step={60}
                                     defaultDate={new Date()}
+                                    onSelectEvent={event => this.setState({ selectedEvent: event, open: true })}
                                 />
                                 // <div className="clickToAddMessage">
                                 //     <span className="addMessage">
@@ -359,23 +414,25 @@ class Dashboard extends Component {
                     {this.state.modal ? null : <MobileNav />}
 
                     <div className='dashboardContainer'>
-                      
+
                         <div className="calendarWrapper">
                             {this.props.user.school_id ? <BigCalendar
                                 events={this.props.all.events}
-                                  views={{month: true, week: true}}
+                                views={{ month: true, week: true }}
                                 // views={allViews}
                                 step={60}
                                 defaultDate={new Date()}
                                 eventPropGetter={(this.eventStyleGetter)}
+                                onSelectEvent={event => alert(event.title)}
                             /> :
 
                                 <BigCalendar
                                     events={this.props.all.events}
-                                      views={{month: true, week: true}}
+                                    views={{ month: true, week: true }}
                                     // views={allViews}
                                     step={60}
                                     defaultDate={new Date()}
+                                    onSelectEvent={event => alert(event.title)}
                                 />
                                 // <div className="clickToAddMessage">code
                                 //     <span className="addMessage">
@@ -401,15 +458,6 @@ class Dashboard extends Component {
 
                         <div className='select'>
                             <h4>What School do you attend?</h4>
-
-                            <Select
-                                className='school-select'
-                                name="form-field-name"
-                                placeholder="Select A School"
-                                value={this.state.select}
-                                options={options}
-                                onChange={this.handleSelect}
-                            />
                             <Select.Async
                                 className='fetch'
                                 name="form-field-name"
@@ -422,6 +470,25 @@ class Dashboard extends Component {
                             <button onClick={() => this.submit()}>Submit</button>
                         </div>
                     </ReactModal>
+                    <div>
+                        <Dialog
+                            title={`Assignment: ${this.state.selectedEvent.title}`}
+                            actions={actions}
+                            modal={false}
+                            open={this.state.open}
+                            onRequestClose={this.handleClose}
+                            contentStyle={{
+                                width: '30%',
+                                maxWidth: 'none',
+                            }}
+                        >
+                            <div>
+                                Class: {this.state.selectedEvent.desc}<br/>
+                                {this.daysLeft(this.state.selectedEvent.start) < 0 ? <span>Days past due: {Math.abs(this.daysLeft(this.state.selectedEvent.start))}</span> : <span>Days until due: {Math.abs(this.daysLeft(this.state.selectedEvent.start))}</span>}
+                            </div>
+
+                        </Dialog>
+                    </div>
                 </div>
             </div >
         )

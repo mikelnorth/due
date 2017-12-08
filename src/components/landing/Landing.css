@@ -3,7 +3,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 200; }
 
-.header {
+.headerL {
   height: 60px;
   width: 100vw;
   background-color: #eeeeee;
@@ -14,13 +14,13 @@
   top: 0;
   z-index: 100;
   border-bottom: 1px solid #1485CB; }
-  .header .sideBySideL {
+  .headerL .sideBySideL {
     display: flex;
     align-items: center; }
-    .header .sideBySideL .logo {
+    .headerL .sideBySideL .logo {
       height: 45px;
       margin-left: 2.5vw; }
-    .header .sideBySideL .dueTitle {
+    .headerL .sideBySideL .dueTitle {
       margin-left: 1vw;
       font-size: 1.5em; }
 

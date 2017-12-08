@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:200,400");
+.rbc-row-content {
+  z-index: 0 !important; }
+
 .Modal {
   position: fixed;
   top: 0;
@@ -106,7 +109,8 @@
     color: #1485CB;
     border-bottom: gray solid 1px;
     margin-bottom: 15px;
-    font-size: 1.5em; }
+    font-size: 1.5em;
+    height: 7vh; }
 
 .calendarWrapper {
   height: 70vh;

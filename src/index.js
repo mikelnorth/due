@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {unregister} from './registerServiceWorker';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from "react-redux";
 import store from "./store";
 
 ReactDOM.render(
-    <Provider store={store} ><HashRouter>
+    <Provider store={store} ><BrowserRouter>
         <App />
-    </HashRouter></Provider>,
+    </BrowserRouter></Provider>,
     document.getElementById('root'));
 unregister();

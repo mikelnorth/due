@@ -79,7 +79,7 @@ class Landing extends Component {
       <div className="Landing" >
         <div ref={this.setTopNode}></div>
 
-        <header className="header">
+        <header className="headerL">
           <div className="sideBySideL" onClick={this.goToTop}>
             <img src={logo} className="logo" alt="logo"></img>
             <span className="dueTitle">due.</span>
@@ -99,23 +99,23 @@ class Landing extends Component {
           {/* <ScrollAnimation animateIn="flipInX" animateOut="fadeOut"><img src={iphone} className="iphone" alt="iphone"></img></ScrollAnimation> */}
           {/* <ScrollAnimation animateIn="flipInX" animateOut="fadeOut"><img src={lappy} className="lappy" alt="lappy"></img></ScrollAnimation> */}
           <div style={{marginTop: '100px'}}>
-            <div class="marvel-device iphone-x">
-              <div class="notch">
-                <div class="camera"></div>
-                <div class="speaker"></div>
+            <div className="marvel-device iphone-x">
+              <div className="notch">
+                <div className="camera"></div>
+                <div className="speaker"></div>
               </div>
-              <div class="top-bar"></div>
-              <div class="sleep"></div>
-              <div class="bottom-bar"></div>
-              <div class="volume"></div>
-              <div class="overflow">
-                <div class="shadow shadow--tr"></div>
-                <div class="shadow shadow--tl"></div>
-                <div class="shadow shadow--br"></div>
-                <div class="shadow shadow--bl"></div>
+              <div className="top-bar"></div>
+              <div className="sleep"></div>
+              <div className="bottom-bar"></div>
+              <div className="volume"></div>
+              <div className="overflow">
+                <div className="shadow shadow--tr"></div>
+                <div className="shadow shadow--tl"></div>
+                <div className="shadow shadow--br"></div>
+                <div className="shadow shadow--bl"></div>
               </div>
-              <div class="inner-shadow"></div>
-              <div class="screen">
+              <div className="inner-shadow"></div>
+              <div className="screen">
                 <img src={logo} style={{width: '275px', marginTop: '250px'}}/>
             </div>
             </div>

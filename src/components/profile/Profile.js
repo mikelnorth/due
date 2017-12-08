@@ -26,11 +26,22 @@ class Profile extends Component {
             calId: '',
             class_id: '',
             class_name: '',
-            imgUrl: ''
+            imgUrl: '',
+            user:{
+
+            }
         }
         this.handleSelect = this.handleSelect.bind(this);
         this.submitSchool = this.submitSchool.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({
+            first_name: this.props.user.first_name,
+            last_name: this.props.user.last_name,
+            imgUrl: this.props.user.user_pic
+        })
     }
 
 
@@ -53,8 +64,6 @@ class Profile extends Component {
                 axios.get(data.secure_url).then(res => {
                     //this is where you set state to your uploaded imgUrl so it will show up in the turnary <img src={} />
                     this.setState({
-                        first_name: '',
-                        last_name: '',
                         imgUrl: res.config.url
                     })
                 })
@@ -89,18 +98,22 @@ class Profile extends Component {
     }
 
     submitSchool() {
-        this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`) : null
+    axios.put(`/api/user/update/firstname/${this.state.first_name}/${this.props.user.user_id}`)
+        .then(nameResponse => {
+            axios.put(`/api/user/update/lastname/${this.state.last_name}/${this.props.user.user_id}`)
+            .then(response => {
+                axios.put(`/api/user/update/img/${this.props.user.user_id}`, this.state).then(res => {
+                  this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`) : null
+                  window.location.reload(true)
+                })
+            })
+        })
+    
 
-        this.state.first_name ? axios.put(`/api/user/update/firstname/${this.state.first_name}/${this.props.user.user_id}`) : null
-
-        this.state.last_name ? axios.put(`/api/user/update/lastname/${this.state.last_name}/${this.props.user.user_id}`) : null
-
-        this.state.imgUrl ? axios.put(`/api/user/update/img/${this.props.user.user_id}`, this.state) : null
-
-        window.location.reload(true)
     }
 
     render() {
+        console.log(this.state)
         const dropZoneStyles = {
 
         }
@@ -144,7 +157,7 @@ class Profile extends Component {
                                         multiple
                                         accept="image/*"
                                         style={dropZoneStyles}
-                                    ><img className='edit-pic' src={this.state.imgUrl ? this.state.imgUrl : null} alt='' />
+                                    ><img className='edit-pic' src={this.state.imgUrl ? this.state.imgUrl : this.props.user.user_pic} alt='' />
                                         <button className='pic-btn'>Edit</button>
                                     </Dropzone>
 

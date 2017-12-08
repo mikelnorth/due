@@ -16,6 +16,8 @@ const assignment_controller = require('./controllers/assignment_controller');
 
 const app = express();
 
+app.use( express.static(`${__dirname}/../build/`))
+
 app.use(bodyParser.json());
 
 app.use(session({
@@ -136,8 +138,11 @@ app.put('/api/assignments/complete/:user_id/:assignment_id', assignment_controll
 // app.get('/api/calendars/user/:user_id', assignment_controller.findAssignmetsByUser);
 
 
+const path = require('path')
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
-
-const PORT = 3005;
+const PORT = 5000;
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))

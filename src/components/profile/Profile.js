@@ -89,11 +89,9 @@ class Profile extends Component {
     }
 
     submitSchool() {
-        this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`).then(res => {
-        }) : null
+        this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`) : null
 
-        this.state.first_name ? axios.put(`/api/user/update/firstname/${this.state.first_name}/${this.props.user.user_id}`).then(res => {
-        }) : null
+        this.state.first_name ? axios.put(`/api/user/update/firstname/${this.state.first_name}/${this.props.user.user_id}`) : null
 
         this.state.last_name ? axios.put(`/api/user/update/lastname/${this.state.last_name}/${this.props.user.user_id}`) : null
 

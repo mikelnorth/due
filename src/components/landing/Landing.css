@@ -1,4 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Barlow+Condensed:200,400");
+.active {
+  font-size: 1.5em;
+  margin-right: 1vw;
+  border-bottom: 2px solid #1485CB;
+  cursor: pointer;
+  transition: .64s; }
+
 .Landing {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 200; }
@@ -18,11 +25,15 @@
     display: flex;
     align-items: center; }
     .headerL .sideBySideL .logo {
+      cursor: pointer;
       height: 45px;
       margin-left: 2.5vw; }
     .headerL .sideBySideL .dueTitle {
+      cursor: pointer;
       margin-left: 1vw;
-      font-size: 1.5em; }
+      font-size: 1.5em;
+      color: black;
+      margin-bottom: 25px; }
 
 .divider {
   width: 1px;
@@ -31,6 +42,7 @@
   margin-right: 1vw; }
 
 .links {
+  color: black;
   font-size: 1.5em;
   margin-right: 1vw;
   border-bottom: 2px solid #eee;
@@ -66,6 +78,7 @@ button {
   height: 100vh;
   width: 100vw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center; }
 
@@ -75,6 +88,91 @@ button {
 .iphone {
   width: 15vw;
   z-index: 1; }
+
+.centeredTextT {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 6vh; }
+
+.centeredTextB {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 6vh; }
+
+.centeredText {
+  width: 100%;
+  display: flex;
+  justify-content: center; }
+
+.aboveComputer {
+  font-size: 8vw;
+  font-weight: 400; }
+
+@-moz-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0); }
+  40% {
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px); }
+  60% {
+    -moz-transform: translateY(-15px);
+    transform: translateY(-15px); } }
+
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0); }
+  40% {
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px); }
+  60% {
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px); } }
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0); }
+  40% {
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -webkit-transform: translateY(-30px);
+    transform: translateY(-30px); }
+  60% {
+    -moz-transform: translateY(-15px);
+    -ms-transform: translateY(-15px);
+    -webkit-transform: translateY(-15px);
+    transform: translateY(-15px); } }
+
+.bounce {
+  margin-top: 55px;
+  -moz-animation: bounce 1.9s infinite;
+  -webkit-animation: bounce 1.9s infinite;
+  animation: bounce 1.9s infinite;
+  cursor: pointer; }
+
+.dashboardImage {
+  height: 70%;
+  border: 5px #1485CB solid; }
+
+.lowerLoginButton {
+  background-color: #1485CB;
+  border-radius: 40px;
+  font-size: 3vw;
+  padding: 15px;
+  color: white;
+  margin-top: 10vh;
+  transition: .64s; }
+
+.lowerLoginButton:hover {
+  background-color: white;
+  color: #1485CB;
+  border: 1px solid #1485CB; }
 
 @media screen and (max-width: 750px) {
   .dueTitle {

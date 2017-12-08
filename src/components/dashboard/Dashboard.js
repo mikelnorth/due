@@ -14,6 +14,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Doughnut } from 'react-chartjs-2'
 import { elastic as Menu } from 'react-burger-menu'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
 import Dialog from 'material-ui/Dialog';
@@ -105,10 +106,27 @@ class Dashboard extends Component {
         })
     }
 
+    hexToRgbA = (hex) => {
+        var c;
+        if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+            c= hex.substring(1).split('');
+            if(c.length== 3){
+                c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+            }
+            c= '0x'+c.join('');
+            return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',.5)';
+        }
+        throw new Error('Bad Hex');
+    }
+
     eventStyleGetter(event, start, end, isSelected, desc) {
+        console.log(event)
+
+        let colorI = this.hexToRgbA(`#${event.color}`)
+
         let style = {
 
-            backgroundColor: `#${event.color}`,
+            backgroundColor: event.completed ? colorI : `#${event.color}`,
             color: 'white'
         };
         return {
@@ -170,6 +188,8 @@ class Dashboard extends Component {
 
         return Math.round(((firstDate.getTime() - secondDate) / (oneDay)))
     }
+
+   
 
     render() {
         const actions = [
@@ -247,7 +267,7 @@ class Dashboard extends Component {
                 top: '36px'
             },
             bmBurgerBars: {
-                background: '#373a47'
+                background: '#222'
             },
             bmCrossButton: {
                 height: '24px',
@@ -257,12 +277,12 @@ class Dashboard extends Component {
                 background: '#bdc3c7'
             },
             bmMenu: {
-                background: '#373a47',
+                background: '#fff',
                 padding: '2.5em 1.5em 0',
                 fontSize: '1.15em',
             },
             bmMorphShape: {
-                fill: '#373a47',
+                fill: '#fff',
             },
             bmItemList: {
                 color: '#b8b7ad',
@@ -355,7 +375,6 @@ class Dashboard extends Component {
                                         }
                                         return (
                                             <div className="upcomingAssignment">
-                                                <div className="assignmentContainer">
                                                     <div className="assignmentDisplay">
                                                         <span className="title">{assignment.title}</span>
                                                         <span className="class">Class: {assignment.desc}</span>
@@ -363,7 +382,6 @@ class Dashboard extends Component {
                                                         <span className="pointsPoss">Points possible: {assignment.points_possible}</span>
                                                         <Doughnut height={50} width={100} data={data2} options={option}></Doughnut>
                                                     </div>
-                                                </div>
                                                 {index < this.props.all.topFive.length - 1 ? <div className="separator"></div> : null}
                                             </div>
                                         )
@@ -471,6 +489,7 @@ class Dashboard extends Component {
                         </div>
                     </ReactModal>
                     <div>
+                        <MuiThemeProvider>
                         <Dialog
                             title={`Assignment: ${this.state.selectedEvent.title}`}
                             actions={actions}
@@ -488,6 +507,7 @@ class Dashboard extends Component {
                             </div>
 
                         </Dialog>
+                        </MuiThemeProvider>
                     </div>
                 </div>
             </div >

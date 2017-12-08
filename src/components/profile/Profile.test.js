@@ -4,7 +4,7 @@ const users = require('../../../server/userData.json')
 
 // test('get users', () => {
 //     expect.assertions(1);
-//     const url = "http://localhost:3005/api/users/setuser/36"
+//     const url = "http://localhost:5000/api/users/setuser/36"
 //     return funcs.getUser(url).then(res => {
 //         console.log(res)
 //         expect(res).toEqual('')

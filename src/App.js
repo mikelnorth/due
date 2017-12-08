@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { getUser, getClassInfo, setEvents, setTopFive, getAdminCalendars } from './ducks/reducer.js';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
   constructor(props) {
@@ -57,9 +56,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <MuiThemeProvider>
           {router}
-        </MuiThemeProvider>
       </div>
     );
   }

@@ -41,6 +41,7 @@
     "react-responsive": "^4.0.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
+    "react-scroll": "^1.7.3",
     "react-select": "^1.0.0-rc.10",
     "react-track": "^0.4.4",
     "redux": "^3.7.2",
@@ -62,5 +63,5 @@
     "eject": "react-scripts eject"
   },
   "main": "./server/server.js",
-  "proxy": "http://localhost:3005"
+  "proxy": "http://localhost:5000"
 }

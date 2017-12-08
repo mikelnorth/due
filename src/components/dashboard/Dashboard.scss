@@ -21,6 +21,7 @@
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
+
 @-webkit-keyframes fadeIn {
     0% {opacity: 0;}
     100% {opacity: 1;}
@@ -43,13 +44,32 @@
     // filter: blur(10px);
 }
 
+.dashboard-submit{
+    margin-top: 20px;
+    border: 1px solid grey;
+    color: grey;
+    padding: 8px 16px 8px 16px;
+    font-size: 16px;
+}
+
+.dashboard-submit:hover{
+    color: black;
+    background: rgba(128, 128, 128, 0.096);
+    transition: .3s;
+    border: 1px solid black;
+}
+
+.modal-logo{
+    height: 100px;
+}
+
 .select{
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       flex-direction: column;
-      width: 80vw;
+      width: 60vw;
       height: 50vh;
       background: white;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

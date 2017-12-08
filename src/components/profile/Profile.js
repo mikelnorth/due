@@ -26,11 +26,27 @@ class Profile extends Component {
             calId: '',
             class_id: '',
             class_name: '',
-            imgUrl: ''
+            imgUrl: '',
+            user:{
+
+            }
         }
         this.handleSelect = this.handleSelect.bind(this);
         this.submitSchool = this.submitSchool.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({
+            first_name: this.props.user.first_name,
+            last_name: this.props.user.last_name,
+            imgUrl: this.props.user.user_pic
+        })
+        console.log(this.state)
+    }
+
+    componentWillRecieveProps(newProps){
+        console.log(newProps)
     }
 
 
@@ -53,8 +69,6 @@ class Profile extends Component {
                 axios.get(data.secure_url).then(res => {
                     //this is where you set state to your uploaded imgUrl so it will show up in the turnary <img src={} />
                     this.setState({
-                        first_name: '',
-                        last_name: '',
                         imgUrl: res.config.url
                     })
                 })
@@ -89,20 +103,25 @@ class Profile extends Component {
     }
 
     submitSchool() {
-        this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`).then(res => {
-        }) : null
+    axios.put(`/api/user/update/firstname/${this.state.first_name ? this.state.first_name : this.props.user.first_name}/${this.props.user.user_id}`)
+        .then(nameResponse => {
+            axios.put(`/api/user/update/lastname/${this.state.last_name ? this.state.last_name : this.props.user.last_name}/${this.props.user.user_id}`)
+            .then(response => {
+               this.state.imgUrl ? axios.put(`/api/user/update/img/${this.props.user.user_id}`, this.state).then(res => {
+                  this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`) : null
+                  window.location.reload(true)
+                }) : 
+                this.state.select ? axios.post(`/api/schools/update/${this.state.select.value}/${this.props.user.user_id}/${this.state.select.label}`) : null
+                window.location.reload(true)
+            })
+        })
+    
 
-        this.state.first_name ? axios.put(`/api/user/update/firstname/${this.state.first_name}/${this.props.user.user_id}`).then(res => {
-        }) : null
-
-        this.state.last_name ? axios.put(`/api/user/update/lastname/${this.state.last_name}/${this.props.user.user_id}`) : null
-
-        this.state.imgUrl ? axios.put(`/api/user/update/img/${this.props.user.user_id}`, this.state) : null
-
-        window.location.reload(true)
     }
 
     render() {
+        console.log(this.state)
+        console.log('props',this.props)
         const dropZoneStyles = {
 
         }
@@ -146,7 +165,7 @@ class Profile extends Component {
                                         multiple
                                         accept="image/*"
                                         style={dropZoneStyles}
-                                    ><img className='edit-pic' src={this.state.imgUrl ? this.state.imgUrl : null} alt='' />
+                                    ><img className='edit-pic' src={this.state.imgUrl ? this.state.imgUrl : this.props.user.user_pic} alt='' />
                                         <button className='pic-btn'>Edit</button>
                                     </Dropzone>
 
@@ -154,8 +173,8 @@ class Profile extends Component {
                                 </div>
                                 <div>
                                     <div className='info-names'>
-                                        <span className='first'>First Name:</span><input onChange={(e) => this.handleUpdate("first_name", e.target.value)} placeholder={this.props.user.first_name}></input>
-                                        <span className='last'>Last Name:</span><input onChange={(e) => this.handleUpdate("last_name", e.target.value)} placeholder={this.props.user.last_name}></input>
+                                        <span className='first'>First Name:</span><input value={this.state.first_name} onChange={(e) => this.handleUpdate("first_name", e.target.value)} placeholder={this.props.user.first_name}></input>
+                                        <span className='last'>Last Name:</span><input value={this.state.last_name} onChange={(e) => this.handleUpdate("last_name", e.target.value)} placeholder={this.props.user.last_name}></input>
                                     </div>
                                     <div className='fetch-school-container'>
                                         <span className='change-schools'>Change Schools</span>

@@ -81,7 +81,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #1485CB;
+    border-top: 1px solid #1485CB;
+    border-bottom: 1px solid #1485CB;
+    
     word-wrap: break-word;
     // border-bottom: 0px;
     color: gray !important;
@@ -106,7 +108,10 @@
     
 }
 
-
+.schoolName {
+    margin-top: 10px;
+    
+}
 
 .side-bottom{
     position: relative;

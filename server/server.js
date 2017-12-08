@@ -77,7 +77,7 @@ app.get("/auth/me", (req, res) => {
 
 app.get("/auth/logout", (req, res) => {
     req.logout()
-    res.redirect(302, "http://localhost:3000/#/")
+    res.redirect(302, "http://localhost:3000/")
 })
 
 passport.serializeUser(function (user_id, done) {

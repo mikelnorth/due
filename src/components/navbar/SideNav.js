@@ -33,6 +33,7 @@ class SideNav extends Component {
                 <div className='side-top'>
                     <Link to='/profile'><img className='profile_pic' src={this.props.user.user_pic} alt='' /></Link>
                     <Link to='/profile'><div className='profile_name'>{this.props.user.first_name} {this.props.user.last_name}</div></Link>
+                    <span className="schoolName">{this.props.user.school_name}</span>
                     <Link to='/profile'><img className='settings' src={settingLogo}/></Link>
                 </div>
                 {/* Checks to see if classes exist on state.
@@ -48,7 +49,7 @@ class SideNav extends Component {
                             //console.log(clss)
                             return (
                                 //returns a button for every class with access to the name, subject, and id
-                                <Link to='class' className='class-btn' onClick={() => this.setCalId(clss.calendar_id)}><div>
+                                <Link to='/class' className='class-btn' onClick={() => this.setCalId(clss.calendar_id)}><div>
                                     <p style={{ borderBottom: `#${clss.color} 2.5px solid` }}>{clss.class_name}</p>
                                 </div></Link>
                             )

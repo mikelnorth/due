@@ -1,4 +1,7 @@
 @import "../../_theme.scss";
+.rbc-row-content {
+    z-index: 0 !important;
+}
 
 .Modal {
     position: fixed;
@@ -117,6 +120,7 @@
         border-bottom: gray solid 1px;
         margin-bottom: 15px;
         font-size: 1.5em;
+        height: 7vh;
     }
 }
 

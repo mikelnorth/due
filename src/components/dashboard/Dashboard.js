@@ -14,6 +14,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Doughnut } from 'react-chartjs-2'
 import { elastic as Menu } from 'react-burger-menu'
+import logo from '../../assets/due-logo.png'
 
 
 import Dialog from 'material-ui/Dialog';
@@ -457,7 +458,9 @@ class Dashboard extends Component {
                         {/* <input onChange={(e) => this.handlChange( e.target.value)}></input> */}
 
                         <div className='select'>
-                            <h4>What School do you attend?</h4>
+                            <h4>Welcom to due</h4>
+                            <img className='modal-logo' src={logo}/>
+                            <h2>What School do you attend?</h2>
                             <Select.Async
                                 className='fetch'
                                 name="form-field-name"
@@ -467,7 +470,7 @@ class Dashboard extends Component {
                                 onChange={this.handleSelect}
 
                             />
-                            <button onClick={() => this.submit()}>Submit</button>
+                            <button className='dashboard-submit' onClick={() => this.submit()}>Submit</button>
                         </div>
                     </ReactModal>
                     <div>

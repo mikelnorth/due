@@ -87,7 +87,8 @@ class Landing extends Component {
             <Link className="links" activeClass="active" to="more" spy={true} smooth={true} offset={-60} duration={800} onSetActive={this.handleSetActive}>
               More info
             </Link>
-
+            <div className="divider"/>
+            <span>Login Credentials: test@test.com | password: test</span>
             <a href={process.env.REACT_APP_LOGIN}><button className="login">Login</button></a>
           </div>
         </header>

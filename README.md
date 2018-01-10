@@ -17,7 +17,7 @@ Demo credentials are provided
 - password: test
 
 Once logged in, if no classes are visible it is recommended to click on the profile picture or gear icon in the top left.
-1. Once in the profile view, click on the input box below change schools and search for "Santa Barbara City College" (Any school can be selected; this particular school has defaul classes added to it.)
+1. Once in the profile view, click on the input box below change schools and search for "Santa Barbara City College" (Any school can be selected; this particular school has default classes added to it.)
 2. From there, click submit
 3. Then click on "Add Class" from the left.
 
